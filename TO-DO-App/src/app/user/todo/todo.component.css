@@ -1,0 +1,14 @@
+.test{
+    width: 1201px;
+}
+
+.clear{
+    clear: both;
+}
+
+.bottom{
+    transform: rotateZ(90deg);
+    position: fixed;
+    right: -40px;
+    bottom: 50px;
+}

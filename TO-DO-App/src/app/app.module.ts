@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms'
 
 import { AppComponent } from './app.component';
 import { UserAuthComponent } from './user-auth/user-auth.component';
@@ -11,6 +12,14 @@ import { TodoComponent } from './user/todo/todo.component';
 import { PublicComponent } from './user/todo/public/public.component';
 import { PrivateComponent } from './user/todo/private/private.component';
 import { NewTodoComponent } from './user/todo/new-todo/new-todo.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AppRoutingModule } from './app-routing.module';
+import { from } from 'rxjs';
+import { HeaderComponent } from './user/header/header.component';
+import { LeftMenuComponent } from './user/todo/left-menu/left-menu.component';
+import { HttpClientModule } from '@angular/common/http'
+
+
 
 @NgModule({
   declarations: [
@@ -23,10 +32,16 @@ import { NewTodoComponent } from './user/todo/new-todo/new-todo.component';
     TodoComponent,
     PublicComponent,
     PrivateComponent,
-    NewTodoComponent
+    NewTodoComponent,
+    PageNotFoundComponent,
+    HeaderComponent,
+    LeftMenuComponent
   ],
   imports: [
-    BrowserModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

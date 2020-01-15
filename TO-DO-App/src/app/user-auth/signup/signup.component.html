@@ -1,1 +1,46 @@
-<p>signup works!</p>
+<section class="form">
+    <h2>Sign-Up Form</h2>
+    <div class="clearfix"></div>
+    <div style="color: rgb(116, 113, 113);">All fields marked with an asterisk( <b style="color: red;">*</b> ) are required</div>
+    <hr>
+    <p class="valid">Valid. Please wait a moment.</p>
+    <p class="error">Error. Please enter correct Username &amp; password.</p>
+    
+
+    <form class="loginbox" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <p><span>*</span></p><p><span>*</span></p>
+        <input formControlName="userName" placeholder="Username" type="text" id="username">
+        <input formControlName="email" placeholder="email" type="email">
+        <p><span>*</span></p><p><span>*</span></p>
+        <input formControlName="password" placeholder="Password" type="password" id="password">
+        <input formControlName="rePassword" placeholder="Re-enter Password" type="rePassword" id="rePassword">
+        <p><span>*</span></p><p><span>*</span></p>
+        <input formControlName="firstName" placeholder="First name" type="text" id="firstname">
+        <input formControlName="lastName" placeholder="Last name" type="text" id="lastname">
+        <div id="genderholder">
+            <p class="gender">Select Gender</p>
+            <div (click)="setValue(female)">
+                <input formControlName="gender" class="no-margin" #female placeholder="Username" type="radio" name="gender" value="Female">
+                Female
+            </div>
+            <div (click)="setValue(male)">
+                <input formControlName="gender" class="no-margin" #male placeholder="Username" type="radio" name="gender" value="Female">
+                Male
+            </div>
+            <div (click)="setValue(other)">
+                <input formControlName="gender" class="no-margin" #other placeholder="Username" type="radio" name="gender" value="Female">
+                Other
+            </div>
+        </div>
+
+        <textarea formControlName="address" placeholder="Address" rows="8" type="text"></textarea>
+        <hr>
+    <div class="imageDiv">
+        <h6>Select Profile Picture</h6>
+        <input class="userImage" formControlName="userImage" type="file" (change)="test($event)" accept="image/*" name="" id="">
+        <img [src]="imageURL" alt="kjavbksd">        
+    </div>
+    <hr>
+        <button type="submit" id="signup">Sign Up</button>
+    </form>
+</section>

@@ -7,6 +7,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrivateComponent implements OnInit {
 
+  todos:{}[] = [
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"},
+    {title:"test", reminderDate:"2012-25-12", category:"Home", duedate:"22-22-2022"}
+  ]
   constructor() { }
 
   ngOnInit() {

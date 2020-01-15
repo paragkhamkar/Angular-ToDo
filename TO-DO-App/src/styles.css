@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    padding: 70px 30px;
+}
+
+app-left-menu{
+    float: left;
+    width: 150px;
+    margin-right:50px;
+    /* background-color: bisque; */
+}
+
+app-private{
+    float: left;
+    width: 1000px;
+}

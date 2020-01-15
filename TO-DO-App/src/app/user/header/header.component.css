@@ -1,0 +1,11 @@
+nav{
+    height: 50px;
+}
+
+.test{
+    background-color: red;
+}
+
+.active{
+    background-color: white;
+}

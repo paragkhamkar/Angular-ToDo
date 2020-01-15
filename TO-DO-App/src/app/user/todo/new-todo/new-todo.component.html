@@ -1,1 +1,39 @@
-<p>new-todo works!</p>
+<section class="form">
+    <h2>Add To List</h2>
+    <hr>
+    <p class="valid">Valid. Please wait a moment.</p>
+    <p class="error">Error. Please enter correct Username &amp; password.</p>
+
+    <form [formGroup]="todoForm" class="loginbox" (ngSubmit)="submit()">
+        
+        <input placeholder="Title" formControlName="title" type="text" id="username">
+        
+        <textarea placeholder="Description" formControlName="desc" type="text" rows="5" style="resize: none;" id="username"></textarea>
+        
+        <p>Due Date</p> 
+        <p>Reminder Date</p>
+        
+        <input formControlName="dueDate" type="date" data-date-inline-picker="true"/>
+        <input class="reminder"  formControlName="reminderDate" type="date" data-date-inline-picker="true"/>
+        
+        <p style="clear: both;"></p>
+        <hr style="margin-top: 0px;">
+        
+        <p>Category</p> 
+        <p>Keep This Private?</p>
+        <select formControlName="category"  name="Categories" id="">
+            <option value="">Home</option>
+            <option value="">Work</option> 
+            <option value="">School</option>
+        </select>
+        
+        <select class="reminder" name="Privacy" id="">
+            <option value="">Yes, Keep This Private</option>
+            <option value="">No, Make It Public</option>
+        </select>
+
+        <button type="submit" value="Login" id="login" *ngIf="false">Save Changes</button>
+        <button type="submit" value="Login" id="login">Add To List</button>
+    </form>
+    <hr>
+</section>
