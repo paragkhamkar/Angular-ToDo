@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 
 const appRoutes: Routes = [
-    { path: '', component: UserComponent, pathMatch: 'full'},
+    { path: '', component: AppComponent, pathMatch: 'full'},
     { 
       path: 'auth', component: UserAuthComponent,
       children: [
@@ -23,7 +23,7 @@ const appRoutes: Routes = [
       ]
     },
     { 
-      path: 'user', component: UserComponent,
+      path: 'user/:username', component: UserComponent,
       children:[
         { path: 'profile', component: SignupComponent },
         { path: 'todo', component: TodoComponent ,

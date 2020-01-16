@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserAuthService } from '../shared/services/user-auth.service';
 
 @Component({
   selector: 'app-user',
@@ -9,8 +10,9 @@ export class UserComponent implements OnInit {
 
  
  
-constructor(){}
+constructor(private userService:UserAuthService){}
 
-ngOnInit(){}
-
+ngOnInit(){
+  this.userService.commander()
+}
 }

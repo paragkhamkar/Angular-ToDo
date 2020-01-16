@@ -22,14 +22,14 @@
         <p>Category</p> 
         <p>Keep This Private?</p>
         <select formControlName="category"  name="Categories" id="">
-            <option value="">Home</option>
-            <option value="">Work</option> 
-            <option value="">School</option>
+            <option value="Home">Home</option>
+            <option value="Work">Work</option> 
+            <option value="School">School</option>
         </select>
         
-        <select class="reminder" name="Privacy" id="">
-            <option value="">Yes, Keep This Private</option>
-            <option value="">No, Make It Public</option>
+        <select formControlName="isPublic" class="reminder" name="Privacy" id="">
+            <option value="Yes">Yes, Keep This Private</option>
+            <option value="No">No, Make It Public</option>
         </select>
 
         <button type="submit" value="Login" id="login" *ngIf="false">Save Changes</button>

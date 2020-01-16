@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TodoDataService } from 'src/app/shared/services/todo-data.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-todo',
@@ -11,13 +12,13 @@ export class NewTodoComponent implements OnInit {
 
   todoForm:FormGroup;
 
-  title = '';
-  description = '';
-  dueDate = '';
-  reminderDate = '';
-  category = '';
+  test:boolean;
 
-  constructor(private todoService:TodoDataService) { }
+  constructor(
+              private todoService:TodoDataService,
+              private router:Router) {
+      this.todoService.setIsToDo(false);
+   }
 
   ngOnInit() {
     this.todoForm = new FormGroup(
@@ -26,21 +27,24 @@ export class NewTodoComponent implements OnInit {
         "desc": new FormControl(null,Validators.required),
         "dueDate": new FormControl(null,Validators.required),
         "reminderDate": new FormControl(null,Validators.required),
-        "category": new FormControl(null,Validators.required)
+        "category": new FormControl(null,Validators.required),
+        "isPublic": new FormControl(null,Validators.required)
       }
     )
   }
 
   submit(){
     const testA = {
-      duedate: this.todoForm.value.dueDate,
+      owner: localStorage.getItem("UserEmail"),
       title: this.todoForm.value.title,
-      reminderDate : this.todoForm.value.reminderDate
+      desc: this.todoForm.value.desc,
+      dueDate: this.todoForm.value.dueDate,
+      reminderDate: this.todoForm.value.reminderDate,
+      category: this.todoForm.value.category,
+      isPublic: this.todoForm.value.isPublic
     };
-    
-    //  title:"This is the test run", reminderDate:"2020-15-01"
-
-    this.todoService.addToDo(testA);
+    console.log(testA);
+    // this.todoService.addTodo(testA);
   }
 
 }

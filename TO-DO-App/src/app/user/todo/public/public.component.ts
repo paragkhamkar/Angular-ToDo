@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 
 @Component({
   selector: 'app-public',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PublicComponent implements OnInit {
 
-  constructor() { }
+  constructor(private todoService:TodoDataService) {
+    this.todoService.setIsToDo(true);
+   }
 
   ngOnInit() {
-  }
 
+  }
 }

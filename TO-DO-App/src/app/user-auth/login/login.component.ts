@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UserAuthService } from 'src/app/shared/services/user-auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,10 +14,32 @@ export class LoginComponent implements OnInit {
   loginForm:FormGroup;
   email = '';
   password = '';
+  success:boolean = false;
 
-  constructor() { }
+  constructor(
+    private userauth:UserAuthService,
+    private router:Router) { }
+
+  onSubmit(){
+    let testA = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password
+    };
+
+    this.userauth.userLogin(testA);
+
+
+    console.log("ahsgcjaghcajshgcjashgcjashcgsjghc");
+    // if(this.userauth.userLogin(testA)){
+    //   this.router.navigate(["/user/"+localStorage.getItem("UserEmail")+"/private"])
+    // }
+  }
 
   ngOnInit() {
+    if(localStorage.getItem("UserEmail")){
+      this.router.navigate(["/user/"+localStorage.getItem("UserEmail")+"/todo/private"])
+    }
+
     this.loginForm = new FormGroup(
       {
         "email": new FormControl(null,Validators.required),
@@ -23,5 +47,4 @@ export class LoginComponent implements OnInit {
       }
     )
   }
-
 }

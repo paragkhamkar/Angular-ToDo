@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserServiceService } from 'src/app/shared/services/user-service.service';
+import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 // import { getMaxListeners } from 'cluster';
 
 @Component({
@@ -14,11 +14,13 @@ export class SignupComponent implements OnInit {
 
   imageURL:any = "../../../assets/angular.svg";
 
-  constructor(private authService:UserServiceService) { }
+  constructor(private authService:UserAuthService) { }
 
   testA = {};
 
   onSubmit(){
+
+      
       this.testA = {
       userName: this.signupForm.value.userName,
       email: this.signupForm.value.email,
@@ -28,63 +30,11 @@ export class SignupComponent implements OnInit {
       gender: this.signupForm.value.gender,
       address : this.signupForm.value.address,
       userImage: this.imageURL,
-      todo: [],
+      todo: [this.signupForm.value.email],
       todoId: -1
     };
-
-    this.authService.addNewUser(this.testA)
-
-    // this.authService.signUp(this.testA)
-    // // console.log(this.signupForm)
-    // // console.log(this.signupForm.value.email +""+this.signupForm.value.password);
-
-    // // let testcase = {
-    // //   usernames:['hello','bye'],
-    // //   email:['hello@getMaxListeners.com', 'bye@getMaxListeners.com']
-    // // }
-    // // let p = this.authService.setUser("users", testcase).subscribe(
-    // //   result => console.log(result),
-    // //   err => console.log(err)
-    // // )
-    
-    // let t1:any = 5;
-    // // let test = this.authService.getDetails().subscribe(
-    //   // result =>  console.log(result),
-    //   // err => console.log(err)
-    // // );
-    // // console.log(test)
-    //   let a = 5;
-    //   let b = 10;
+      this.authService.userSignup(this.testA);
     }
-
-    addUser(){
-
-    }
-
-    // let test = this.authService.setUser("users", testcase).subscribe()
-
-    // let test = this.authService
-    //           .signUp(testA.email, testA.password)
-    //           .subscribe(
-    //             (resultData) => {
-    //               this.authService
-    //               .setUser(testA)
-    //               .subscribe(
-    //                 res=>{console.log(res)},
-    //                 err=>{console.log(err)}
-    //               )
-    //               console.log(resultData);
-    //             },
-    //             (errorData) =>{
-    //               console.log("Error : "+errorData.error.error.message);
-    //             }
-    //           );
-    // console.log(test)
-
-  // setValue(gender){
-  //   this.gender = gender.value
-  //   gender.checked = true;
-  // }
 
   ngOnInit() {
     this.signupForm = new FormGroup(

@@ -4,7 +4,7 @@
     <p class="valid">Valid. Please wait a moment.</p>
     <p class="error">Error. Please enter correct Username &amp; password.</p>
 
-    <form class="loginbox" [formGroup]="loginForm" (ngSubmit)="submit()">
+    <form class="loginbox" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <input placeholder="Username" formControlName="email" type="text" id="username">
         <input placeholder="Password" formControlName="password" type="password" id="password">
         <input type="submit" value="Login" id="login">
