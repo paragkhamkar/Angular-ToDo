@@ -36,13 +36,6 @@ export class LoginComponent implements OnInit {
     };
 
     this.userauth.userLogin(testA);
-
-    
-
-    console.log("ahsgcjaghcajshgcjashgcjashcgsjghc");
-    // if(this.userauth.userLogin(testA)){
-    //   this.router.navigate(["/user/"+localStorage.getItem("UserEmail")+"/private"])
-    // }
   }
 
   ngOnInit() {
