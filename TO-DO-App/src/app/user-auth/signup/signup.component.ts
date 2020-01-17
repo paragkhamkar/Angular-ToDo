@@ -16,12 +16,10 @@ export class SignupComponent implements OnInit {
 
   constructor(private authService:UserAuthService) { }
 
-  testA = {};
-
   onSubmit(){
-
+    console.log("Clicked Submit on User SignUp Form");
       
-      this.testA = {
+      let testA = {
       userName: this.signupForm.value.userName,
       email: this.signupForm.value.email,
       password : this.signupForm.value.password,
@@ -29,11 +27,14 @@ export class SignupComponent implements OnInit {
       lastName: this.signupForm.value.lastName,
       gender: this.signupForm.value.gender,
       address : this.signupForm.value.address,
-      userImage: this.imageURL,
-      todo: [this.signupForm.value.email],
-      todoId: -1
+      userImage: this.imageURL
     };
-      this.authService.userSignup(this.testA);
+
+    console.log("Fetched User Signup data From Form");
+    console.log("Created Object for new user");
+    console.log(testA);
+
+      this.authService.userSignup(testA);
     }
 
   ngOnInit() {

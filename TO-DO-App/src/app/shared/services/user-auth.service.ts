@@ -88,8 +88,11 @@ export class UserAuthService {
   }
 
   userSignup(userData){
-    console.log("Inside UserSignup");
+    console.log("User Signup Service Called");
+    console.log("Recived User Data As Argument : ");
+    console.log(userData);
     this.userDetails = userData;
+    console.log("Sending HTTP Post Request to Authentication API for Signup");
     return this.http.post(
           "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDm11ltHEGq2trpZp0LsK1Pi5dKiq18d4I",
           {
@@ -101,32 +104,40 @@ export class UserAuthService {
   }
 
   addUser(token){
-    console.log("Inside addUser");
-    console.log(token);
+    console.log("Resolved Authentication for Signup");
+    console.log("Add User Method Called");
+    console.log("Sending HTTP Post Request for Adding User Details In DB");
     return this.http.post("https://angular-todo-2f483.firebaseio.com/users.json",this.userDetails)
     .subscribe(resolve => this.getUserRecords(resolve), this.failedUserSignup) 
   }
 
   getUserRecords(userKey){
-    console.log("Inside getUserRecords");
+    console.log("Resolved & Added To DB");
+    console.log("Get User Records Method Called");
+    console.log("Sending HTTP GET Request for getting user records");
     return this.http.get("https://angular-todo-2f483.firebaseio.com/userRecords.json")
     .subscribe(
       resolve => this.setUserRecord(resolve, userKey), this.failedUserSignup)
   }
 
   setUserRecord(userRecords:any , userKey){
-    console.log("Inside setRecords");
+    console.log("Resolved $ Received User Records");
+    console.log(userRecords);
+    console.log("Set User Record Method Called");
     if(userRecords == undefined){
+    console.log("User Records is Empty");
       userRecords = {};
       userRecords.userEmail = [];
       userRecords.userKey = []
     }
+    console.log("Pushing new user to User Records");
     userRecords.userEmail.push(this.userDetails.email);
     userRecords.userKey.push(userKey.name);
     return this.http
     .put("https://angular-todo-2f483.firebaseio.com/userRecords.json",userRecords)
     .subscribe(
       resolve => {
+        console.log("Resolved & Set Key to Local Storage");
         sessionStorage.setItem("signup successfull", "true");
         this.router.navigate(['/auth/login'])
       },
