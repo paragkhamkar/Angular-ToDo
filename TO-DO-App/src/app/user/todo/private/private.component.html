@@ -20,13 +20,13 @@
       <tr *ngFor="let todo of todos">
         <td class="check-box check"><input type="checkbox" name=""></td>
         <td class="privacy"><i class="glyphicon glyphicon-user"></i></td>
-        <td class="due-date">{{todo.duedate}}</td>
+        <td class="due-date">{{todo.dueDate}}</td>
         <td class="due-date">{{todo.category}}</td>
-        <td class="title">{{todo.title}}</td>
+        <td class="title" >{{todo.title}}</td>
         <td class="due-date">{{todo.reminderDate}}</td>
         <td class="options">
           <div class="testOption">
-              <i class="glyphicon glyphicon-pencil test"></i>
+              <i class="glyphicon glyphicon-pencil test" id={{todo.todoID}} (click)="editTodo($event)"></i>
               <i class="glyphicon glyphicon-ok test"></i>
               <i class="glyphicon glyphicon-trash test"></i>
           </div>

@@ -17,20 +17,25 @@
         <p><span>*</span></p><p><span>*</span></p>
         <input formControlName="firstName" placeholder="First name" type="text" id="firstname">
         <input formControlName="lastName" placeholder="Last name" type="text" id="lastname">
+
         <div id="genderholder">
             <p class="gender">Select Gender</p>
-            <div (click)="setValue(female)">
-                <input formControlName="gender" class="no-margin" #female placeholder="Username" type="radio" name="gender" value="Female">
+
+            <div (click)="selectGender('Female')">
+                <input formControlName="gender" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Female">
                 Female
             </div>
-            <div (click)="setValue(male)">
-                <input formControlName="gender" class="no-margin" #male placeholder="Username" type="radio" name="gender" value="Female">
+            
+            <div (click)="selectGender('Male')">
+                <input formControlName="gender" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Male">
                 Male
             </div>
-            <div (click)="setValue(other)">
-                <input formControlName="gender" class="no-margin" #other placeholder="Username" type="radio" name="gender" value="Female">
+            
+            <div (click)="selectGender('Other')">
+                <input formControlName="gender" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Other">
                 Other
             </div>
+
         </div>
 
         <textarea formControlName="address" placeholder="Address" rows="8" type="text"></textarea>

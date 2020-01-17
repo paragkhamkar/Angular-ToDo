@@ -1,23 +1,53 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { JsonPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class TodoDataService {
 
   constructor(private http:HttpClient) { }
 
+  todos:{};
+  getUpdatedTodo = new Subject()
   test = new Subject<boolean>();
   isTodo = true;
+
+
+  prepareData(){
+    let todo = [];
+    let test = JSON.parse(localStorage.getItem('todos'));
+    for(let todoItem in test){
+        todo.push(test[todoItem])
+    }
+    this.getUpdatedTodo.next(todo);
+
+  }
+
+  setData(){
+    let userData = JSON.parse(localStorage.getItem("UserDetails"));
+    let todos = userData.todo;
+    localStorage.setItem("todos",JSON.stringify(this.todos))
+    console.log(this.todos);
+  }
+
+  setLocalToDo(){
+
+  }
+
+  getTodos(){
+    this.todos = JSON.parse(localStorage.getItem('todos'));
+    return this.todos;
+  }
 
   setIsToDo(value:boolean){
     this.isTodo = value;
     this.test.next(this.isTodo);
   }
 
-  testC = 0;
   addTodo(todoItem){
     console.log("Inside Add new ToDo Service");
     if(todoItem.isPublic){

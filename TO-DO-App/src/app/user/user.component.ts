@@ -1,6 +1,7 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { UserAuthService } from '../shared/services/user-auth.service';
 import { Router } from '@angular/router';
+import { TodoDataService } from '../shared/services/todo-data.service';
 
 @Component({
   selector: 'app-user',
@@ -11,10 +12,13 @@ export class UserComponent implements OnInit, DoCheck {
 
  
  
-constructor(private userService:UserAuthService,
+constructor(
+            private userService:UserAuthService,
+            private todoService:TodoDataService,
             private router:Router){
   if(!localStorage.getItem("UserEmail"))
       router.navigate(['/auth/login'])
+  // todoService.setData();
 }
 
 ngOnInit(){

@@ -30,12 +30,16 @@ export class NewTodoComponent implements OnInit {
         "title": new FormControl(null,Validators.required),
         "desc": new FormControl(null,Validators.required),
         "dueDate": new FormControl(null,Validators.required),
-        "reminderDate": new FormControl(null,Validators.required),
-        "category": new FormControl(null,Validators.required),
-        "isPublic": new FormControl(null,Validators.required)
+        "reminderDate": new FormControl(this.toDate(new Date),Validators.required),
+        "category": new FormControl("Home"),
+        "isPublic": new FormControl("No")
       }
     )
     console.log("Controls Set");
+  }
+
+  toDate(date:Date){
+    return date.getFullYear()+"-"+date.getMonth()+1+"-"+date.getDate()
   }
 
   submit(){
@@ -46,9 +50,8 @@ export class NewTodoComponent implements OnInit {
       desc: this.todoForm.value.desc,
       dueDate: this.todoForm.value.dueDate,
       reminderDate: this.todoForm.value.reminderDate,
-      category: this.todoForm.value.category,
-      isPublic: false,
-      // isPublic: Boolean(this.todoForm.value.isPublic),
+      category: this.todoForm.value.category == null? 'Home':this.todoForm.value.category,
+      isPublic: this.todoForm.value.isPublic == "Yes" ? true : false,
       status: "pending",
       todoID: Math.random().toString(36).substr(2, 10)
     };

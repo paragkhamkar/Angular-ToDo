@@ -11,6 +11,7 @@ import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 export class SignupComponent implements OnInit {
 
   signupForm:FormGroup;
+  selectedGender:string = '';
 
   imageURL:any = "../../../assets/angular.svg";
 
@@ -25,7 +26,7 @@ export class SignupComponent implements OnInit {
       password : this.signupForm.value.password,
       firstName: this.signupForm.value.firstName,
       lastName: this.signupForm.value.lastName,
-      gender: this.signupForm.value.gender,
+      gender: this.selectedGender == '' ? this.signupForm.value.gender:this.selectGender,
       address : this.signupForm.value.address,
       userImage: this.imageURL
     };
@@ -36,6 +37,10 @@ export class SignupComponent implements OnInit {
 
       this.authService.userSignup(testA);
     }
+
+  selectGender(gender:string){
+    this.selectedGender = gender;
+  }
 
   ngOnInit() {
     this.signupForm = new FormGroup(

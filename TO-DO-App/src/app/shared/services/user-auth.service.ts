@@ -9,6 +9,8 @@ import { Subject } from 'rxjs';
 export class UserAuthService {
 
   private userDetails:any;
+  todos:any;
+  todoUpdated = new Subject<object>();
   loginSuccessful = false;
   checkLogin = new Subject<boolean>()
 
@@ -27,6 +29,9 @@ export class UserAuthService {
     return true;
   }
 
+
+
+
   userLogin(userCredentials:{email:string, password:string}){
     localStorage.clear();
     console.log("Inside user Login");
@@ -41,10 +46,12 @@ export class UserAuthService {
     ).subscribe(resolve => this.getDetails(resolve), this.failedUserSignup);
   }
 
+
+
+
   getDetails(resolve){
     localStorage.setItem("authKey",resolve.idToken);
     localStorage.setItem("UserEmail",resolve.email);
-    
     this.http.get("https://angular-todo-2f483.firebaseio.com/userRecords.json")
     .subscribe(
       (userRecords:any) => {
@@ -56,9 +63,7 @@ export class UserAuthService {
               break;
             }
         }
-      }, this.failedUserSignup)
-    
-    
+      }, this.failedUserSignup)    
   }
 
   getUserDetails(userRecords){
@@ -79,13 +84,43 @@ export class UserAuthService {
 
   commander(){
     this.http.get("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('USER_KEY')+".json")
-    .subscribe(this.setLocalStorage, this.failedUserSignup)
+    .subscribe(
+      (result:any) => {
+        localStorage.setItem("UserDetails", JSON.stringify(result));
+        this.todos = localStorage.setItem("todos", JSON.stringify(result.todo));
+      }, this.failedUserSignup)
   }
 
 
-  setLocalStorage(userData){
-    localStorage.setItem("UserDetails", JSON.stringify(userData));
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // setLocalStorage(userData){
+  //   localStorage.setItem("UserDetails", JSON.stringify(userData));
+  //   localStorage.setItem("todos", JSON.stringify(userData.todo));
+  //   this.todoUpdated.next(this.todos);
+  // }
+
+
+
+
+
 
   userSignup(userData){
     console.log("User Signup Service Called");
