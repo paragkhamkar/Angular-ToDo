@@ -13,6 +13,7 @@ export class UserComponent implements OnInit {
 constructor(private userService:UserAuthService){}
 
 ngOnInit(){
+  console.log("Inside User Component")
   this.userService.commander()
 }
 }

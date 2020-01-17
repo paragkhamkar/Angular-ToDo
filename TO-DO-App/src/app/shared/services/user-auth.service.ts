@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class UserAuthService {
 
   private userDetails:any;
+  loginSuccessful = false;
+  checkLogin = new Subject<boolean>()
 
   constructor(
                 private http:HttpClient,
@@ -43,22 +46,35 @@ export class UserAuthService {
     localStorage.setItem("UserEmail",resolve.email);
     
     this.http.get("https://angular-todo-2f483.firebaseio.com/userRecords.json")
-    .subscribe(this.getUserDetails, this.failedUserSignup)
+    .subscribe(
+      (userRecords:any) => {
+        let activeUser = localStorage.getItem('UserEmail');
+        for(let user=0; user<userRecords.userEmail.length; user++){
+            if(userRecords.userEmail[user] == activeUser){
+              localStorage.setItem("USER_KEY",userRecords.userKey[user]);
+              this.router.navigate(['user/'+userRecords.userEmail[user]+'/todo/private'])
+              break;
+            }
+        }
+      }, this.failedUserSignup)
     
     
   }
-
-  userKey:any;
 
   getUserDetails(userRecords){
     let activeUser = localStorage.getItem('UserEmail');
     for(let user=0; user<userRecords.userEmail.length; user++){
         if(userRecords.userEmail[user] == activeUser){
           localStorage.setItem("USER_KEY",userRecords.userKey[user]);
-          this.router.navigate(['/user/'+localStorage.getItem('UserEmail')+' /todo/private'])
+          this.loginSuccessful = true;
+          this.checkLogin.next(this.loginSuccessful);
           break;
         }
     }
+  }
+
+  gotoDashboard(){
+    this.router.navigate(['/user/'+localStorage.getItem('UserEmail')+' /todo/private'])
   }
 
   commander(){

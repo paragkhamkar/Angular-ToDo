@@ -25,4 +25,7 @@ export class TodoDataService {
 
   }
 
+  getUserDetails(){
+    
+  }
 }

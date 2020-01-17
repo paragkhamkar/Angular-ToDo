@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+  loginSuccessful:boolean;
   loginForm:FormGroup;
   email = '';
   password = '';
@@ -18,7 +19,15 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private userauth:UserAuthService,
-    private router:Router) { }
+    private router:Router) { 
+      userauth.checkLogin.subscribe(
+        value => {
+          if(value)
+            router.navigate(['/user/'+localStorage.getItem('UserEmail')+'/todo/private'])
+        }
+      )
+    
+    }
 
   onSubmit(){
     let testA = {
@@ -28,6 +37,7 @@ export class LoginComponent implements OnInit {
 
     this.userauth.userLogin(testA);
 
+    
 
     console.log("ahsgcjaghcajshgcjashgcjashcgsjghc");
     // if(this.userauth.userLogin(testA)){
