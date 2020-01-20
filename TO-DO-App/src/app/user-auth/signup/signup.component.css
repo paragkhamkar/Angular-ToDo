@@ -41,7 +41,14 @@ span{
     vertical-align: middle;
 } */
 
-input,textarea, form div div{
+/* button{
+    display: inline-block;
+    width: 240px;
+} */
+
+
+
+input,textarea, form div div, button{
     outline: none;
     /* display: block; */
     display: inline-block;
@@ -75,10 +82,10 @@ h2 {
     font-weight: 400;
     }
 
-#signup {
+.signup {
     cursor: pointer;
     background: #44c4e7;
-    width: 100%;
+    /* width: 100%; */
     padding: 10px 15px;
     border: 0;
     color: #fff;
@@ -178,4 +185,9 @@ h6{
     height: 90px;
     /* padding: 10px; */
     vertical-align: middle;
+}
+
+.disabled{
+    cursor: not-allowed;
+    opacity: 0.6;
 }

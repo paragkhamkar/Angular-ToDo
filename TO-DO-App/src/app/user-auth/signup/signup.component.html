@@ -21,18 +21,18 @@
         <div id="genderholder">
             <p class="gender">Select Gender</p>
 
-            <div (click)="selectGender('Female')">
-                <input formControlName="gender" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Female">
+            <div (click)="selectGender(female)">
+                <input #female formControlName="gender" [checked]="true" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Female">
                 Female
             </div>
             
-            <div (click)="selectGender('Male')">
-                <input formControlName="gender" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Male">
+            <div (click)="selectGender(male)">
+                <input #male formControlName="gender" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Male">
                 Male
             </div>
             
-            <div (click)="selectGender('Other')">
-                <input formControlName="gender" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Other">
+            <div (click)="selectGender(other)">
+                <input #other formControlName="gender" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Other">
                 Other
             </div>
 
@@ -42,10 +42,11 @@
         <hr>
     <div class="imageDiv">
         <h6>Select Profile Picture</h6>
-        <input class="userImage" formControlName="userImage" type="file" (change)="test($event)" accept="image/*" name="" id="">
+        <input class="userImage" formControlName="userImage" type="file" (change)="setImage($event)" accept="image/*" name="" id="">
         <img [src]="imageURL" alt="kjavbksd">        
     </div>
     <hr>
-        <button type="submit" id="signup">Sign Up</button>
+        <button type="submit" id="signup" [ngClass]="{disabled:!signupForm.valid || isLoading, signup:signupForm.valid || !isLoading}" [disabled]="!signupForm.valid || isLoading">Sign Up</button>
+        <button type="reset" id="signup" [ngClass]="{disabled:!signupForm.touched || isLoading, signup:signupForm.touched || !isLoading}">Reset</button>
     </form>
 </section>

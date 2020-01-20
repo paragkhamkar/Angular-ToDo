@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 
 @Component({
   selector: 'app-left-menu',
@@ -8,11 +9,19 @@ import { Router } from '@angular/router';
 })
 export class LeftMenuComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,
+              private todoFilter:TodoFilterService) { }
 
   ngOnInit() {
+  
   }
+
   addNew(){
-    this.router.navigate(['/user/'+localStorage.getItem("UserEmail")+'/todo/new-todo'])
+    this.router.navigate(['/user/'+localStorage.getItem("localId")+'/todo/new-todo'])
+  }
+
+  categorySearch(data){
+    console.log('clicked')
+    this.todoFilter.filterSearch('category' , data)
   }
 }

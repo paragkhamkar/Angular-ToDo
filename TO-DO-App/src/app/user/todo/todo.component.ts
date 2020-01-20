@@ -10,7 +10,7 @@ export class TodoComponent implements OnInit{
 
   constructor(private todoService:TodoDataService) {
     this.todoService.setIsToDo(true);
-    this.todoService.test.subscribe(value => this.test = value)
+    this.todoService.showFilters.subscribe(value => this.test = value)
     console.log(this.test);
    }
 

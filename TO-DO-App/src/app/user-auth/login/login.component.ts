@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 import { Router } from '@angular/router';
+import { MessagesService } from 'src/app/shared/services/messages.service';
 
 
 @Component({
@@ -19,28 +20,13 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private userauth:UserAuthService,
-    private router:Router) { 
-      userauth.checkLogin.subscribe(
-        value => {
-          if(value)
-            router.navigate(['/user/'+localStorage.getItem('UserEmail')+'/todo/private'])
-        }
-      )
-    
-    }
-
-  onSubmit(){
-    let testA = {
-      email: this.loginForm.value.email,
-      password: this.loginForm.value.password
-    };
-
-    this.userauth.userLogin(testA);
-  }
+    private router:Router,
+    private messageService:MessagesService) { }
 
   ngOnInit() {
-    if(localStorage.getItem("UserEmail")){
-      this.router.navigate(["/user/"+localStorage.getItem("UserEmail")+"/todo/private"])
+    this.messageService.deactivateSpinner();
+    if(localStorage.getItem("localId")){
+      this.router.navigate(["/user/"+localStorage.getItem('localId')+"/todo/private"])
     }
 
     this.loginForm = new FormGroup(
@@ -49,5 +35,14 @@ export class LoginComponent implements OnInit {
         "password": new FormControl(null,Validators.required)
       }
     )
+  }
+
+  onSubmit(){
+    let loginDetails = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password
+    };
+    this.messageService.activateSpinner();
+    this.userauth.userLogin(loginDetails);
   }
 }

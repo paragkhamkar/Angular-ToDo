@@ -7,10 +7,50 @@ app-left-menu{
     float: left;
     width: 150px;
     margin-right:50px;
-    /* background-color: bisque; */
 }
 
 app-private{
     float: left;
     width: 1000px;
+}
+
+.error-message {
+    position: fixed;
+    width: 400px;
+    top: 110px;
+    text-align: center;
+    left: 50%;
+    margin-left: -200px;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+.success-message{
+    position: fixed;
+    width: 400px;
+    top: 110px;
+    text-align: center;
+    left: 50%;
+    margin-left: -200px;
+    z-index: 999;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.info-message{
+    position: fixed;
+    width: 400px;
+    top: 110px;
+    text-align: center;
+    left: 50%;
+    margin-left: -200px;
+    z-index: 99;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+
+
+app-spinner{
+    position: fixed;
+    top: 50%;
+    left: 50%;
 }

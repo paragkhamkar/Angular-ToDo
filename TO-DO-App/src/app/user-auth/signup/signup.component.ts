@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserAuthService } from 'src/app/shared/services/user-auth.service';
+import { MessagesService } from 'src/app/shared/services/messages.service';
 // import { getMaxListeners } from 'cluster';
 
 @Component({
@@ -11,46 +12,21 @@ import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 export class SignupComponent implements OnInit {
 
   signupForm:FormGroup;
-  selectedGender:string = '';
-
+  selectedGender:string = 'Female';
   imageURL:any = "../../../assets/angular.svg";
-
-  constructor(private authService:UserAuthService) { }
-
-  onSubmit(){
-    console.log("Clicked Submit on User SignUp Form");
-      
-      let testA = {
-      userName: this.signupForm.value.userName,
-      email: this.signupForm.value.email,
-      password : this.signupForm.value.password,
-      firstName: this.signupForm.value.firstName,
-      lastName: this.signupForm.value.lastName,
-      gender: this.selectedGender == '' ? this.signupForm.value.gender:this.selectGender,
-      address : this.signupForm.value.address,
-      userImage: this.imageURL
-    };
-
-    console.log("Fetched User Signup data From Form");
-    console.log("Created Object for new user");
-    console.log(testA);
-
-      this.authService.userSignup(testA);
-    }
-
-  selectGender(gender:string){
-    this.selectedGender = gender;
-  }
+  
+  constructor(private authService:UserAuthService,
+              private messageService:MessagesService) { }
 
   ngOnInit() {
     this.signupForm = new FormGroup(
       {
-        "userName": new FormControl(null,Validators.required),
+        "userName": new FormControl(null,[Validators.required, Validators.minLength(6)]),
         "email": new FormControl(null,[Validators.required, Validators.email]),
-        "password": new FormControl(null,Validators.required),
-        "rePassword": new FormControl(null,Validators.required),
-        "firstName": new FormControl(null,Validators.required),
-        "lastName": new FormControl(null,Validators.required),
+        "password": new FormControl(null,[Validators.required, Validators.minLength(8)]),
+        "rePassword": new FormControl(null,[Validators.required, Validators.minLength(8)]),
+        "firstName": new FormControl(null,[Validators.required , Validators.minLength(3)]),
+        "lastName": new FormControl(null,[Validators.required, Validators.minLength(3)]),
         "gender": new FormControl(null),
         "address": new FormControl(null),
         "userImage": new FormControl(null)
@@ -58,7 +34,7 @@ export class SignupComponent implements OnInit {
     )
   }
 
-  test(event) {
+  setImage(event) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
       console.log(reader);
@@ -68,5 +44,28 @@ export class SignupComponent implements OnInit {
         this.imageURL = reader.result;
       }
     }
+  }
+
+  selectGender(gender:HTMLInputElement){
+    this.selectedGender = gender.value;
+    gender.checked = true;
+  }
+
+  onSubmit(){
+    if(this.signupForm.valid){
+      let userDetails = {
+      userName: this.signupForm.value.userName,
+      email: this.signupForm.value.email,
+      password : this.signupForm.value.password,
+      firstName: this.signupForm.value.firstName,
+      lastName: this.signupForm.value.lastName,
+      gender: this.selectedGender == '' ? this.signupForm.value.gender:this.selectedGender,
+      address : this.signupForm.value.address,
+      userImage: this.imageURL
+    };
+      this.authService.signupUser(userDetails);
+    }
+    else
+      this.messageService.errorMessage("Fill All the Required Details Correctly")
   }
 }

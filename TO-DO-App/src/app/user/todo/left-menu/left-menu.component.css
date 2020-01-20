@@ -8,6 +8,10 @@ ul:hover{
     height: auto;
 }
 
+/* li:hover{
+    cursor: pointer;
+} */
+
 input[type="date"]{
     width: 150px;
     padding: 5px;

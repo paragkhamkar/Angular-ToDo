@@ -4,7 +4,7 @@
 }
 
 table{
-    width: 1000px;
+    width: 100%;
     margin: 20px 0px;
 }
 
@@ -43,7 +43,6 @@ tr{
 
 .title{
     text-align: center;
-    width: 305px;
     padding: 0px 15px;
     border-left: 1px solid #aaa;
 }
@@ -69,6 +68,7 @@ tr:hover td{
 
 .options{
     text-align: center;
+    width: 140px;
     border-left: 1px solid #aaa;
     border-right: 1px solid #aaa;
 }

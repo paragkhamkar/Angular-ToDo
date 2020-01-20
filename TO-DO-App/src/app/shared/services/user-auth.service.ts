@@ -2,40 +2,57 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
+import { MessagesService } from './messages.service';
+import { TodoFilterService } from './todo-filter.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAuthService {
 
+  test;
   private userDetails:any;
-  todos:any;
+  private API_KEY = 'AIzaSyDm11ltHEGq2trpZp0LsK1Pi5dKiq18d4I';
+  private AUTH_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='
   todoUpdated = new Subject<object>();
-  loginSuccessful = false;
-  checkLogin = new Subject<boolean>()
 
-  constructor(
-                private http:HttpClient,
-                private router:Router,
-                private route:ActivatedRoute) { }
+  constructor(private http:HttpClient,
+            private router:Router,
+            private messageService:MessagesService,
+            private todoFilter:TodoFilterService) { }
 
-  private getToken(){
-    return localStorage.getItem("UserKey");
+
+  signupUser(userData){
+    this.messageService.successMessage("Registration Process Started");
+    this.userDetails = userData;
+    return this.http.post(
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+this.API_KEY,{
+            email: userData.email,
+            password:	userData.password,
+            returnSecureToken: "true"
+          }
+        ).subscribe(response => this.addUser(response), this.showError);
   }
 
-  private seeDetails(data){
-    console.log("Inside See Details")
-    console.log(data)
-    return true;
+  addUser(response){
+    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+response.localId+".json",this.userDetails)
+    .subscribe(
+      resolve => {
+        this.messageService.successMessage("SignUp Sucessful");
+        this.router.navigate(['/auth/login'])
+      }, this.showError) 
   }
 
-
+  // addUserRecords(userKey){
+    
+    // let newRecord = {[this.userDetails.email] : userKey}
+    // return this.http.put("https://angular-todo-2f483.firebaseio.com/userRecords.json", newRecord)
+    // .subscribe( ()=>{},this.showError)
+  // }
 
 
   userLogin(userCredentials:{email:string, password:string}){
     localStorage.clear();
-    console.log("Inside user Login");
-    console.log(userCredentials);
     return this.http.post(
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDm11ltHEGq2trpZp0LsK1Pi5dKiq18d4I",
       {
@@ -43,145 +60,29 @@ export class UserAuthService {
         password:	userCredentials.password,
         returnSecureToken: "true"
       }
-    ).subscribe(resolve => this.getDetails(resolve), this.failedUserSignup);
+    ).subscribe(resopnse => this.getUserDetails(resopnse)
+                  , this.showError);
   }
 
+  getUserDetails(response){
+    localStorage.setItem('localId',response.localId);
 
-
-
-  getDetails(resolve){
-    localStorage.setItem("authKey",resolve.idToken);
-    localStorage.setItem("UserEmail",resolve.email);
-    this.http.get("https://angular-todo-2f483.firebaseio.com/userRecords.json")
-    .subscribe(
-      (userRecords:any) => {
-        let activeUser = localStorage.getItem('UserEmail');
-        for(let user=0; user<userRecords.userEmail.length; user++){
-            if(userRecords.userEmail[user] == activeUser){
-              localStorage.setItem("USER_KEY",userRecords.userKey[user]);
-              this.router.navigate(['user/'+userRecords.userEmail[user]+'/todo/private'])
-              break;
-            }
-        }
-      }, this.failedUserSignup)    
-  }
-
-  getUserDetails(userRecords){
-    let activeUser = localStorage.getItem('UserEmail');
-    for(let user=0; user<userRecords.userEmail.length; user++){
-        if(userRecords.userEmail[user] == activeUser){
-          localStorage.setItem("USER_KEY",userRecords.userKey[user]);
-          this.loginSuccessful = true;
-          this.checkLogin.next(this.loginSuccessful);
-          break;
-        }
-    }
-  }
-
-  gotoDashboard(){
-    this.router.navigate(['/user/'+localStorage.getItem('UserEmail')+' /todo/private'])
-  }
-
-  commander(){
-    this.http.get("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('USER_KEY')+".json")
+    this.http.get("https://angular-todo-2f483.firebaseio.com/users/"+response.localId+".json")
     .subscribe(
       (result:any) => {
+        this.messageService.successMessage("Logged-In Successfully")
+        localStorage.setItem("UserEmail", JSON.stringify(result.email));
         localStorage.setItem("UserDetails", JSON.stringify(result));
-        this.todos = localStorage.setItem("todos", JSON.stringify(result.todo));
-      }, this.failedUserSignup)
+        this.router.navigate(['/user/'+response.localId+'/todo/private'])
+        localStorage.setItem("todos", JSON.stringify(result.todo));
+        this.todoFilter.fetchUpdatedTodo();
+      }, this.showError)
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // setLocalStorage(userData){
-  //   localStorage.setItem("UserDetails", JSON.stringify(userData));
-  //   localStorage.setItem("todos", JSON.stringify(userData.todo));
-  //   this.todoUpdated.next(this.todos);
-  // }
-
-
-
-
-
-
-  userSignup(userData){
-    console.log("User Signup Service Called");
-    console.log("Recived User Data As Argument : ");
-    console.log(userData);
-    this.userDetails = userData;
-    console.log("Sending HTTP Post Request to Authentication API for Signup");
-    return this.http.post(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDm11ltHEGq2trpZp0LsK1Pi5dKiq18d4I",
-          {
-            email: userData.email,
-            password:	userData.password,
-            returnSecureToken: "true"
-          }
-        ).subscribe(resolve => this.addUser(resolve), this.failedUserSignup);
+  showError(error){
+    console.log(error)
+    this.messageService.deactivateSpinner();
+    this.messageService.errorMessage(error.error.error.message);
   }
 
-  addUser(token){
-    console.log("Resolved Authentication for Signup");
-    console.log("Add User Method Called");
-    console.log("Sending HTTP Post Request for Adding User Details In DB");
-    return this.http.post("https://angular-todo-2f483.firebaseio.com/users.json",this.userDetails)
-    .subscribe(resolve => this.getUserRecords(resolve), this.failedUserSignup) 
-  }
-
-  getUserRecords(userKey){
-    console.log("Resolved & Added To DB");
-    console.log("Get User Records Method Called");
-    console.log("Sending HTTP GET Request for getting user records");
-    return this.http.get("https://angular-todo-2f483.firebaseio.com/userRecords.json")
-    .subscribe(
-      resolve => this.setUserRecord(resolve, userKey), this.failedUserSignup)
-  }
-
-  setUserRecord(userRecords:any , userKey){
-    console.log("Resolved $ Received User Records");
-    console.log(userRecords);
-    console.log("Set User Record Method Called");
-    if(userRecords == undefined){
-    console.log("User Records is Empty");
-      userRecords = {};
-      userRecords.userEmail = [];
-      userRecords.userKey = []
-    }
-    console.log("Pushing new user to User Records");
-    userRecords.userEmail.push(this.userDetails.email);
-    userRecords.userKey.push(userKey.name);
-    return this.http
-    .put("https://angular-todo-2f483.firebaseio.com/userRecords.json",userRecords)
-    .subscribe(
-      resolve => {
-        console.log("Resolved & Set Key to Local Storage");
-        sessionStorage.setItem("signup successfull", "true");
-        this.router.navigate(['/auth/login'])
-      },
-      this.failedUserSignup
-    );
-  }
-
-  failedUserSignup(err){
-    console.log("Failed To Signup")
-    console.log(err)
-  }
 }

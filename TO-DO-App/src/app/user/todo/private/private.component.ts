@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 import { UserAuthService } from 'src/app/shared/services/user-auth.service';
+import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 
 @Component({
   selector: 'app-private',
@@ -11,23 +12,23 @@ export class PrivateComponent implements OnInit {
   todos:{}
 
   constructor(private todoService:TodoDataService,
-              private userauth:UserAuthService) {
+              private userauth:UserAuthService,
+              private todoFilter:TodoFilterService) {
     this.todoService.setIsToDo(true);
     this.todoService.getUpdatedTodo.subscribe(value =>{
-      console.log("Sub")
-      console.log(value)
       this.todos = value;
-    } )
+    })
+    todoFilter.getFilteredTodo.subscribe(value => this.todos = value)
+
    }
 
    editTodo(event){
-     console.log("Edit : "+ event.target.id)
-      console.log()
+     this.todoService.edit(event.target.id)
    }
 
   ngOnInit() {
     setTimeout(
-      ()=>this.todoService.prepareData(),100)
+      ()=>this.todoService.prepareData(),500)
     
   }
 

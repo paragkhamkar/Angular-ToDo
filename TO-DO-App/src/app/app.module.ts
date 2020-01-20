@@ -17,7 +17,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { from } from 'rxjs';
 import { HeaderComponent } from './user/header/header.component';
 import { LeftMenuComponent } from './user/todo/left-menu/left-menu.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { SpinnerComponent } from './shared/spinner/spinner.component'
 
 
 
@@ -35,7 +36,8 @@ import { HttpClientModule } from '@angular/common/http'
     NewTodoComponent,
     PageNotFoundComponent,
     HeaderComponent,
-    LeftMenuComponent
+    LeftMenuComponent,
+    SpinnerComponent
   ],
   imports: [
     HttpClientModule,

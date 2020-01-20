@@ -9,6 +9,7 @@ export class UserAuthComponent implements OnInit {
 
   constructor() { }
 
+  isLoginPage = true;
   ngOnInit() {
   }
 
