@@ -26,7 +26,9 @@ export class PrivateComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.todoService.prepareData();
+    setTimeout(
+      ()=>this.todoService.prepareData(),100)
+    
   }
 
 }

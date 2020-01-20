@@ -16,6 +16,19 @@ export class TodoDataService {
   test = new Subject<boolean>();
   isTodo = true;
 
+  getTodos(){
+    let todo = [];
+    let test = JSON.parse(localStorage.getItem('todos'));
+    for(let todoItem in test){
+        todo.push(test[todoItem])
+    }
+    return todo;
+  }
+
+  setIsToDo(value:boolean){
+    this.isTodo = value;
+    this.test.next(this.isTodo);
+  }
 
   prepareData(){
     let todo = [];
@@ -24,7 +37,6 @@ export class TodoDataService {
         todo.push(test[todoItem])
     }
     this.getUpdatedTodo.next(todo);
-
   }
 
   setData(){
@@ -36,16 +48,6 @@ export class TodoDataService {
 
   setLocalToDo(){
 
-  }
-
-  getTodos(){
-    this.todos = JSON.parse(localStorage.getItem('todos'));
-    return this.todos;
-  }
-
-  setIsToDo(value:boolean){
-    this.isTodo = value;
-    this.test.next(this.isTodo);
   }
 
   addTodo(todoItem){
@@ -78,6 +80,20 @@ export class TodoDataService {
           this.failedToUpdate(err)
         })
   }
+
+  private addPublicTodo(){
+
+  }
+
+  private addPrivateTodo(){
+
+  }
+  
+  private appendTodo(){
+
+  }
+
+
 
   added(test){
     console.log("Inside added(test)")

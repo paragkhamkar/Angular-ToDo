@@ -8,17 +8,15 @@ import { TodoDataService } from '../shared/services/todo-data.service';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit, DoCheck {
+export class UserComponent implements OnInit{
 
  
  
-constructor(
-            private userService:UserAuthService,
+constructor(private userService:UserAuthService,
             private todoService:TodoDataService,
             private router:Router){
   if(!localStorage.getItem("UserEmail"))
       router.navigate(['/auth/login'])
-  // todoService.setData();
 }
 
 ngOnInit(){
@@ -26,13 +24,5 @@ ngOnInit(){
   this.userService.commander()
 }
 
-ngDoCheck(){
-  // console.log("User ngDoCheck")
-  // if(!localStorage.getItem("UserEmail")){
-  //   console.log("Something Went Wrong, Logging you out")
-  //   this.router.navigate(['/auth/login'])
-  // }
-      
-}
 }
 
