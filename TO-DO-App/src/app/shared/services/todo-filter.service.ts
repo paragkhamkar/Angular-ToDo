@@ -30,7 +30,12 @@ export class TodoFilterService {
   }
   
   showAll(){
-    this.getFilteredTodo.next(this.todo);
+    if(this.todo){
+      this.getFilteredTodo.next(this.todo);
+      this.getDataAvailability.next(true);
+    }
+    else
+      this.getDataAvailability.next(false);
   }
 
   filterSearch(type, value){
@@ -40,7 +45,31 @@ export class TodoFilterService {
       if(todoItem[type] === value)
         todoItems.push(todoItem)
     }
-    this.getFilteredTodo.next(todoItems);
+    if(todoItems.length > 0){
+      this.getFilteredTodo.next(todoItems);
+      this.getDataAvailability.next(true);
+    }
+    else
+      this.getDataAvailability.next(false);
+  }    
+}
+
+textSearch(text){
+  let searchKey = text.toLowerCase();
+  let todoItems = [];
+    if(this.todo){
+    for(let todoItem of this.todo){
+      let title:string = todoItem.title;
+      let desc:string = todoItem.desc;
+      if(title.toLowerCase().search(searchKey) > -1 || desc.toLowerCase().search(searchKey) > -1)
+        todoItems.push(todoItem)
+    }
+    if(todoItems.length > 0){
+      this.getFilteredTodo.next(todoItems);
+      this.getDataAvailability.next(true);
+    }
+    else
+      this.getDataAvailability.next(false);
   }    
 }
 
@@ -53,26 +82,31 @@ export class TodoFilterService {
       if(todoItem[type] >= fromDate && todoItem[type] <= toDate)
         todoItems.push(todoItem)
     }
-    this.getFilteredTodo.next(todoItems);
+    if(todoItems.length > 0){
+      this.getFilteredTodo.next(todoItems);
+      this.getDataAvailability.next(true);
+    }
+    else
+      this.getDataAvailability.next(false);
   }
 }
 
-  sortBy(type){
-    let todoData:any = this.todo;
-    if(!todoData)
-      return this.getDataAvailability.next(false);
+  // sortBy(type){
+  //   let todoData:any = this.todo;
+  //   if(!todoData)
+  //     return this.getDataAvailability.next(false);
       
-    let todoItems = todoData.sort( (a,b) => this.compare(a,b,type));
-    this.getFilteredTodo.next(todoItems);
-  }
+  //   let todoItems = todoData.sort( (a,b) => this.compare(a,b,type));
+  //   this.getFilteredTodo.next(todoItems);
+  // }
 
-  private compare(a:string|number, b:string|number, filterBy:string){
-    const typeA = a[filterBy].toUpperCase();
-    const typeB = b[filterBy].toUpperCase();
-    if(typeA == typeB){
-      return 0;
-    }
-    return typeA > typeB ? 1 : -1;
-  }
+  // private compare(a:string|number, b:string|number, filterBy:string){
+  //   const typeA = a[filterBy].toUpperCase();
+  //   const typeB = b[filterBy].toUpperCase();
+  //   if(typeA == typeB){
+  //     return 0;
+  //   }
+  //   return typeA > typeB ? 1 : -1;
+  // }
 
 }

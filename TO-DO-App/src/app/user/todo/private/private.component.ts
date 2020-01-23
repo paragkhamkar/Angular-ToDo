@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
@@ -9,8 +9,12 @@ import { MessagesService } from 'src/app/shared/services/messages.service';
   templateUrl: './private.component.html',
   styleUrls: ['./private.component.css']
 })
-export class PrivateComponent implements OnInit {
-  todos:{}
+export class PrivateComponent implements OnInit{
+  todos:any;
+  allowedBatchOperation = false;
+  allSelected = false;
+  dataAvailable:boolean = false;
+  selected = [];
 
   constructor(private todoService:TodoDataService,
               private userauth:UserAuthService,
@@ -19,11 +23,39 @@ export class PrivateComponent implements OnInit {
     todoService.setIsToDo(true);
     todoService.isPublicPage(false);
     todoFilter.isPublicPage(false);
-    todoService.getUpdatedPrivateTodo.subscribe(value =>{
-      this.todos = value;
-    })
-    todoFilter.getFilteredTodo.subscribe(value => this.todos = value)
+    todoService.getUpdatedPrivateTodo.subscribe(value => this.todos = value);
+    todoFilter.getFilteredTodo.subscribe(value => this.todos = value);
    }
+
+   selectAll(event){
+    if(event.target.checked){
+      this.allSelected = true;
+      for(let item = 0; item < this.todos.length; item++){
+         this.selected.push(this.todos[item].todoID);
+       }
+    }else{
+      this.allSelected = false;
+      this.selected = [];
+    }
+  }
+ 
+   selectItem(data){
+     let found = false;
+ 
+     for(let item = 0; item < this.selected.length; item++){
+       if(this.selected[item] == data.target.id){
+         found = true;
+         this.selected.splice(item,1);
+       }
+     }
+     if(!found)
+        this.selected.push(data.target.id);
+     
+     if(this.selected.length > 0)
+        this.allowedBatchOperation = true;
+     else
+       this.allowedBatchOperation = false;    
+  }
 
    editTodo(event){
      this.todoService.edit(event.target.id)
@@ -34,14 +66,18 @@ export class PrivateComponent implements OnInit {
    }
 
    deleteTodo(event){
-     console.log("deleting")
     this.todoService.delete(event.target.id)
    }
-  ngOnInit() {
-    this.message.infoMessage("Fetching Todo Items")
-    setTimeout(
-      ()=>this.todoService.prepareData(),2000)
-    
-  }
 
+   batchDone(){
+
+   }
+
+   batchDelete(){
+
+   }
+
+  ngOnInit() {
+    this.todoService.prepareData();
+  }
 }

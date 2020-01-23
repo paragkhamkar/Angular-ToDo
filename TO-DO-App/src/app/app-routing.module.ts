@@ -25,7 +25,7 @@ const appRoutes: Routes = [
     { 
       path: 'user/:username', component: UserComponent,
       children:[
-        { path: 'profile', component: SignupComponent },
+        { path: 'profile', component: ProfileComponent },
         { path: 'todo', component: TodoComponent ,
           children: [
             { path: 'public', component: PublicComponent },

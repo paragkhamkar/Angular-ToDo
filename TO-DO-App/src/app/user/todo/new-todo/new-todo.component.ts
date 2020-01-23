@@ -1,24 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TodoDataService } from 'src/app/shared/services/todo-data.service';
-import { Router} from '@angular/router';
+import { Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'app-new-todo',
   templateUrl: './new-todo.component.html',
   styleUrls: ['./new-todo.component.css']
 })
-export class NewTodoComponent implements OnInit {
+export class NewTodoComponent implements OnInit, OnDestroy{
 
   todoForm:FormGroup;
-
+  todoId:string = '';
+  todoItem;
+  editMode:boolean = false;
   test:boolean;
 
   constructor(
               private todoService:TodoDataService,
-              private router:Router) {
+              private router:Router,
+              private route:ActivatedRoute) {
+      this.editMode = false;
       this.todoService.setIsToDo(false);
+      route.params.subscribe(
+        (params:Params)=> {
+            this.todoId = params['id'];
+        }
+      )
    }
+
+  setForm(){
+    this.todoForm.setValue(
+      {
+        title : this.todoItem.title,
+        desc : this.todoItem.desc,
+        dueDate : this.todoItem.dueDate,
+        reminderDate : this.todoItem.reminderDate,
+        category : this.todoItem.category,
+        isPublic : this.todoItem.isPublic
+      });
+  }
 
   ngOnInit() {
     this.todoForm = new FormGroup(
@@ -31,7 +52,11 @@ export class NewTodoComponent implements OnInit {
         "isPublic": new FormControl("No")
       }
     )
-    console.log("Controls Set");
+    if(this.todoId){
+      this.editMode = true;
+      this.todoItem = this.todoService.getItem(this.todoId);
+      this.setForm();
+    }
   }
 
   toDate(date:Date){
@@ -39,9 +64,8 @@ export class NewTodoComponent implements OnInit {
   }
 
   submit(){
-    let test = JSON.parse(localStorage.getItem("UserDetails"))
-    const todoItem = {
-      owner: test.email,
+    let todo = {
+      owner: this.todoService.activeUser,
       title: this.todoForm.value.title,
       desc: this.todoForm.value.desc,
       dueDate: this.todoForm.value.dueDate,
@@ -51,7 +75,22 @@ export class NewTodoComponent implements OnInit {
       status: "pending",
       todoID: Math.random().toString(36).substr(2, 10)
     };
-    this.todoService.addTodo(todoItem);
+
+    if(this.editMode){
+      if(this.todoItem.isPublic === todo.isPublic){
+        todo.todoID = this.todoItem.todoID
+        this.todoService.addTodo(todo);    
+      }else{
+        todo.todoID = this.todoItem.todoID
+        this.todoService.updatePrivacy(todo)
+      }
+    }else
+       this.todoService.addTodo(todo);
   }
 
+  ngOnDestroy(){
+    this.editMode = false;
+    this.todoForm.reset();
+  }
+  
 }

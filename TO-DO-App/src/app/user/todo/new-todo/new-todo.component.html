@@ -21,8 +21,7 @@
             <option value="No" [selected]=true>Yes, Keep This Private</option>
             <option value="Yes">No, Make It Public</option>
         </select>
-        <button type="submit" value="Login" id="login" *ngIf="false">Save Changes</button>
-        <button type="submit" value="Login" id="login">Add To List</button>
+        <button type="submit" value="Login" id="login">{{editMode === true ? 'Save Changes' : 'Add To List'}}</button>
     </form>
     <hr>
 </section>

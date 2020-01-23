@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoDataService } from 'src/app/shared/services/todo-data.service';
+import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 
 @Component({
   selector: 'app-todo',
@@ -8,10 +9,12 @@ import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 })
 export class TodoComponent implements OnInit{
 
-  constructor(private todoService:TodoDataService) {
+  dataAvaliable:any = true;
+  constructor(private todoService:TodoDataService,
+              private filterService:TodoFilterService) {
     this.todoService.setIsToDo(true);
-    this.todoService.showFilters.subscribe(value => this.test = value)
-    console.log(this.test);
+    this.todoService.showFilters.subscribe(value => this.test = value);
+    filterService.getDataAvailability.subscribe(value  => this.dataAvaliable = value)
    }
 
   test:boolean;

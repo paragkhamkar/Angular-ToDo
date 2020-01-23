@@ -3,19 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { MessagesService } from './messages.service';
-import { TodoFilterService } from './todo-filter.service';
+import { TodoDataService } from './todo-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAuthService {
-  private userDetails:any;
+  userDetails:{};
   private API_KEY = 'AIzaSyDm11ltHEGq2trpZp0LsK1Pi5dKiq18d4I';
 
   constructor(private http:HttpClient,
             private router:Router,
             private messageService:MessagesService,
-            private todoFilter:TodoFilterService) { }
+            private todoService:TodoDataService) { }
 
   signupUser(userData){
     this.messageService.activateSpinner();
@@ -41,6 +41,7 @@ export class UserAuthService {
 
   userLogin(userCredentials:{email:string, password:string}){
     localStorage.clear();
+    this.userDetails = null;
     return this.http.post(
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDm11ltHEGq2trpZp0LsK1Pi5dKiq18d4I",
       {
@@ -48,7 +49,9 @@ export class UserAuthService {
         password:	userCredentials.password,
         returnSecureToken: "true"
       }
-    ).subscribe(resopnse => this.getUserDetails(resopnse), this.showError);
+    ).subscribe(resopnse =>{
+      this.todoService.activeUser = userCredentials.email;
+     this.getUserDetails(resopnse)}, this.showError);
   }
 
   getUserDetails(response){
@@ -57,9 +60,9 @@ export class UserAuthService {
     this.http.get("https://angular-todo-2f483.firebaseio.com/users/"+response.localId+".json")
     .subscribe(
       (result:any) => {
-        console.log("Hello")
+        this.userDetails = result;
         this.messageService.successMessage("Welcome Back")
-        localStorage.setItem("UserDetails", JSON.stringify(result));
+        this.userDetails = result;
       }, this.showError)
   }
 
@@ -69,5 +72,4 @@ export class UserAuthService {
     this.messageService.errorMessage(error.error.error.message);
     this.messageService.deactivateSpinner();
   }
-
 }

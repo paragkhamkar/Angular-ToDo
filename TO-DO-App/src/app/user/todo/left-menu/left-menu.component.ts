@@ -15,6 +15,11 @@ export class LeftMenuComponent implements OnInit {
   ngOnInit() {
   
   }
+
+  textSearch(searchKey){
+    this.todoFilter.textSearch(searchKey.value)
+  }
+
   showAll(){
     this.todoFilter.showAll();
   }
@@ -24,7 +29,14 @@ export class LeftMenuComponent implements OnInit {
   }
 
   categorySearch(data){
-    console.log('clicked')
     this.todoFilter.filterSearch('category' , data)
+  }
+
+  statusSearch(data){
+    this.todoFilter.filterSearch('status' , data)
+  }
+
+  dateSearch(fromDate:HTMLInputElement, toDate:HTMLInputElement){
+    this.todoFilter.dateFilter(fromDate.value, toDate.value, 'dueDate')
   }
 }

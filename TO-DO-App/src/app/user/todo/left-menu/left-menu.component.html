@@ -3,7 +3,7 @@
 <p style="text-align: center; margin: 0px;"> Filters </p> -->
 <hr>
 <div class="test">
-    <input type="search" name="" id="" placeholder="Search...">
+    <input type="search" name="" id="" #search (input)="textSearch(search)" placeholder="Search...">
     <button class="btn btn-default search-button">
         <i class="glyphicon glyphicon-search"></i>
     </button>
@@ -11,20 +11,19 @@
 <hr>
 <ul class="list-group list-group-flush">
     <li class="list-group-item">Status</li>
-    <li class="list-group-item list-group-item-success">Done <span class="badge badge-pill badge-dark">15</span></li>
-    <li class="list-group-item list-group-item-warning">Pending &nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-pill badge-dark">95</span></li>
-    <li class="list-group-item list-group-item-danger">Overdue<span class="badge badge-pill badge-dark">155</span></li>
-    <li class="list-group-item list-group-item-light">Closed <span class="badge badge-pill badge-dark">9655</span></li>
+    <li class="list-group-item" (click)="showAll()">All</li>
+    <li class="list-group-item list-group-item-success" (click)="statusSearch('done')">Done </li>
+    <li class="list-group-item list-group-item-warning" (click)="statusSearch('pending')">Pending &nbsp;&nbsp;&nbsp;&nbsp;</li>
 </ul>
 <ul class="list-group list-group-flush">
     <li class="list-group-item">Categories</li>
-    <li class="list-group-item" (click)="showAll()">All<span class="badge badge-pill badge-dark">15</span></li>
-    <li class="list-group-item" (click)="categorySearch('Home')">Home &nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-pill badge-dark">95</span></li>
-    <li class="list-group-item" (click)="categorySearch('School')">School<span class="badge badge-pill badge-dark">155</span></li>
-    <li class="list-group-item" (click)="categorySearch('Work')">Work <span class="badge badge-pill badge-dark">9655</span></li>
+    <li class="list-group-item" (click)="showAll()">All</li>
+    <li class="list-group-item" (click)="categorySearch('Home')">Home &nbsp;&nbsp;&nbsp;&nbsp;</li>
+    <li class="list-group-item" (click)="categorySearch('School')">School</li>
+    <li class="list-group-item" (click)="categorySearch('Work')">Work</li>
 </ul>
 <hr>
-<input type="date" name="" id="" value="2020-01-01">
+<input type="date" name="" id="" value="2020-01-01" #fromDate>
 <p style="padding-left: 25px; margin: 2px 0px; font-weight: 900; color: #aaa;">To</p>
-<input type="date" name="" id="" value="2020-12-31">
-<button class="btn btn-primary" style="margin-top: 5px;">Search</button>
+<input type="date" name="" id="" value="2020-12-31" #toDate>
+<button class="btn btn-primary" style="margin-top: 5px;" (click)="dateSearch(fromDate, toDate)">Search</button>

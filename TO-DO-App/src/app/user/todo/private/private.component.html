@@ -1,13 +1,13 @@
 <div class="test2">
-    <button class="btn btn-danger" (click)="deleteAll()">Delete Selected</button>
-    <button class="btn btn-success">Mark As Done</button>
+    <button class="btn btn-danger" (click)="deleteAll()" [disabled]='!allowedBatchOperation'>Delete Selected</button>
+    <button class="btn btn-success" [disabled]='!allowedBatchOperation'>Mark As Done</button>
     <button class="btn btn-primary">Show All</button>
   </div>
   <hr>
   <table>
     <thead style="margin-bottom: 5px;" id="head">
       <tr>
-        <th class="check-box check"><input type="checkbox" name="" id="" (change)="selectAll($event)"></th>
+        <th class="check-box check"><input type="checkbox" name="" #test id="" (click)="selectAll($event)"></th>
         <th class="privacy"><i class="glyphicon glyphicon-globe"></i></th>
         <th class="due-date">Due Date</th>
         <th class="due-date">Category</th>
@@ -19,11 +19,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let todo of todos">
-        <td class="check-box check"><input type="checkbox" name="" id={{todo.todoID}}></td>
+        <td class="check-box check"><input type="checkbox" (click)="selectItem($event)" name="" id={{todo.todoID}} [checked]='allSelected'></td>
         <td class="privacy"><i class="glyphicon glyphicon-user"></i></td>
         <td class="due-date">{{todo.dueDate}}</td>
         <td class="due-date">{{todo.category}}</td>
-        <td class="due-date">{{todo.status}}</td>
+        <td class="due-date" [ngStyle]="{'color': todo.status == 'done' ? 'green' : 'red' }">{{todo.status}}</td>
         <td class="title" >{{todo.title}}</td>
         <td class="due-date">{{todo.reminderDate}}</td>
         <td class="options">

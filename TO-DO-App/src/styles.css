@@ -9,7 +9,7 @@ app-left-menu{
     margin-right:50px;
 }
 
-app-private{
+app-private, app-public{
     float: left;
     width: 1000px;
 }
@@ -47,10 +47,12 @@ app-private{
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
 }
 
-
-
 app-spinner{
     position: fixed;
     top: 50%;
     left: 50%;
+}
+
+li:hover, tr{
+    cursor: pointer;
 }

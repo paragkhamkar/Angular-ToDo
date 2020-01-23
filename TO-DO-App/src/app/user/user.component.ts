@@ -23,6 +23,7 @@ constructor(private userService:UserAuthService,
 }
 
 ngOnInit(){
+  this.messageService.infoMessage("Fetching Todo Items");
   this.messageService.deactivateSpinner();
 }
 }

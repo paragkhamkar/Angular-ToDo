@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TodoFilterService } from './todo-filter.service';
 import { MessagesService } from './messages.service';
+import { JsonPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,15 @@ import { MessagesService } from './messages.service';
 
 export class TodoDataService{
 
+  publicTodoData:{};
+  privateTodoData:{};
+
+  activeUser;
+
   constructor( private http:HttpClient,
                private router:Router,
                private message:MessagesService) { }
 
-  todos:{};
   getUpdatedPrivateTodo = new Subject();
   getUpdatedPublicTodo = new Subject();
   showFilters = new Subject<boolean>();
@@ -39,7 +44,8 @@ export class TodoDataService{
     this.http.get("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo.json")
     .subscribe(
       (result:any) => {
-        localStorage.setItem("userTodos", JSON.stringify(result));
+        this.privateTodoData = result;
+        this.prepareData();
       },this.failedToUpdate)
   }
 
@@ -47,8 +53,50 @@ export class TodoDataService{
     this.http.get("https://angular-todo-2f483.firebaseio.com/publicToDo.json")
     .subscribe(
       (result:any) => {
-        localStorage.setItem("publicTodos", JSON.stringify(result));
+        this.publicTodoData = result;
       },this.failedToUpdate)
+  }
+
+  getItem(id){
+    if(this.isPublic)
+      return this.publicTodoData[id]
+    else
+      return this.privateTodoData[id];
+  }
+
+  updatePrivacy(todo){
+    if(todo.isPublic)
+      this.swapPrivateToPublic(todo)
+    else
+      this.swapPublicToPrivate(todo)
+  }
+
+  private swapPrivateToPublic(todo){
+    let test = todo;
+    test.status = 'deleted'
+    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo/"+todo.todoID+".json",todo)
+    .subscribe(
+      res => {
+        todo.status = 'pending';
+        this.privateTodoData[todo.todoID].status = 'deleted';
+        this.addTodo(todo);
+      },
+      err => {
+        console.log("Error")
+      }
+    )
+  }
+
+  private swapPublicToPrivate(todo){
+    todo.status = 'deleted'
+    return this.http.put("https://angular-todo-2f483.firebaseio.com/publicToDo/"+todo.todoID+".json",todo)
+      .subscribe(
+        res => {
+          todo.status = 'pending';
+          this.publicTodoData[todo.todoID].status = 'deleted';
+          this.addTodo(todo) 
+        },err => console.log("Error")
+      )
   }
 
   setIsToDo(value:boolean){
@@ -57,8 +105,7 @@ export class TodoDataService{
 
   prepareData(){
     let todo = [];
-    let storageName = this.isPublic ? 'publicTodos' : 'userTodos';
-    let test:any = JSON.parse(localStorage.getItem(storageName));
+    let test = this.isPublic ? this.publicTodoData : this.privateTodoData
     if(test == ""){
         return this.isTodo.next(false)
     }
@@ -69,21 +116,18 @@ export class TodoDataService{
     this.isPublic ? this.getUpdatedPublicTodo.next(todo) : this.getUpdatedPrivateTodo.next(todo);
   }
 
-  setData(){
-    let userData = JSON.parse(localStorage.getItem("UserDetails"));
-    let todos = userData.todo;
-    localStorage.setItem("todos",JSON.stringify(todos));
-  }
-
   addTodo(todoItem){
     this.message.activateSpinner();
     if(todoItem.isPublic){
       return this.http.put("https://angular-todo-2f483.firebaseio.com/publicToDo/"+todoItem.todoID+".json",todoItem)
       .subscribe(
         resolve => {
-          let oldPublicTodo = JSON.parse(localStorage.getItem('publicTodos'))||{};
-          oldPublicTodo[todoItem.todoID] = todoItem;
-          localStorage.setItem('publicTodos', JSON.stringify(oldPublicTodo));
+          if(Object.keys(this.publicTodoData).length === 0 && this.publicTodoData.constructor === Object){
+            this.publicTodoData = {
+              [todoItem.todoID] : todoItem
+            }
+          }else
+            this.publicTodoData[todoItem.todoID] = todoItem;
           this.prepareData();
           this.router.navigate(['/user/'+localStorage.getItem('localId')+'/todo/public']);
           this.message.deactivateSpinner();
@@ -96,46 +140,51 @@ export class TodoDataService{
     
     return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo/"+todoItem.todoID+".json",todoItem)
     .subscribe(
-        resolve => {
-          let oldTodo = JSON.parse(localStorage.getItem('userTodos'))||{};
-          oldTodo[todoItem.todoID] = todoItem;
-          localStorage.setItem('userTodos', JSON.stringify(oldTodo));
-          this.router.navigate(['/user/'+localStorage.getItem('localId')+'/todo/private']);
-          this.message.deactivateSpinner();
-          this.message.successMessage("Todo Item Added Successfully");
+        resolve => {          
+          if(Object.keys(this.privateTodoData).length === 0 && this.privateTodoData.constructor === Object){
+          this.privateTodoData = {
+            [todoItem.todoID] : todoItem
+          }
+        }else
+          this.privateTodoData[todoItem.todoID] = todoItem;
+        this.router.navigate(['/user/'+localStorage.getItem('localId')+'/todo/private']);
+        this.message.deactivateSpinner();
+        this.message.successMessage("Todo Item Added Successfully");
         }, 
         err => {
           this.failedToUpdate(err);
         })
   }
 
-  markDone(todoId){
+  private statusUpdate(id, isDelete){
+    let updatedValue = isDelete ? 'deleted' : 'done';
     if(this.isPublic){
-      return this.http.put("https://angular-todo-2f483.firebaseio.com/publicToDo/"+todoId+"/status.json","done");  
+      ;
+      this.publicTodoData[id].status = updatedValue;
+      return this.http.put("https://angular-todo-2f483.firebaseio.com/publicToDo/"+id+".json",this.publicTodoData[id])  
+      .subscribe(
+        res => this.prepareData() ,err => console.log("Error")
+      )
     }
-    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo/"+todoId+"/status.json","done");
+    
+    this.privateTodoData[id].status = updatedValue
+    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo/"+id+".json",this.privateTodoData[id])
+    .subscribe(
+      res => this.prepareData() ,err => {console.log("Error")}
+    )
   }
 
-  batchMarkDone(){
-
+  markDone(todoId){
+    this.statusUpdate(todoId, false)
   }
 
   delete(todoId){
-    if(this.isPublic){
-      let todos = JSON.parse(localStorage.getItem('publicTodos'));
-      todos[todoId].status = 'deleted'
-      return this.http.put("https://angular-todo-2f483.firebaseio.com/publicToDo/"+todoId+".json",todos[todoId])
-      .subscribe(
-        res => {console.log("deleted")},err => console.log("Error")
-      )
-    }
+    this.statusUpdate(todoId, true)
+  }
 
-    let todos = JSON.parse(localStorage.getItem('userTodos'));
-    todos[todoId].status = 'deleted'
-    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo/"+todoId+".json",todos[todoId])
-    .subscribe(
-      res => {console.log("deleted")},err => {console.log("Error"); console.log(err)}
-    )
+  batchMarkDone(todoList:[]){
+    for(let item of todoList){
+    }
   }
 
   batchDelete(){
@@ -144,7 +193,7 @@ export class TodoDataService{
 
   failedToUpdate(err){
     this.message.deactivateSpinner();
-    console.log("TODO DATA SERVICE ERROR : ")
+    console.log("TODO DATA SERVICE ERROR : ");
     console.log(err);
   }
 }
