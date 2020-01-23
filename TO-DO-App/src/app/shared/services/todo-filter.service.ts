@@ -10,38 +10,33 @@ export class TodoFilterService {
   getDataAvailability = new Subject();
   getFilteredTodo = new Subject();
   getFilteredPublic = new Subject();
+  todo:any = [];
+  isPublic = false;
 
   constructor(private todoService:TodoDataService) {
-    this.getFilteredTodo.next(this.getAllItems())
-  }
-  
-  private getAllItems(){
-    let todo = [];
-    let test = JSON.parse(localStorage.getItem('todos'));
-    if(test == null)
-        return this.getDataAvailability.next(false)
-    for(let todoItem in test){
-        todo.push(test[todoItem])
-    }
-    this.getDataAvailability.next(true)
-    return todo;
+    todoService.getUpdatedPrivateTodo.subscribe( value => {
+      if(!this.isPublic)
+        this.todo = value;
+    });
+
+    todoService.getUpdatedPublicTodo.subscribe( value => {
+      if(this.isPublic)
+        this.todo = value;
+    })
   }
 
-  fetchUpdatedTodo(){
-    if(localStorage.getItem('todos'))
-      this.getFilteredTodo.next(JSON.parse(localStorage.getItem('todos')));
-    else
-      this.getDataAvailability.next(false)
+  isPublicPage(value){
+    this.isPublic = value;
   }
-  getAll(){
-    this.getFilteredTodo.next(this.getAllItems());
+  
+  showAll(){
+    this.getFilteredTodo.next(this.todo);
   }
 
   filterSearch(type, value){
     let todoItems = [];
-    let todoData = this.getAllItems();
-    if(todoData){
-    for(let todoItem of todoData){
+    if(this.todo){
+    for(let todoItem of this.todo){
       if(todoItem[type] === value)
         todoItems.push(todoItem)
     }
@@ -53,9 +48,8 @@ export class TodoFilterService {
     let fromDate = startDate <= endDate ? startDate : endDate;
     let toDate = startDate > endDate ? startDate : endDate;
     let todoItems = [];
-    let todoData = this.getAllItems();
-    if(todoData){
-    for(let todoItem of todoData){
+    if(this.todo){
+    for(let todoItem of this.todo){
       if(todoItem[type] >= fromDate && todoItem[type] <= toDate)
         todoItems.push(todoItem)
     }
@@ -64,7 +58,7 @@ export class TodoFilterService {
 }
 
   sortBy(type){
-    let todoData = this.getAllItems();
+    let todoData:any = this.todo;
     if(!todoData)
       return this.getDataAvailability.next(false);
       

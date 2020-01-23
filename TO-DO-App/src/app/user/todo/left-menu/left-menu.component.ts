@@ -15,6 +15,9 @@ export class LeftMenuComponent implements OnInit {
   ngOnInit() {
   
   }
+  showAll(){
+    this.todoFilter.showAll();
+  }
 
   addNew(){
     this.router.navigate(['/user/'+localStorage.getItem("localId")+'/todo/new-todo'])

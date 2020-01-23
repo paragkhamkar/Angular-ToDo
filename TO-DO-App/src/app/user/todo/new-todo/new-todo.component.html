@@ -3,21 +3,12 @@
     <hr>
     <form [formGroup]="todoForm" class="loginbox" (ngSubmit)="submit()">
         <input placeholder="Title" formControlName="title" type="text">
-        <div class="alert alert-danger" role="alert">
-            This is a danger alert—check it out!
-        </div>
         <textarea placeholder="Description" formControlName="desc" type="text" rows="5" style="resize: none;"></textarea>
-        <div class="alert alert-danger" role="alert">
-            This is a danger alert—check it out!
-        </div>
         <p>Due Date</p> 
         <p>Reminder Date</p>
         <input formControlName="dueDate" type="date" data-date-inline-picker="true"/>
         <input class="reminder" formControlName="reminderDate" type="date" data-date-inline-picker="true"/>
         <p style="clear: both;"></p>
-        <div class="alert alert-danger" role="alert">
-            This is a danger alert—check it out!
-        </div>
         <hr style="margin-top: 0px;">
         <p>Category</p> 
         <p>Keep This Private?</p>

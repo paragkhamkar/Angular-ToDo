@@ -17,13 +17,13 @@ constructor(private userService:UserAuthService,
             private todoService:TodoDataService,
             private messageService: MessagesService,
             private router:Router){
-  if(!localStorage.getItem("UserEmail"))
+  if(!localStorage.getItem("localId"))
       router.navigate(['/auth/login'])
+  todoService.getTodos();
 }
 
 ngOnInit(){
   this.messageService.deactivateSpinner();
-  // this.userService.getUserDetails()
 }
 }
 

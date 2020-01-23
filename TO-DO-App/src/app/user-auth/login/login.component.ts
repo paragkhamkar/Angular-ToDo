@@ -19,9 +19,12 @@ export class LoginComponent implements OnInit {
   success:boolean = false;
 
   constructor(
-    private userauth:UserAuthService,
-    private router:Router,
-    private messageService:MessagesService) { }
+              private userauth:UserAuthService,
+              private router:Router,
+              private messageService:MessagesService) {
+      
+    this.messageService.deactivateSpinner();
+  }
 
   ngOnInit() {
     this.messageService.deactivateSpinner();

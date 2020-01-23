@@ -11,6 +11,7 @@
         <th class="privacy"><i class="glyphicon glyphicon-globe"></i></th>
         <th class="due-date">Due Date</th>
         <th class="due-date">Category</th>
+        <th class="due-date">Status</th>
         <th class="title">Title</th>
         <th class="due-date">Reminder Date</th>
         <th class="options">Option</th>
@@ -22,12 +23,13 @@
         <td class="privacy"><i class="glyphicon glyphicon-user"></i></td>
         <td class="due-date">{{todo.dueDate}}</td>
         <td class="due-date">{{todo.category}}</td>
+        <td class="due-date">{{todo.status}}</td>
         <td class="title" >{{todo.title}}</td>
         <td class="due-date">{{todo.reminderDate}}</td>
         <td class="options">
           <div class="testOption">
-              <i class="glyphicon glyphicon-pencil test" id={{todo.todoID}} (click)="editTodo($event)"></i>
-              <i class="glyphicon glyphicon-ok test" id={{todo.todoID}} (click)="doneTodo($event)"></i>
+              <i class="glyphicon glyphicon-pencil test" id={{todo.todoID}} (click)="editTodo($event)" *ngIf="todo.status != 'done' "></i>
+              <i class="glyphicon glyphicon-ok test" id={{todo.todoID}} (click)="doneTodo($event)" *ngIf="todo.status != 'done' "></i>
               <i class="glyphicon glyphicon-trash test" id={{todo.todoID}} (click)="deleteTodo($event)"></i>
           </div>
         </td>
