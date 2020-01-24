@@ -9,7 +9,7 @@ import { MessagesService } from 'src/app/shared/services/messages.service';
   templateUrl: './private.component.html',
   styleUrls: ['./private.component.css']
 })
-export class PrivateComponent implements OnInit{
+export class PrivateComponent implements OnInit, OnDestroy{
   todos:any;
   allowedBatchOperation = false;
   allSelected = false;
@@ -30,11 +30,13 @@ export class PrivateComponent implements OnInit{
    selectAll(event){
     if(event.target.checked){
       this.allSelected = true;
+      this.allowedBatchOperation = true;
       for(let item = 0; item < this.todos.length; item++){
          this.selected.push(this.todos[item].todoID);
        }
     }else{
       this.allSelected = false;
+      this.allowedBatchOperation = false;
       this.selected = [];
     }
   }
@@ -69,15 +71,22 @@ export class PrivateComponent implements OnInit{
     this.todoService.delete(event.target.id)
    }
 
-   batchDone(){
-
+   deleteSelected(){
+      this.todoService.batchDelete(this.selected)
    }
 
-   batchDelete(){
-
+   doneSelected(){
+      this.todoService.batchMarkDone(this.selected)
    }
 
   ngOnInit() {
     this.todoService.prepareData();
   }
+
+  ngOnDestroy(){
+    this.selected = [];
+    this.dataAvailable = false;
+    this.allowedBatchOperation = false;
+  }
+  
 }

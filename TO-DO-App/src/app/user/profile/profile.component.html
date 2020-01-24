@@ -1,15 +1,16 @@
 <section class="form">
-    <img [src]="abcd" alt="kjavbksd">
+    <img [src]="imageURL" alt="User Image">
     <hr>    
 
     <form class="loginbox" [formGroup]="profile" (ngSubmit)="onSubmit()">
+        <p>Username</p><p>Email Id</p>
         <input formControlName="userName" placeholder="Username" type="text" id="username" disabled>
         <input formControlName="email" placeholder="email" type="email" disabled>
-        <p><span>*</span></p><p><span>*</span></p>
+        <p>First Name</p><p>Last Name</p>
         <input formControlName="firstName" placeholder="First name" type="text" id="firstname">
         <input formControlName="lastName" placeholder="Last name" type="text" id="lastname">
         <div id="genderholder">
-            <p class="gender">Select Gender</p>
+            <p class="gender">Gender</p>
 
             <div (click)="selectGender(female)">
                 <input #female formControlName="gender" [checked]="true" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Female">
@@ -27,16 +28,16 @@
             </div>
 
         </div>
-
+        <p>Address</p>
         <textarea formControlName="address" placeholder="Address" rows="8" type="text"></textarea>
         <hr>
     <div class="imageDiv">
         <h6>Select Profile Picture</h6>
         <input class="userImage" formControlName="userImage" type="file" (change)="setImage($event)" accept="image/*" name="" id="">
-        <img [src]="abcd" alt="kjavbksd">        
+        <img [src]="imageURL" alt="User Image">        
     </div>
     <hr>
         <button type="submit" id="signup" >Sign Up</button>
-        <button id="signup" >Cancel & Go Back</button>
+        <button id="signup" (click)="goBack()">Cancel & Go Back</button>
     </form>
 </section>

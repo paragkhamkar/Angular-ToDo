@@ -12,8 +12,8 @@ import { JsonPipe } from '@angular/common';
 
 export class TodoDataService{
 
-  publicTodoData:{};
-  privateTodoData:{};
+  publicTodoData;
+  privateTodoData;
 
   activeUser;
 
@@ -157,20 +157,29 @@ export class TodoDataService{
   }
 
   private statusUpdate(id, isDelete){
+    this.message.activateSpinner();
     let updatedValue = isDelete ? 'deleted' : 'done';
     if(this.isPublic){
       ;
       this.publicTodoData[id].status = updatedValue;
       return this.http.put("https://angular-todo-2f483.firebaseio.com/publicToDo/"+id+".json",this.publicTodoData[id])  
       .subscribe(
-        res => this.prepareData() ,err => console.log("Error")
+        res => {
+          this.message.deactivateSpinner();
+          this.prepareData() 
+        }
+          ,err => console.log("Error")
       )
     }
     
     this.privateTodoData[id].status = updatedValue
     return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo/"+id+".json",this.privateTodoData[id])
     .subscribe(
-      res => this.prepareData() ,err => {console.log("Error")}
+      res => {
+        this.message.deactivateSpinner();
+        this.prepareData() 
+      }
+      ,err => {console.log("Error")}
     )
   }
 
@@ -182,13 +191,16 @@ export class TodoDataService{
     this.statusUpdate(todoId, true)
   }
 
-  batchMarkDone(todoList:[]){
+  batchMarkDone(todoList){
     for(let item of todoList){
+      this.markDone(item);
     }
   }
 
-  batchDelete(){
-
+  batchDelete(todoList){
+    for(let item of todoList){
+      this.delete(item);
+    }
   }
 
   failedToUpdate(err){

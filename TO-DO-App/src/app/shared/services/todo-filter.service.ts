@@ -60,7 +60,8 @@ textSearch(text){
     if(this.todo){
     for(let todoItem of this.todo){
       let title:string = todoItem.title;
-      let desc:string = todoItem.desc;
+      let desc:string = todoItem.desc || '';
+      console.log(title)
       if(title.toLowerCase().search(searchKey) > -1 || desc.toLowerCase().search(searchKey) > -1)
         todoItems.push(todoItem)
     }

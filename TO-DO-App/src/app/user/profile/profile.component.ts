@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserAuthComponent } from 'src/app/user-auth/user-auth.component';
 import { UserAuthService } from 'src/app/shared/services/user-auth.service';
+import { Router } from '@angular/router';
+import { MessagesService } from 'src/app/shared/services/messages.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,19 +13,25 @@ import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 export class ProfileComponent implements OnInit {
 
   profile:FormGroup;
-  abcd:any = "../../../assets/angular.svg";
+  imageURL:string | ArrayBuffer = "../../../assets/angular.svg";
+  selectedGender:string;
   userDetails;
-  constructor(userData:UserAuthService) {
-      this.userDetails = userData.userDetails;
+  constructor(private router:Router,
+              private authService:UserAuthService,
+              private messageService:MessagesService) {
+      this.userDetails = authService.userDetails;
    }
 
+  goBack(){
+    this.router.navigate(['../'])
+  }
   ngOnInit() {
-    this.abcd = this.userDetails.userImage;
+    this.imageURL = this.userDetails.userImage;
 
-    console.log(this.abcd)
+    console.log(this.imageURL)
     this.profile = new FormGroup(
       {
-        "userName": new FormControl(this.userDetails.userName,[Validators.required, Validators.minLength(6)]),
+        "userName": new FormControl(this.userDetails.userName,[Validators.required, Validators.minLength(3)]),
         "email": new FormControl(this.userDetails.email,[Validators.required, Validators.email]),
         "firstName": new FormControl(this.userDetails.firstName,[Validators.required , Validators.minLength(3)]),
         "lastName": new FormControl(this.userDetails.lastName,[Validators.required, Validators.minLength(3)]),
@@ -32,7 +40,30 @@ export class ProfileComponent implements OnInit {
         "userImage": new FormControl(null)
       }
     )
-    this.abcd = this.userDetails.userImage ? this.userDetails.userImage : "../../../assets/angular.svg";
+    this.imageURL = this.userDetails.userImage ? this.userDetails.userImage : "../../../assets/angular.svg";
+  }
+
+  selectGender(gender:HTMLInputElement){
+    this.selectedGender = gender.value;
+    gender.checked = true;
+  }
+
+  onSubmit(){
+    if(this.profile.valid){
+      let userDetails = {
+      userName: this.profile.value.userName,
+      email: this.profile.value.email,
+      password : this.profile.value.password,
+      firstName: this.profile.value.firstName,
+      lastName: this.profile.value.lastName,
+      gender: this.selectedGender == '' ? this.profile.value.gender:this.selectedGender,
+      address : this.profile.value.address,
+      userImage: this.imageURL
+    };
+      this.authService.saveChanges(userDetails);
+    }
+    else
+      this.messageService.errorMessage("Fill All the Required Details Correctly")
   }
 
   setImage(event) {
@@ -42,7 +73,7 @@ export class ProfileComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
       console.log(reader)
       reader.onload = (event) => {
-        this.abcd = reader.result;
+        this.imageURL = reader.result;
       }
     }
   }

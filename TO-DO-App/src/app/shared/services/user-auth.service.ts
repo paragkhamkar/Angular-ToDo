@@ -66,6 +66,17 @@ export class UserAuthService {
       }, this.showError)
   }
 
+  saveChanges(user){
+    this.userDetails = user;
+    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+".json",this.userDetails)
+    .subscribe(
+      resolve => {
+        this.messageService.successMessage("Changes Saved Successfully");
+        this.router.navigate(['../'])
+      }, this.showError) 
+
+  }
+
   showError(error){
     console.log("Error Occurred")
     console.log(error);

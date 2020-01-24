@@ -1,6 +1,6 @@
 <div class="test2">
-    <button class="btn btn-danger" (click)="deleteAll()" [disabled]='!allowedBatchOperation'>Delete Selected</button>
-    <button class="btn btn-success" [disabled]='!allowedBatchOperation'>Mark As Done</button>
+    <button class="btn btn-danger" (click)="deleteSelected()" [disabled]='!allowedBatchOperation'>Delete Selected</button>
+    <button class="btn btn-success" (click)="doneSelected()" [disabled]='!allowedBatchOperation'>Mark As Done</button>
     <button class="btn btn-primary">Show All</button>
   </div>
   <hr>

@@ -4,13 +4,17 @@ body{
 }
 
 app-left-menu{
-    float: left;
-    width: 150px;
-    margin-right:50px;
+    /* float: left; */
+    position: fixed;
+    padding: 0px 20px;
+    width: 190px;
+    background-color: white;
+    z-index: 99;
 }
 
 app-private, app-public{
     float: left;
+    margin-left: 200px;
     width: 1000px;
 }
 
