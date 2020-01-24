@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TodoFilterService } from './todo-filter.service';
 import { MessagesService } from './messages.service';
-import { JsonPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,8 @@ import { JsonPipe } from '@angular/common';
 
 export class TodoDataService{
 
-  publicTodoData;
-  privateTodoData;
+  publicTodoData = {};
+  privateTodoData = {};
 
   activeUser;
 
@@ -122,7 +121,7 @@ export class TodoDataService{
       return this.http.put("https://angular-todo-2f483.firebaseio.com/publicToDo/"+todoItem.todoID+".json",todoItem)
       .subscribe(
         resolve => {
-          if(Object.keys(this.publicTodoData).length === 0 && this.publicTodoData.constructor === Object){
+          if(this.publicTodoData === undefined || this.publicTodoData === null){
             this.publicTodoData = {
               [todoItem.todoID] : todoItem
             }
@@ -141,7 +140,7 @@ export class TodoDataService{
     return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo/"+todoItem.todoID+".json",todoItem)
     .subscribe(
         resolve => {          
-          if(Object.keys(this.privateTodoData).length === 0 && this.privateTodoData.constructor === Object){
+          if(this.privateTodoData === undefined || this.privateTodoData === null){
           this.privateTodoData = {
             [todoItem.todoID] : todoItem
           }
