@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TodoDataService } from './todo-data.service';
+import { TodoItem } from '../data.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoFilterService {
   
-  getDataAvailability = new Subject();
-  getFilteredTodo = new Subject();
-  getFilteredPublic = new Subject();
-  todo:any = [];
-  isPublic = false;
+  getDataAvailability = new Subject<boolean>();
+  getFilteredTodo = new Subject<TodoItem[]>();
+  getFilteredPublic = new Subject<TodoItem[]>();
+  todo:TodoItem[] = [];
+  isPublic:boolean = false;
 
   constructor(private todoService:TodoDataService) {
     todoService.getUpdatedPrivateTodo.subscribe( value => {
@@ -39,7 +40,7 @@ export class TodoFilterService {
   }
 
   filterSearch(type, value){
-    let todoItems = [];
+    let todoItems:TodoItem[] = [];
     if(this.todo){
     for(let todoItem of this.todo){
       if(todoItem[type] === value)
@@ -56,7 +57,7 @@ export class TodoFilterService {
 
 textSearch(text){
   let searchKey = text.toLowerCase();
-  let todoItems = [];
+  let todoItems:TodoItem[] = [];
     if(this.todo){
     for(let todoItem of this.todo){
       let title:string = todoItem.title;

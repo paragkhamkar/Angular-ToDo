@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MessagesService } from 'src/app/shared/services/messages.service';
+import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router:Router,
               private route:ActivatedRoute,
-              private messageService:MessagesService) { }
+              private messageService:MessagesService,
+              private todoService:TodoDataService) { }
 
   ngOnInit() {
   }
@@ -33,6 +35,7 @@ export class HeaderComponent implements OnInit {
   logout(){
     this.messageService.successMessage("Logged Out Successfully");
     localStorage.clear();
+    this.todoService.activeUser = "";
     this.router.navigate(['/'])
   }
 

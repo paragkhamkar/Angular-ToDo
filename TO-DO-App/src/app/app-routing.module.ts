@@ -12,9 +12,11 @@ import { NewTodoComponent } from './user/todo/new-todo/new-todo.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
+import { TodoDataService } from './shared/services/todo-data.service';
+import { AuthGuard } from './auth.guard';
 
 const appRoutes: Routes = [
-    { path: '', component: AppComponent, pathMatch: 'full'},
+    { path: '',redirectTo: '/auth/login', pathMatch: 'full'},
     { 
       path: 'auth', component: UserAuthComponent,
       children: [

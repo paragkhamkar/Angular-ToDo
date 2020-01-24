@@ -3,6 +3,7 @@ import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
+import { TodoItem } from 'src/app/shared/data.model';
 
 @Component({
   selector: 'app-private',
@@ -10,7 +11,7 @@ import { MessagesService } from 'src/app/shared/services/messages.service';
   styleUrls: ['./private.component.css']
 })
 export class PrivateComponent implements OnInit, OnDestroy{
-  todos:any;
+  todos:TodoItem[];
   allowedBatchOperation = false;
   allSelected = false;
   dataAvailable:boolean = false;
@@ -81,12 +82,14 @@ export class PrivateComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.todoService.prepareData();
+    this.todoService.beforeMount();
   }
 
   ngOnDestroy(){
     this.selected = [];
     this.dataAvailable = false;
     this.allowedBatchOperation = false;
+    this.todoService.beforeDestroy();
   }
   
 }

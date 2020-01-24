@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
+import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 
 @Component({
   selector: 'app-left-menu',
@@ -10,7 +11,8 @@ import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 export class LeftMenuComponent implements OnInit {
 
   constructor(private router:Router,
-              private todoFilter:TodoFilterService) { }
+              private todoFilter:TodoFilterService,
+              private todoService:TodoDataService) { }
 
   ngOnInit() {
   
@@ -25,7 +27,7 @@ export class LeftMenuComponent implements OnInit {
   }
 
   addNew(){
-    this.router.navigate(['/user/'+localStorage.getItem("localId")+'/todo/new-todo'])
+    this.router.navigate(['/user/'+this.todoService.activeUser+'/todo/new-todo'])
   }
 
   categorySearch(data){

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 import { Router } from '@angular/router';
 import { MessagesService } from 'src/app/shared/services/messages.service';
+import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 
 
 @Component({
@@ -21,15 +22,16 @@ export class LoginComponent implements OnInit {
   constructor(
               private userauth:UserAuthService,
               private router:Router,
-              private messageService:MessagesService) {
+              private messageService:MessagesService,
+              private todoService:TodoDataService) {
       
     this.messageService.deactivateSpinner();
   }
 
   ngOnInit() {
     this.messageService.deactivateSpinner();
-    if(localStorage.getItem("localId")){
-      this.router.navigate(["/user/"+localStorage.getItem('localId')+"/todo/private"])
+    if(this.todoService.activeUser != ""){
+      this.router.navigate(["/user/"+this.todoService.activeUser+"/todo/private"])
     }
 
     this.loginForm = new FormGroup(

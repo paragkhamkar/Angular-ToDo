@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { TodoFilterService } from './todo-filter.service';
+import { Router, CanActivate } from '@angular/router';
 import { MessagesService } from './messages.service';
+import { TodoItem, TodoObject } from '../data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,27 +11,47 @@ import { MessagesService } from './messages.service';
 
 export class TodoDataService{
 
-  publicTodoData = {};
-  privateTodoData = {};
+  publicTodoData:TodoObject;
+  privateTodoData:TodoObject;
 
-  activeUser;
+  activeUser = "";
 
   constructor( private http:HttpClient,
                private router:Router,
                private message:MessagesService) { }
 
-  getUpdatedPrivateTodo = new Subject();
-  getUpdatedPublicTodo = new Subject();
+  getUpdatedPrivateTodo = new Subject<TodoItem[]>();
+  getUpdatedPublicTodo = new Subject<TodoItem[]>();
   showFilters = new Subject<boolean>();
   isTodo = new Subject<boolean>();
   isPublic = false;
+
+  beforeMount() {
+    console.log("listener Added")
+    window.addEventListener('beforeunload', (event) => {
+      // Cancel the event as stated by the standard.
+      event.preventDefault();
+      // Chrome requires returnValue to be set.
+      event.returnValue = '';
+
+      return ''
+    });
+  }
+
+  preventNav(){
+    alert("Dont Play With URL")
+  }
+
+  beforeDestroy() {
+    window.removeEventListener("beforeunload", this.preventNav);
+  }
 
   isPublicPage(value){
     this.isPublic = value;
   }
 
   edit(id){
-    this.router.navigate(['/user',localStorage.getItem('localId'),'todo','edit',id])
+    this.router.navigate(['/user',this.activeUser,'todo','edit',id])
   }
 
   getTodos(){
@@ -40,9 +60,10 @@ export class TodoDataService{
   }
 
   private getPrivate(){
-    this.http.get("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo.json")
+    let test = this.activeUser;
+    this.http.get("https://angular-todo-2f483.firebaseio.com/users/"+test+"-todo.json")
     .subscribe(
-      (result:any) => {
+      (result:TodoObject) => {
         this.privateTodoData = result;
         this.prepareData();
       },this.failedToUpdate)
@@ -51,7 +72,7 @@ export class TodoDataService{
   private getPublic(){
     this.http.get("https://angular-todo-2f483.firebaseio.com/publicToDo.json")
     .subscribe(
-      (result:any) => {
+      (result:TodoObject) => {
         this.publicTodoData = result;
       },this.failedToUpdate)
   }
@@ -63,17 +84,17 @@ export class TodoDataService{
       return this.privateTodoData[id];
   }
 
-  updatePrivacy(todo){
+  updatePrivacy(todo:TodoItem){
     if(todo.isPublic)
       this.swapPrivateToPublic(todo)
     else
       this.swapPublicToPrivate(todo)
   }
 
-  private swapPrivateToPublic(todo){
+  private swapPrivateToPublic(todo:TodoItem){
     let test = todo;
     test.status = 'deleted'
-    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo/"+todo.todoID+".json",todo)
+    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+this.activeUser+"-todo/"+todo.todoID+".json",todo)
     .subscribe(
       res => {
         todo.status = 'pending';
@@ -103,9 +124,9 @@ export class TodoDataService{
   }
 
   prepareData(){
-    let todo = [];
+    let todo:TodoItem[] = [];
     let test = this.isPublic ? this.publicTodoData : this.privateTodoData
-    if(test == ""){
+    if(test == undefined){
         return this.isTodo.next(false)
     }
     for(let todoItem in test){
@@ -115,7 +136,7 @@ export class TodoDataService{
     this.isPublic ? this.getUpdatedPublicTodo.next(todo) : this.getUpdatedPrivateTodo.next(todo);
   }
 
-  addTodo(todoItem){
+  addTodo(todoItem:TodoItem){
     this.message.activateSpinner();
     if(todoItem.isPublic){
       return this.http.put("https://angular-todo-2f483.firebaseio.com/publicToDo/"+todoItem.todoID+".json",todoItem)
@@ -128,7 +149,7 @@ export class TodoDataService{
           }else
             this.publicTodoData[todoItem.todoID] = todoItem;
           this.prepareData();
-          this.router.navigate(['/user/'+localStorage.getItem('localId')+'/todo/public']);
+          this.router.navigate(['/user/'+this.activeUser+'/todo/public']);
           this.message.deactivateSpinner();
           this.message.successMessage("Todo Item Added Successfully");
         }, 
@@ -137,7 +158,7 @@ export class TodoDataService{
         })
     }
     
-    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo/"+todoItem.todoID+".json",todoItem)
+    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+this.activeUser+"-todo/"+todoItem.todoID+".json",todoItem)
     .subscribe(
         resolve => {          
           if(this.privateTodoData === undefined || this.privateTodoData === null){
@@ -146,7 +167,7 @@ export class TodoDataService{
           }
         }else
           this.privateTodoData[todoItem.todoID] = todoItem;
-        this.router.navigate(['/user/'+localStorage.getItem('localId')+'/todo/private']);
+        this.router.navigate(['/user/'+this.activeUser+'/todo/private']);
         this.message.deactivateSpinner();
         this.message.successMessage("Todo Item Added Successfully");
         }, 
@@ -172,14 +193,17 @@ export class TodoDataService{
     }
     
     this.privateTodoData[id].status = updatedValue
-    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+localStorage.getItem('localId')+"-todo/"+id+".json",this.privateTodoData[id])
+    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+this.activeUser+"-todo/"+id+".json",this.privateTodoData[id])
     .subscribe(
       res => {
         this.message.deactivateSpinner();
-        this.prepareData() 
+        this.prepareData();
       }
-      ,err => {console.log("Error")}
-    )
+      ,err => {
+              this.failedToUpdate(err),
+              console.log("Error")
+      }
+    );
   }
 
   markDone(todoId){

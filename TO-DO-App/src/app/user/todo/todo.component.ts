@@ -9,7 +9,8 @@ import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 })
 export class TodoComponent implements OnInit{
 
-  dataAvaliable:any = true;
+  dataAvaliable:boolean = true;
+  
   constructor(private todoService:TodoDataService,
               private filterService:TodoFilterService) {
     this.todoService.setIsToDo(true);

@@ -17,9 +17,12 @@ constructor(private userService:UserAuthService,
             private todoService:TodoDataService,
             private messageService: MessagesService,
             private router:Router){
-  if(!localStorage.getItem("localId"))
+  if(todoService.activeUser == "")
       router.navigate(['/auth/login'])
-  todoService.getTodos();
+  else{
+    todoService.getTodos();
+    router.navigate(['/user/'+todoService.activeUser+'/todo/private'])
+  }
 }
 
 ngOnInit(){

@@ -18,9 +18,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let todo of todos" [ngClass]="{'myTodo': todo.owner === owner }">
+      <tr *ngFor="let todo of todos">
         <td class="check-box check"><input type="checkbox" name="" id={{todo.todoID}} #check (click)="selectItem(check)" [checked]='allSelected'></td>
-        <td class="privacy"><i class="glyphicon glyphicon-user"></i></td>
+        <td class="privacy" [ngClass]="{'myTodo': todo.owner === owner}">
+          <i class="glyphicon glyphicon-globe" *ngIf="todo.owner !== owner"></i>
+          <i class="glyphicon glyphicon-user" *ngIf="todo.owner === owner"></i>
+        </td>
         <td class="due-date">{{todo.dueDate}}</td>
         <td class="due-date">{{todo.category}}</td>
         <td class="due-date" [ngStyle]="{'color': todo.status == 'done' ? 'green' : 'red' }">{{todo.status}}</td>
