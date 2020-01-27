@@ -19,11 +19,16 @@ export class ProfileComponent implements OnInit {
   constructor(private router:Router,
               private authService:UserAuthService,
               private messageService:MessagesService) {
-      this.userDetails = authService.userDetails;
+      if(authService.userDetails)
+        this.userDetails = authService.userDetails;
+      else{
+        messageService.errorMessage('Unbale To Fetch Details .. Try After Some Time')
+        router.navigate(['/user/'+localStorage.getItem('localId')+'/todo/private'])
+      }
    }
 
   goBack(){
-    this.router.navigate(['../'])
+    this.router.navigate(['/user',localStorage.getItem('localId'),'todo','private'])
   }
   ngOnInit() {
     this.imageURL = this.userDetails.userImage;

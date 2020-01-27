@@ -10,7 +10,8 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-         <li><a routerLink="/user/logout" (click)="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+         <li><img [routerLinkActive]="'active'" (click)="navigate(2)"  src="../../../assets/angular.svg"  alt="user"></li>
+         <li><a (click)="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
       </ul>
     </div>
 </nav>

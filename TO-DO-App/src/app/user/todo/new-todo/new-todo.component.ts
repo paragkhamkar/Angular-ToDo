@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 import { Router, ActivatedRoute, Params} from '@angular/router';
+import { TodoItem } from 'src/app/shared/data.model';
 
 @Component({
   selector: 'app-new-todo',
@@ -12,21 +13,29 @@ export class NewTodoComponent implements OnInit, OnDestroy{
 
   todoForm:FormGroup;
   todoId:string = '';
-  todoItem;
+  viewId:string = '';
   editMode:boolean = false;
-  test:boolean;
-
+  viewMode:boolean = false;
+  status = false;
+  todoItem:TodoItem;
+  
   constructor(
               private todoService:TodoDataService,
               private router:Router,
               private route:ActivatedRoute) {
       this.editMode = false;
+      this.viewMode = false;
       this.todoService.setIsToDo(false);
       route.params.subscribe(
         (params:Params)=> {
+            this.viewId = params['view'];
             this.todoId = params['id'];
         }
       )
+   }
+
+    goBack(){
+      this.router.navigate(['/user',localStorage.getItem('localId'),'todo','private'])
    }
 
   setForm(){
@@ -52,9 +61,11 @@ export class NewTodoComponent implements OnInit, OnDestroy{
         "isPublic": new FormControl("No")
       }
     )
-    if(this.todoId){
+
+    if(this.todoId || this.viewId){
       this.editMode = true;
       this.todoItem = this.todoService.getItem(this.todoId);
+      // this.status = this.todoItem.status == 'done' ? false : true;
       this.setForm();
     }
   }

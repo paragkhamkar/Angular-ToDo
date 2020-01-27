@@ -27,7 +27,11 @@ export class PublicComponent implements OnInit {
     todoFilter.isPublicPage(true);
     this.owner = todoService.activeUser;
     todoService.getUpdatedPublicTodo.subscribe(value =>{
-      this.todos = value;
+      if(value){
+        this.todos = value;
+        todoFilter.getDataAvailability.next(true);
+      }else
+        todoFilter.getDataAvailability.next(false);
     })
     todoFilter.getFilteredTodo.subscribe(value => this.todos = value)
   }
@@ -74,7 +78,6 @@ export class PublicComponent implements OnInit {
     this.todoService.delete(event.target.id)
    }
   ngOnInit() {
-    this.message.infoMessage("Fetching Todo Items");
     this.todoService.prepareData();
   }
 }

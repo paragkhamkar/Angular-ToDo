@@ -10,6 +10,8 @@ import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 })
 export class HeaderComponent implements OnInit {
 
+  userName = "ajcasjcnasjncn"
+
   constructor(private router:Router,
               private route:ActivatedRoute,
               private messageService:MessagesService,
@@ -36,7 +38,7 @@ export class HeaderComponent implements OnInit {
     this.messageService.successMessage("Logged Out Successfully");
     localStorage.clear();
     this.todoService.activeUser = "";
-    this.router.navigate(['/'])
+    this.router.navigate(['/auth/login']);
   }
 
 }

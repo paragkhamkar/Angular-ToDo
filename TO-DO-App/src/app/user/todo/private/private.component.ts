@@ -4,6 +4,7 @@ import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
 import { TodoItem } from 'src/app/shared/data.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-private',
@@ -26,6 +27,10 @@ export class PrivateComponent implements OnInit, OnDestroy{
     todoFilter.isPublicPage(false);
     todoService.getUpdatedPrivateTodo.subscribe(value => this.todos = value);
     todoFilter.getFilteredTodo.subscribe(value => this.todos = value);
+   }
+
+   navigate(id){
+    this.todoService.view(id) 
    }
 
    selectAll(event){
@@ -82,14 +87,12 @@ export class PrivateComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.todoService.prepareData();
-    this.todoService.beforeMount();
   }
 
   ngOnDestroy(){
     this.selected = [];
     this.dataAvailable = false;
     this.allowedBatchOperation = false;
-    this.todoService.beforeDestroy();
   }
   
 }

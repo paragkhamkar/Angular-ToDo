@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, CanActivate } from '@angular/router';
 import { MessagesService } from './messages.service';
 import { TodoItem, TodoObject } from '../data.model';
+import { TodoFilterService } from './todo-filter.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,32 +27,16 @@ export class TodoDataService{
   isTodo = new Subject<boolean>();
   isPublic = false;
 
-  beforeMount() {
-    console.log("listener Added")
-    window.addEventListener('beforeunload', (event) => {
-      // Cancel the event as stated by the standard.
-      event.preventDefault();
-      // Chrome requires returnValue to be set.
-      event.returnValue = '';
-
-      return ''
-    });
-  }
-
-  preventNav(){
-    alert("Dont Play With URL")
-  }
-
-  beforeDestroy() {
-    window.removeEventListener("beforeunload", this.preventNav);
-  }
-
   isPublicPage(value){
     this.isPublic = value;
   }
 
   edit(id){
     this.router.navigate(['/user',this.activeUser,'todo','edit',id])
+  }
+
+  view(id){
+    this.router.navigate(['/user',this.activeUser,'todo',id])
   }
 
   getTodos(){
@@ -127,7 +112,7 @@ export class TodoDataService{
     let todo:TodoItem[] = [];
     let test = this.isPublic ? this.publicTodoData : this.privateTodoData
     if(test == undefined){
-        return this.isTodo.next(false)
+        return this.isTodo.next(false);
     }
     for(let todoItem in test){
       if(test[todoItem].status != 'deleted')

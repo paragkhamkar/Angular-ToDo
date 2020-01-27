@@ -9,6 +9,7 @@ import { LoginResponse, UserDetails, SignupRespose } from '../data.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserAuthService{
   userDetails:UserDetails;
   private API_KEY = 'AIzaSyDm11ltHEGq2trpZp0LsK1Pi5dKiq18d4I';
@@ -18,22 +19,9 @@ export class UserAuthService{
             private messageService:MessagesService,
             private todoService:TodoDataService) { }
   
-  beforeMount() {
-    window.addEventListener("beforeunload", this.preventNav)
-  }
-
-  preventNav(){
-    alert("Dont Play With URL")
-  }
-
-  beforeDestroy() {
-    window.removeEventListener("beforeunload", this.preventNav);
-  }
-
   signupUser(userData){
     this.messageService.activateSpinner();
     this.messageService.successMessage("Registration Process Started");
-    this.userDetails = userData;
     return this.http.post(
       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+this.API_KEY,{
             email: userData.email,
@@ -42,15 +30,15 @@ export class UserAuthService{
           }
         ).subscribe(
           (response:SignupRespose) => {
-            this.addUser(response)
+            this.addUser(response, userData)
           },
           err =>{
             this.showError(err);
-          } );
+          });
   }
 
-  addUser(response:SignupRespose){
-    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+response.localId+".json",this.userDetails)
+  addUser(response:SignupRespose, userData:UserDetails){
+    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+response.localId+".json",userData)
     .subscribe(
       resolve => {
         this.messageService.successMessage("SignUp Successful");
@@ -73,20 +61,17 @@ export class UserAuthService{
         returnSecureToken: "true"
       }
     ).subscribe(
-      (resopnse:LoginResponse) => {
-          sessionStorage.setItem('localId', resopnse.localId)
-          this.todoService.activeUser = userCredentials.email;
-          this.getUserDetails(resopnse)
+      (response:LoginResponse) => {
+          localStorage.setItem('localId', response.localId);
+          this.router.navigate(['/user/'+response.localId+'/todo/private']);
         },
       (err) => {
         this.showError(err);
       });
   }
 
-  getUserDetails(response){
-    this.todoService.activeUser = response.localId;
-    this.router.navigate(['/user/'+response.localId+'/todo/private']);
-    this.http.get("https://angular-todo-2f483.firebaseio.com/users/"+response.localId+".json")
+  getUserDetails(id){
+    this.http.get("https://angular-todo-2f483.firebaseio.com/users/"+id+".json")
     .subscribe(
       (result:UserDetails) => {
         this.userDetails = result;
@@ -96,6 +81,7 @@ export class UserAuthService{
         this.showError(err);
     });
   }
+
 
   saveChanges(user){
     this.userDetails = user;

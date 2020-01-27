@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessagesService } from './shared/services/messages.service';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,6 @@ import { MessagesService } from './shared/services/messages.service';
 export class AppComponent implements OnInit{
   title = 'TO-DO-App';
   isRoot = true;
-
   isError = false;
   isSuccess = false;
   isInfo = false;
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit{
 }
 
   ngOnInit(){
-    // this.router.navigate(["/auth/login"])
+    
   }
 
 }

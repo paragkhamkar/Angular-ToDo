@@ -16,7 +16,7 @@ import { TodoDataService } from './shared/services/todo-data.service';
 import { AuthGuard } from './auth.guard';
 
 const appRoutes: Routes = [
-    { path: '',redirectTo: '/auth/login', pathMatch: 'full'},
+    { path: '', redirectTo: '/auth/login', pathMatch: 'full'},
     { 
       path: 'auth', component: UserAuthComponent,
       children: [
@@ -33,7 +33,8 @@ const appRoutes: Routes = [
             { path: 'public', component: PublicComponent },
             { path: 'private', component: PrivateComponent },
             { path: 'new-todo', component: NewTodoComponent },
-            { path: 'edit/:id', component: NewTodoComponent }
+            { path: 'edit/:id', component: NewTodoComponent },
+            { path: ':view', component: NewTodoComponent }
           ]
         },
       ]

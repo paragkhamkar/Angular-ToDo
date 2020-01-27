@@ -11,9 +11,10 @@ export class UserAuthComponent implements OnInit {
 
   constructor(private todoService:TodoDataService,
               private router:Router) {
-    if(todoService.activeUser != "")
-        router.navigate(['/user'])
-
+    if(localStorage.getItem('localId') == null)
+        router.navigate(['/auth/login']);
+    else
+        router.navigate(['/user/'+localStorage.getItem('localId')+'/todo/private']);
    }
 
   isLoginPage = true;

@@ -96,3 +96,66 @@ button{
     glyphicon glyphicon-user
     glyphicon glyphicon-plus
 */
+
+/* ul{
+    margin: 0px;
+    padding: 0px;
+    width: 1000px;
+    background-color: green;
+}
+
+li{
+    list-style-type: none;
+    height: 65px;
+    background-color: #eee;
+    padding: 0px;
+    overflow: hidden;
+    line-height: 30px;
+}
+
+ul li:hover{
+    overflow: auto;
+    height: auto;
+}
+
+ul li span{
+    display: inline-block;
+    width: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    text-align: center;
+    padding: 15px 5px;
+    border-left: solid 1px rgb(87, 80, 80);
+    border-collapse: collapse;
+}
+
+ul li input{
+    height: 15px;
+    width: 15px;
+    background-color: white;
+    border-color: black;
+    margin: 22px 20px 23px;
+}
+
+ul li .title{
+    width: 400px;
+}
+
+ul li .reminder{
+    width: 120px;
+}
+
+
+ul li div{
+    display: inline-block;
+}
+
+ul li p{
+    background-color: rgb(146, 110, 110);
+    padding: 20px 40px;
+    margin: 0px;
+}
+
+ul li .options{
+    width: 125px;
+} */
