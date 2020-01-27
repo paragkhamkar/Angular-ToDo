@@ -30,6 +30,7 @@ export class NewTodoComponent implements OnInit, OnDestroy{
         (params:Params)=> {
             this.viewId = params['view'];
             this.todoId = params['id'];
+            // confirm(this.viewId)
         }
       )
    }
@@ -64,7 +65,7 @@ export class NewTodoComponent implements OnInit, OnDestroy{
 
     if(this.todoId || this.viewId){
       this.editMode = true;
-      this.todoItem = this.todoService.getItem(this.todoId);
+      this.todoItem = this.todoService.getItem(this.todoId || this.viewId);
       // this.status = this.todoItem.status == 'done' ? false : true;
       this.setForm();
     }
