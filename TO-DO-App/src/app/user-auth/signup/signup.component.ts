@@ -51,8 +51,18 @@ export class SignupComponent implements OnInit {
     gender.checked = true;
   }
 
+  // validation(){
+  //   if(this.signupForm.value.password !== this.signupForm.value.rePassword){
+  //     return this.messageService.errorMessage('Please Enter Same Password');
+  //   }
+  // }
+
   onSubmit(){
+    console.log(this.signupForm)
     if(this.signupForm.valid){
+      if(this.signupForm.value.password !== this.signupForm.value.rePassword){
+        return this.messageService.errorMessage('Please Enter Same Password');
+      }
       let userDetails = {
       userName: this.signupForm.value.userName,
       email: this.signupForm.value.email,

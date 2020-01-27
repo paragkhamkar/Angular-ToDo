@@ -19,7 +19,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let todo of todos" [ngClass]="{'myTodo': todo.owner === owner}">
-        <td class="check-box check"><input type="checkbox" name="" id={{todo.todoID}} #check (click)="selectItem(check)" [checked]='allSelected'></td>
+        <td class="check-box check"><input type="checkbox" name="" id={{todo.todoID}} #check (click)="selectItem(check)" [checked]='allSelected' *ngIf="todo.owner === owner"></td>
         <td class="privacy">
           <i class="glyphicon glyphicon-globe" *ngIf="todo.owner !== owner"></i>
           <i class="glyphicon glyphicon-user" *ngIf="todo.owner === owner"></i>

@@ -8,13 +8,13 @@
     
 
     <form class="loginbox" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <p><span>*</span></p><p><span>*</span></p>
+        <p>Minimum 6 characters<span>*</span></p><p>Enter Valid Email<span>*</span></p>
         <input formControlName="userName" placeholder="Username" type="text" id="username">
         <input formControlName="email" placeholder="email" type="email">
-        <p><span>*</span></p><p><span>*</span></p>
+        <p>Minimum 8 characters<span>*</span></p><p>Enter Same Password<span>*</span></p>
         <input formControlName="password" placeholder="Password" type="password" id="password">
         <input formControlName="rePassword" placeholder="Re-enter Password" type="password" id="rePassword">
-        <p><span>*</span></p><p><span>*</span></p>
+        <p>Enter your first name<span>*</span></p><p>Enter your last name<span>*</span></p>
         <input formControlName="firstName" placeholder="First name" type="text" id="firstname">
         <input formControlName="lastName" placeholder="Last name" type="text" id="lastname">
 

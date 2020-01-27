@@ -54,7 +54,9 @@ export class PublicComponent implements OnInit {
      for(let item = 0; item < this.todos.length; item++){
         this.selected.push(this.todos[item].todoID);
       }
+      this.allowedBatchOperation = true;
    }else{
+     this.allowedBatchOperation = false;
      this.allSelected = false;
      this.selected = [];
    }
