@@ -77,9 +77,9 @@ export class TodoDataService{
   }
 
   private swapPrivateToPublic(todo:TodoItem){
-    let test = todo;
-    test.status = 'deleted'
-    return this.http.put("https://angular-todo-2f483.firebaseio.com/users/"+this.activeUser+"-todo/"+todo.todoID+".json",todo)
+    // let test = todo;
+    // test.status = 'deleted'
+    return this.http.delete("https://angular-todo-2f483.firebaseio.com/users/"+this.activeUser+"-todo/"+todo.todoID+".json")
     .subscribe(
       res => {
         todo.status = 'pending';
@@ -93,13 +93,13 @@ export class TodoDataService{
   }
 
   private swapPublicToPrivate(todo){
-    todo.status = 'deleted'
-    return this.http.put("https://angular-todo-2f483.firebaseio.com/publicToDo/"+todo.todoID+".json",todo)
+    // todo.status = 'deleted'
+    return this.http.delete("https://angular-todo-2f483.firebaseio.com/publicToDo/"+todo.todoID+".json")
       .subscribe(
         res => {
           todo.status = 'pending';
           this.publicTodoData[todo.todoID].status = 'deleted';
-          this.addTodo(todo) 
+          this.addTodo(todo)
         },err => console.log("Error")
       )
   }

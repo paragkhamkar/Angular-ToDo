@@ -22,7 +22,7 @@ export class PrivateComponent implements OnInit, OnDestroy{
               private userauth:UserAuthService,
               private todoFilter:TodoFilterService,
               private message:MessagesService) {
-    todoService.setIsToDo(true);
+    todoService.showFilters.next(true);
     todoService.isPublicPage(false);
     todoFilter.isPublicPage(false);
     todoService.getUpdatedPrivateTodo.subscribe(value => this.todos = value);

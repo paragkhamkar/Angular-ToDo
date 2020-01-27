@@ -86,11 +86,21 @@ button{
     color: rgb(70, 167, 40);
 }
 
+table td:nth-of-type(6){
+    width: 400px;
+    overflow: hidden;
+}
+
 .glyphicon-trash{
     color: rgb(231, 65, 15);
 }
 
-/* 
+.myTodo{
+    background-color: rgb(70, 163, 170);
+    color: azure;
+}
+
+/*
     glyphicon glyphicon-trash
     glyphicon glyphicon-ok
     glyphicon glyphicon-pencil

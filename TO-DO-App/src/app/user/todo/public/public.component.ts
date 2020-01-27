@@ -3,6 +3,7 @@ import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
+import { TodoItem } from 'src/app/shared/data.model';
 
 @Component({
   selector: 'app-public',
@@ -22,18 +23,29 @@ export class PublicComponent implements OnInit {
               private userauth:UserAuthService,
               private todoFilter:TodoFilterService,
               private message:MessagesService) {
-    todoService.setIsToDo(true);
+    todoService.showFilters.next(true);
     todoService.isPublicPage(true);
     todoFilter.isPublicPage(true);
     this.owner = todoService.activeUser;
-    todoService.getUpdatedPublicTodo.subscribe(value =>{
+    todoService.getUpdatedPublicTodo.subscribe(
+      (value: TodoItem[]) =>{
       if(value){
-        this.todos = value;
+        this.makeShorterTodo(value)
         todoFilter.getDataAvailability.next(true);
       }else
         todoFilter.getDataAvailability.next(false);
     })
-    todoFilter.getFilteredTodo.subscribe(value => this.todos = value)
+    todoFilter.getFilteredTodo.subscribe(value => this.makeShorterTodo)
+  }
+
+  private makeShorterTodo(todoItems:TodoItem[]){
+    for(let todoItem of todoItems){
+          if(todoItem.title.length > 50){
+            todoItem.title = todoItem.title.slice(0,50);
+            todoItem.title += '....'
+          }
+    }
+    this.todos = todoItems;
   }
 
  selectAll(event){
@@ -50,7 +62,6 @@ export class PublicComponent implements OnInit {
 
   selectItem(data){
     let found = false;
-
     for(let item = 0; item < this.selected.length; item++){
       if(this.selected[item] == data.id){
         found = true;
@@ -65,17 +76,19 @@ export class PublicComponent implements OnInit {
     else
       this.allowedBatchOperation = false;    
  }
+
    editTodo(event){
      this.todoService.edit(event.target.id)
    }
 
    doneTodo(event){
-    this.todoService.markDone(event.target.id)
+    this.todoService.markDone(event.target.id);
+    this.allSelected = false;
    }
 
    deleteTodo(event){
-     console.log("deleting")
-    this.todoService.delete(event.target.id)
+    this.todoService.delete(event.target.id);
+    this.allSelected = false;
    }
   ngOnInit() {
     this.todoService.prepareData();

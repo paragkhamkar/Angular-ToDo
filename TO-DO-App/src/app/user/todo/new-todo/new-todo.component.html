@@ -21,7 +21,12 @@
             <option value="No" [selected]=true>Yes, Keep This Private</option>
             <option value="Yes">No, Make It Public</option>
         </select>
-        <button type="submit" value="" id="login">{{editMode === true ?  'Save Changes' : 'Add To List'}}</button>
+        <button type="submit" value="" id="login" 
+            [ngClass]="{disabled:!todoForm.valid || isLoading, Addnew:todoForm.valid || !isLoading}" 
+            [disabled]="!todoForm.valid || isLoading"
+            *ngIf="editable == true">
+            {{editMode === true ?  'Save Changes' : 'Add To List'}}
+        </button>
         <button type="submit" value="" id="login" (click)="goBack()">Cancel & Go Back</button>
     </form>
     <hr>

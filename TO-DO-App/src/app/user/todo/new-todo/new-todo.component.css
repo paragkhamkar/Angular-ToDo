@@ -13,6 +13,10 @@
     box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
 }
 
+.disabled{
+    cursor: not-allowed;
+    opacity: 0.6;
+}
 
 input, textarea, button, select {
     outline: none;
@@ -21,7 +25,7 @@ input, textarea, button, select {
     margin: 0 0 20px;
     padding: 10px 15px;
     border: 1px solid #ccc;
-    color: #ccc;
+    color: #666;
     font-family: "Roboto";
     box-sizing: border-box;
     font-size: 14px;
@@ -29,6 +33,18 @@ input, textarea, button, select {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: 0.2s linear;
+}
+
+.Addnew{
+    cursor: pointer;
+    background: #44c4e7;
+    /* width: 100%; */
+    padding: 10px 15px;
+    border: 0;
+    color: #fff;
+    font-family: "Roboto";
+    font-size: 14px;
+    font-weight: 400;
 }
 
 p{
@@ -97,4 +113,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     right: 0;
     top: 0;
     width: auto;
+}
+
+.Addnew{
+    cursor: pointer;
+    background: #44c4e7;
+    /* width: 100%; */
+    padding: 10px 15px;
+    border: 0;
+    color: #fff;
+    font-family: "Roboto";
+    font-size: 14px;
+    font-weight: 400;
 }

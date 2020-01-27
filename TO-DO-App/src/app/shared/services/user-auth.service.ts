@@ -89,7 +89,7 @@ export class UserAuthService{
     .subscribe(
       (resolve) => {
         this.messageService.successMessage("Changes Saved Successfully");
-        this.router.navigate(['../'])
+        this.router.navigate(['/user'])
       }, 
       (err) => {
         this.showError(err);

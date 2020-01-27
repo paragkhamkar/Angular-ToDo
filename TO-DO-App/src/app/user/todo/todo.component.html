@@ -1,5 +1,5 @@
 <div class="test">
-    <app-left-menu></app-left-menu>
+    <app-left-menu *ngIf="showMenu"></app-left-menu>
     <div class="noData" *ngIf='!dataAvaliable'>No Data Found</div>
     <div *ngIf='dataAvaliable'>
         <router-outlet></router-outlet>

@@ -18,13 +18,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let todo of todos" (click)="navigate(todo.todoID)">
+      <tr *ngFor="let todo of todos">
         <td class="check-box check"><input type="checkbox" (click)="selectItem($event)" name="" id={{todo.todoID}} [checked]='allSelected'></td>
         <td class="privacy"><i class="glyphicon glyphicon-user"></i></td>
         <td class="due-date">{{todo.dueDate}}</td>
         <td class="due-date">{{todo.category}}</td>
         <td class="due-date" [ngStyle]="{'color': todo.status == 'done' ? 'green' : 'red' }">{{todo.status}}</td>
-        <td class="title" >{{todo.title}}</td>
+        <td class="title" (click)="navigate(todo.todoID)">{{todo.title}}</td>
         <td class="due-date">{{todo.reminderDate}}</td>
         <td class="options">
           <div class="testOption">

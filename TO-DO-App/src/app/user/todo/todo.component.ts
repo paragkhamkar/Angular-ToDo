@@ -10,15 +10,14 @@ import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 export class TodoComponent implements OnInit{
 
   dataAvaliable:boolean = true;
+  showMenu:boolean;
   
   constructor(private todoService:TodoDataService,
               private filterService:TodoFilterService) {
-    this.todoService.setIsToDo(true);
-    this.todoService.showFilters.subscribe(value => this.test = value);
+    this.todoService.showFilters.subscribe(value => this.showMenu = value);
     filterService.getDataAvailability.subscribe(value  => this.dataAvaliable = value)
+    this.todoService.showFilters.next(true);
    }
-
-  test:boolean;
 
   ngOnInit() {
 
