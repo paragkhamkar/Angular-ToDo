@@ -4,6 +4,7 @@ import { UserAuthComponent } from 'src/app/user-auth/user-auth.component';
 import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 import { Router } from '@angular/router';
 import { MessagesService } from 'src/app/shared/services/messages.service';
+import { UserDetails } from 'src/app/shared/data.model';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,8 @@ export class ProfileComponent implements OnInit {
   profile:FormGroup;
   imageURL:string | ArrayBuffer = "../../../assets/angular.svg";
   selectedGender:string;
-  userDetails;
+  userDetails:UserDetails;
+
   constructor(private router:Router,
               private authService:UserAuthService,
               private messageService:MessagesService) {
@@ -36,8 +38,8 @@ export class ProfileComponent implements OnInit {
     console.log(this.imageURL)
     this.profile = new FormGroup(
       {
-        "userName": new FormControl(this.userDetails.userName,[Validators.required, Validators.minLength(3)]),
-        "email": new FormControl(this.userDetails.email,[Validators.required, Validators.email]),
+        "userName": new FormControl({value: this.userDetails.userName, disabled: true},[Validators.required, Validators.minLength(3)]),
+        "email": new FormControl({value : this.userDetails.email, disabled: true},[Validators.required, Validators.email]),
         "firstName": new FormControl(this.userDetails.firstName,[Validators.required , Validators.minLength(3)]),
         "lastName": new FormControl(this.userDetails.lastName,[Validators.required, Validators.minLength(3)]),
         "gender": new FormControl(this.userDetails.gender),
@@ -56,12 +58,12 @@ export class ProfileComponent implements OnInit {
   onSubmit(){
     if(this.profile.valid){
       let userDetails = {
-      userName: this.profile.value.userName,
-      email: this.profile.value.email,
-      password : this.profile.value.password,
+      userName: this.userDetails.userName,
+      email: this.userDetails.email,
+      password : this.userDetails.password,
       firstName: this.profile.value.firstName,
       lastName: this.profile.value.lastName,
-      gender: this.selectedGender == '' ? this.profile.value.gender:this.selectedGender,
+      gender: this.selectedGender == '' ? this.selectedGender : this.userDetails.gender,
       address : this.profile.value.address,
       userImage: this.imageURL
     };

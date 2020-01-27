@@ -165,7 +165,6 @@ export class TodoDataService{
     this.message.activateSpinner();
     let updatedValue = isDelete ? 'deleted' : 'done';
     if(this.isPublic){
-      ;
       this.publicTodoData[id].status = updatedValue;
       return this.http.put("https://angular-todo-2f483.firebaseio.com/publicToDo/"+id+".json",this.publicTodoData[id])  
       .subscribe(

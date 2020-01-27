@@ -12,7 +12,7 @@ import { TodoItem } from 'src/app/shared/data.model';
 })
 export class PublicComponent implements OnInit {
 
-  todos:any
+  todos:TodoItem[]
   selected = [];
   allSelected = false;
   allowedBatchOperation:boolean = false;
@@ -48,7 +48,7 @@ export class PublicComponent implements OnInit {
     this.todos = todoItems;
   }
 
- selectAll(event){
+  selectAll(event){
    if(event.target.checked){
      this.allSelected = true;
      for(let item = 0; item < this.todos.length; item++){
@@ -79,19 +79,28 @@ export class PublicComponent implements OnInit {
       this.allowedBatchOperation = false;    
  }
 
-   editTodo(event){
+  editTodo(event){
      this.todoService.edit(event.target.id)
    }
 
-   doneTodo(event){
+  doneTodo(event){
     this.todoService.markDone(event.target.id);
     this.allSelected = false;
    }
 
-   deleteTodo(event){
+  deleteTodo(event){
     this.todoService.delete(event.target.id);
     this.allSelected = false;
    }
+
+  deleteSelected(){
+    this.todoService.batchDelete(this.selected)
+  }
+
+  doneSelected(){
+    this.todoService.batchMarkDone(this.selected)
+  }
+
   ngOnInit() {
     this.todoService.prepareData();
   }

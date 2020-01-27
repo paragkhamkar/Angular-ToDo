@@ -44,6 +44,7 @@ tr{
 .title{
     text-align: center;
     padding: 0px 15px;
+    cursor: pointer;
     border-left: 1px solid #aaa;
 }
 
@@ -75,7 +76,7 @@ tr:hover td{
     border-right: 1px solid #aaa;
 }
 
-.options i:hover{
+.options i:hover, input{
     cursor: pointer;
 }
 

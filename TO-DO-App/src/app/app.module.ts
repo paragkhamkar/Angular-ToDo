@@ -18,7 +18,8 @@ import { from } from 'rxjs';
 import { HeaderComponent } from './user/header/header.component';
 import { LeftMenuComponent } from './user/todo/left-menu/left-menu.component';
 import { HttpClientModule } from '@angular/common/http';
-import { SpinnerComponent } from './shared/spinner/spinner.component'
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { TrashComponent } from './user/todo/trash/trash.component';
 
 
 
@@ -37,7 +38,8 @@ import { SpinnerComponent } from './shared/spinner/spinner.component'
     PageNotFoundComponent,
     HeaderComponent,
     LeftMenuComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    TrashComponent
   ],
   imports: [
     HttpClientModule,

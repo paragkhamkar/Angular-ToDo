@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { TodoDataService } from './shared/services/todo-data.service';
 import { AuthGuard } from './auth.guard';
+import { TrashComponent } from './user/todo/trash/trash.component';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/auth/login', pathMatch: 'full'},
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
         { path: 'profile', component: ProfileComponent },
         { path: 'todo', component: TodoComponent ,
           children: [
+            { path: 'trash', component: TrashComponent },
             { path: 'public', component: PublicComponent },
             { path: 'private', component: PrivateComponent },
             { path: 'new-todo', component: NewTodoComponent },

@@ -1,0 +1,13 @@
+div{
+    text-align: center;
+    padding: 30px;
+}
+.code{
+    font-weight: bolder;
+    font-size: 50px;
+}
+
+.text{
+    font-weight: bold;
+    font-size: 40px; 
+}

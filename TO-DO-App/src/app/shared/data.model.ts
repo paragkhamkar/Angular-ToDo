@@ -36,7 +36,7 @@ export interface TodoItem{
     status:string; 
     title:string; 
     todoID:string; 
-    isPublic:boolean; 
+    isPublic:boolean;
 }
 
 export interface UserDetails{

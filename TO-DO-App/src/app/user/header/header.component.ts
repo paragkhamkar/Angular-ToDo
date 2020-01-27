@@ -31,6 +31,8 @@ export class HeaderComponent implements OnInit {
         case 2: 
                 this.router.navigate(['./profile'],{relativeTo: this.route})
                 break;
+        default:
+                this.router.navigate(['./todo/trash'],{relativeTo: this.route})
       } 
   }
 
