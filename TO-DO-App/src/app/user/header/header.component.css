@@ -1,0 +1,17 @@
+nav{
+    height: 50px;
+}
+
+.test{
+    background-color: red;
+}
+
+.active{
+    background-color: white;
+}
+
+img{
+    margin-top: 5px;
+    height: 40px;
+    width: 40px;
+}

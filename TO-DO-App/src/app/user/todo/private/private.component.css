@@ -1,0 +1,164 @@
+
+.no-right{
+    margin-right: 0px;
+}
+
+table{
+    width: 1200px   ;
+    margin: 20px 0px;
+}
+
+tr{
+    border: 1px solid #aaa;
+}
+
+.test2{
+    margin: auto;
+    text-align: center;
+}
+
+.test{
+    margin: 0px 15px;
+}
+
+.check-box{
+    text-align: center;
+    width: 75px;
+    height: 40px;
+    border-left: 1px solid #aaa;
+}
+
+.privacy{
+    text-align: center;
+    width: 50px;
+    border-left: 1px solid #aaa;
+}
+
+.due-date{
+    width: 140px;
+    text-align: center;
+    padding: 0px 15px;
+    border-left: 1px solid #aaa;
+}
+
+.title{
+    text-align: center;
+    padding: 0px 15px;
+    cursor: pointer;
+    border-left: 1px solid #aaa;
+}
+
+th{
+    font-size: 15px;
+    height: 50px;
+    background-color: #eee;
+}
+
+
+
+.testOption{
+    display: none;
+}
+
+tr:hover .testOption{
+    display: block;
+}
+
+tr:hover td{
+    background-color: #333;
+    color: white;
+}
+
+.options{
+    text-align: center;
+    width: 140px;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+}
+
+.options i:hover, input{
+    cursor: pointer;
+}
+
+button{
+    margin-right: 20px;
+    width: 200px;
+}
+
+.glyphicon-ok{
+    color: rgb(70, 167, 40);
+}
+
+.glyphicon-trash{
+    color: rgb(231, 65, 15);
+}
+/* 
+    glyphicon glyphicon-trash
+    glyphicon glyphicon-ok
+    glyphicon glyphicon-pencil
+    glyphicon glyphicon-user
+    glyphicon glyphicon-plus
+*/
+
+/* ul{
+    margin: 0px;
+    padding: 0px;
+    width: 1000px;
+    background-color: green;
+}
+
+li{
+    list-style-type: none;
+    height: 65px;
+    background-color: #eee;
+    padding: 0px;
+    overflow: hidden;
+    line-height: 30px;
+}
+
+ul li:hover{
+    overflow: auto;
+    height: auto;
+}
+
+ul li span{
+    display: inline-block;
+    width: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    text-align: center;
+    padding: 15px 5px;
+    border-left: solid 1px rgb(87, 80, 80);
+    border-collapse: collapse;
+}
+
+ul li input{
+    height: 15px;
+    width: 15px;
+    background-color: white;
+    border-color: black;
+    margin: 22px 20px 23px;
+}
+
+ul li .title{
+    width: 400px;
+}
+
+ul li .reminder{
+    width: 120px;
+}
+
+
+ul li div{
+    display: inline-block;
+}
+
+ul li p{
+    background-color: rgb(146, 110, 110);
+    padding: 20px 40px;
+    margin: 0px;
+}
+
+ul li .options{
+    width: 125px;
+} */

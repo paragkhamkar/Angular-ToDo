@@ -1,0 +1,18 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <span class="navbar-brand">TO-DO App</span>
+      </div>
+      <ul class="nav navbar-nav">
+        <li [routerLinkActive]="'active'" (click)="navigate(0)"><a>Home</a></li>
+        <li [routerLinkActive]="'active'" (click)="navigate(1)"><a>Public</a></li>
+        <li [routerLinkActive]="'active'" (click)="navigate(2)"><a>Profile</a></li>
+        <li [routerLinkActive]="'active'" (click)="navigate(3)"><a>Trash <i class="glyphicon glyphicon-trash"></i></a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+         <li><img [routerLinkActive]="'active'" (click)="navigate(2)"  src="../../../assets/angular.svg"  alt="user"></li>
+         <li><a (click)="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+    </div>
+</nav>

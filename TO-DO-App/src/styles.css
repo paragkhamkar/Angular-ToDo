@@ -1,1 +1,62 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    padding: 70px 30px;
+}
+
+app-left-menu{
+    /* float: left; */
+    position: fixed;
+    padding: 0px 20px;
+    width: 190px;
+    background-color: white;
+    z-index: 99;
+}
+
+app-private, app-public, app-trash{
+    float: left;
+    margin-left: 200px;
+    width: 1000px;
+}
+
+.error-message {
+    position: fixed;
+    width: 400px;
+    top: 110px;
+    text-align: center;
+    left: 50%;
+    margin-left: -200px;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+.success-message{
+    position: fixed;
+    width: 400px;
+    top: 110px;
+    text-align: center;
+    left: 50%;
+    margin-left: -200px;
+    z-index: 999;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.info-message{
+    position: fixed;
+    width: 400px;
+    top: 110px;
+    text-align: center;
+    left: 50%;
+    margin-left: -200px;
+    z-index: 99;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+app-spinner{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+
+li:hover{
+    cursor: pointer;
+}

@@ -1,0 +1,109 @@
+
+.no-right{
+    margin-right: 0px;
+}
+
+table{
+    width: 1200px   ;
+    margin: 20px 0px;
+}
+
+tr{
+    border: 1px solid #aaa;
+}
+
+.test2{
+    margin: auto;
+    text-align: center;
+}
+
+.test{
+    margin: 0px 15px;
+}
+
+.check-box{
+    text-align: center;
+    width: 75px;
+    height: 40px;
+    border-left: 1px solid #aaa;
+}
+
+.privacy{
+    text-align: center;
+    width: 50px;
+    border-left: 1px solid #aaa;
+}
+
+.due-date{
+    width: 140px;
+    text-align: center;
+    padding: 0px 15px;
+    border-left: 1px solid #aaa;
+}
+
+.title{
+    text-align: center;
+    padding: 0px 15px;
+    border-left: 1px solid #aaa;
+}
+
+th{
+    font-size: 15px;
+    height: 50px;
+    background-color: #eee;
+}
+
+.testOption{
+    display: none;
+}
+
+tr:hover .testOption{
+    display: block;
+}
+
+tr:hover td{
+    background-color: #333;
+    color: white;
+}
+
+.options{
+    text-align: center;
+    width: 140px;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+}
+
+.options i:hover{
+    cursor: pointer;
+}
+
+button{
+    margin-right: 20px;
+    width: 200px;
+}
+
+.glyphicon-ok{
+    color: rgb(70, 167, 40);
+}
+
+table td:nth-of-type(6){
+    width: 400px;
+    overflow: hidden;
+}
+
+.glyphicon-trash{
+    color: rgb(231, 65, 15);
+}
+
+.myTodo{
+    background-color: rgb(182, 225, 228);
+    color: rgb(24, 36, 36);
+}
+
+/*
+    glyphicon glyphicon-trash
+    glyphicon glyphicon-ok
+    glyphicon glyphicon-pencil
+    glyphicon glyphicon-user
+    glyphicon glyphicon-plus
+*/
