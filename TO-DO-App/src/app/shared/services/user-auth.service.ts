@@ -29,7 +29,7 @@ export class UserAuthService{
             returnSecureToken: "true"
           }
         ).subscribe(
-          (response:SignupRespose) => {
+             (response:SignupRespose) => {
             this.addUser(response, userData)
           },
           err =>{
@@ -61,11 +61,13 @@ export class UserAuthService{
         returnSecureToken: "true"
       }
     ).subscribe(
-      (response:LoginResponse) => {
+      (response:LoginResponse) => 
+      {
           localStorage.setItem('localId', response.localId);
           this.router.navigate(['/user/'+response.localId+'/todo/private']);
         },
-      (err) => {
+      (err) => 
+      {
         this.showError(err);
       });
   }
@@ -94,7 +96,6 @@ export class UserAuthService{
       (err) => {
         this.showError(err);
       }); 
-
   }
 
   showError(error){

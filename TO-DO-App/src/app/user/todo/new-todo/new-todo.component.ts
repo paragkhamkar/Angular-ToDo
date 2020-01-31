@@ -94,7 +94,7 @@ export class NewTodoComponent implements OnInit, OnDestroy{
     let reminder = this.toDate(new Date(this.todoForm.value.reminderDate));
     let due = this.toDate(new Date(this.todoForm.value.dueDate));
 
-    if(due < today || due < reminder){
+    if(due < today || due < reminder || reminder < today){
         this.message.errorMessage("Please Enter Valid Dates");
         return false;
     }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
-// import { getMaxListeners } from 'cluster';
 
 @Component({
   selector: 'app-signup',
@@ -25,8 +24,8 @@ export class SignupComponent implements OnInit {
         "email": new FormControl(null,[Validators.required, Validators.email]),
         "password": new FormControl(null,[Validators.required, Validators.minLength(8)]),
         "rePassword": new FormControl(null,[Validators.required, Validators.minLength(8)]),
-        "firstName": new FormControl(null,[Validators.required , Validators.minLength(3)]),
-        "lastName": new FormControl(null,[Validators.required, Validators.minLength(3)]),
+        "firstName": new FormControl(null,Validators.required),
+        "lastName": new FormControl(null,Validators.required),
         "gender": new FormControl(null),
         "address": new FormControl(null),
         "userImage": new FormControl(null)
@@ -51,17 +50,11 @@ export class SignupComponent implements OnInit {
     gender.checked = true;
   }
 
-  // validation(){
-  //   if(this.signupForm.value.password !== this.signupForm.value.rePassword){
-  //     return this.messageService.errorMessage('Please Enter Same Password');
-  //   }
-  // }
-
   onSubmit(){
-    console.log(this.signupForm)
     if(this.signupForm.valid){
       if(this.signupForm.value.password !== this.signupForm.value.rePassword){
-        return this.messageService.errorMessage('Please Enter Same Password');
+        this.messageService.errorMessage('Please Enter Same Password');
+        return false;
       }
       let userDetails = {
       userName: this.signupForm.value.userName,
