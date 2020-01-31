@@ -52,7 +52,7 @@ export class PublicComponent implements OnInit {
    if(event.target.checked){
      this.allSelected = true;
      for(let item = 0; item < this.todos.length; item++){
-        if(this.todos[item].owner = this.owner)
+        if(this.todos[item].owner == this.owner)
         this.selected.push(this.todos[item].todoID);
       }
       this.allowedBatchOperation = true;
