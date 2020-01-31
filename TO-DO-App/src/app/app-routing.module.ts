@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from'@angular/router'
+import { Routes, RouterModule } from '@angular/router';
 import { UserAuthComponent } from './user-auth/user-auth.component';
 import { SignupComponent } from './user-auth/signup/signup.component';
 import { LoginComponent } from './user-auth/login/login.component';
@@ -17,40 +17,40 @@ import { AuthGuard } from './auth.guard';
 import { TrashComponent } from './user/todo/trash/trash.component';
 
 const appRoutes: Routes = [
-    { path: '', redirectTo: '/auth/login', pathMatch: 'full'},
-    { 
-      path: 'auth', component: UserAuthComponent,
-      children: [
-        { path: 'login', component: LoginComponent },
-        { path: 'signup', component: SignupComponent }
-      ]
-    },
-    { 
-      path: 'user/:username', component: UserComponent,
-      children:[
-        { path: 'profile', component: ProfileComponent },
-        { path: 'todo', component: TodoComponent ,
-          children: [
-            { path: 'trash', component: TrashComponent },
-            { path: 'public', component: PublicComponent },
-            { path: 'private', component: PrivateComponent },
-            { path: 'new-todo', component: NewTodoComponent },
-            { path: 'edit/:id', component: NewTodoComponent },
-            { path: ':view', component: NewTodoComponent }
-          ]
-        },
-      ]
-    },
-    { path: '**', component: PageNotFoundComponent }
-  ];
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+  {
+    path: 'auth',
+    component: UserAuthComponent,
+    children: [
+      { path: 'login', component: LoginComponent },
+      { path: 'signup', component: SignupComponent }
+    ]
+  },
+  {
+    path: 'user/:username',
+    component: UserComponent,
+    children: [
+      { path: 'profile', component: ProfileComponent },
+      {
+        path: 'todo',
+        component: TodoComponent,
+        children: [
+          { path: 'trash', component: TrashComponent },
+          { path: 'public', component: PublicComponent },
+          { path: 'private', component: PrivateComponent },
+          { path: 'new-todo', component: NewTodoComponent },
+          { path: 'edit/:id', component: NewTodoComponent },
+          { path: ':view', component: NewTodoComponent }
+        ]
+      }
+    ]
+  },
+  { path: '**', component: PageNotFoundComponent }
+];
 
-  @NgModule({
-      declarations:[],
-      imports:[
-          CommonModule,
-          RouterModule.forRoot(appRoutes)
-      ],
-      exports:[RouterModule]
-  })
-
-export class AppRoutingModule{ }
+@NgModule({
+  declarations: [],
+  imports: [CommonModule, RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}

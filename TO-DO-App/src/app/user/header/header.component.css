@@ -1,4 +1,4 @@
-nav{
+/* nav{
     height: 50px;
 }
 
@@ -7,11 +7,26 @@ nav{
 }
 
 .active{
-    background-color: white;
+    background-color: black;
+    color: cornsilk;
 }
 
 img{
     margin-top: 5px;
     height: 40px;
-    width: 40px;
+    width: 40px; */
+/* } */
+
+ul{
+    margin: 0px;
+    padding: 0px;
+}
+
+li{
+    display: inline-block;
+    padding: 15px;
+}
+
+nav{
+    background-color: darkgray;
 }

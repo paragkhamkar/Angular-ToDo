@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { UserAuthComponent } from './user-auth/user-auth.component';
@@ -20,8 +20,6 @@ import { LeftMenuComponent } from './user/todo/left-menu/left-menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { TrashComponent } from './user/todo/trash/trash.component';
-
-
 
 @NgModule({
   declarations: [
@@ -50,4 +48,4 @@ import { TrashComponent } from './user/todo/trash/trash.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

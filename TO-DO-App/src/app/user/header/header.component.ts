@@ -9,38 +9,37 @@ import { TodoDataService } from 'src/app/shared/services/todo-data.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  userName = 'ajcasjcnasjncn';
 
-  userName = "ajcasjcnasjncn"
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private messageService: MessagesService,
+    private todoService: TodoDataService
+  ) {}
 
-  constructor(private router:Router,
-              private route:ActivatedRoute,
-              private messageService:MessagesService,
-              private todoService:TodoDataService) { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  navigate(page) {
+    switch (page) {
+      case 0:
+        this.router.navigate(['./todo/private'], { relativeTo: this.route });
+        break;
+      case 1:
+        this.router.navigate(['./todo/public'], { relativeTo: this.route });
+        break;
+      case 2:
+        this.router.navigate(['./profile'], { relativeTo: this.route });
+        break;
+      default:
+        this.router.navigate(['./todo/trash'], { relativeTo: this.route });
+    }
   }
 
-  navigate(page){
-      switch(page){
-        case 0: 
-                this.router.navigate(['./todo/private'],{relativeTo: this.route})
-                break;
-        case 1: 
-                this.router.navigate(['./todo/public'],{relativeTo: this.route})
-                break;
-        case 2: 
-                this.router.navigate(['./profile'],{relativeTo: this.route})
-                break;
-        default:
-                this.router.navigate(['./todo/trash'],{relativeTo: this.route})
-      } 
-  }
-
-  logout(){
-    this.messageService.successMessage("Logged Out Successfully");
+  logout() {
+    this.messageService.successMessage('Logged Out Successfully');
     localStorage.clear();
-    this.todoService.activeUser = "";
+    this.todoService.activeUser = '';
     this.router.navigate(['/auth/login']);
   }
-
 }

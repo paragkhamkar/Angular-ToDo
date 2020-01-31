@@ -10,29 +10,29 @@ import { TodoFilterService } from '../shared/services/todo-filter.service';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit{
-
-  constructor(private userService:UserAuthService,
-              private todoService:TodoDataService,
-              private messageService: MessagesService,
-              private todoFilter:TodoFilterService,
-              private router:Router){
-
-    if(localStorage.getItem('localId') == null){
+export class UserComponent implements OnInit {
+  constructor(
+    private userService: UserAuthService,
+    private todoService: TodoDataService,
+    private messageService: MessagesService,
+    private todoFilter: TodoFilterService,
+    private router: Router
+  ) {
+    if (localStorage.getItem('localId') == null) {
       router.navigate(['/auth/login']);
-      messageService.errorMessage('Login To Get Access')
-    }
-    else{
-      todoService.activeUser = localStorage.getItem('localId')
+      messageService.errorMessage('Login To Get Access');
+    } else {
+      todoService.activeUser = localStorage.getItem('localId');
       todoService.getTodos();
       userService.getUserDetails(localStorage.getItem('localId'));
-      router.navigate(['/user/'+localStorage.getItem('localId')+'/todo/private'])
+      router.navigate([
+        '/user/' + localStorage.getItem('localId') + '/todo/private'
+      ]);
     }
   }
 
-  ngOnInit(){
-    this.messageService.infoMessage("Fetching Todo Items");
+  ngOnInit() {
+    this.messageService.infoMessage('Fetching Todo Items');
     this.messageService.deactivateSpinner();
   }
 }
-

@@ -9,36 +9,37 @@ import { TodoDataService } from 'src/app/shared/services/todo-data.service';
   styleUrls: ['./left-menu.component.css']
 })
 export class LeftMenuComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private todoFilter: TodoFilterService,
+    private todoService: TodoDataService
+  ) {}
 
-  constructor(private router:Router,
-              private todoFilter:TodoFilterService,
-              private todoService:TodoDataService) { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  
+  textSearch(searchKey) {
+    this.todoFilter.textSearch(searchKey.value);
   }
 
-  textSearch(searchKey){
-    this.todoFilter.textSearch(searchKey.value)
-  }
-
-  showAll(){
+  showAll() {
     this.todoFilter.showAll();
   }
 
-  addNew(){
-    this.router.navigate(['/user/'+this.todoService.activeUser+'/todo/new-todo'])
+  addNew() {
+    this.router.navigate([
+      '/user/' + this.todoService.activeUser + '/todo/new-todo'
+    ]);
   }
 
-  categorySearch(data){
-    this.todoFilter.filterSearch('category' , data)
+  categorySearch(data) {
+    this.todoFilter.filterSearch('category', data);
   }
 
-  statusSearch(data){
-    this.todoFilter.filterSearch('status' , data)
+  statusSearch(data) {
+    this.todoFilter.filterSearch('status', data);
   }
 
-  dateSearch(fromDate:HTMLInputElement, toDate:HTMLInputElement){
-    this.todoFilter.dateFilter(fromDate.value, toDate.value, 'dueDate')
+  dateSearch(fromDate: HTMLInputElement, toDate: HTMLInputElement) {
+    this.todoFilter.dateFilter(fromDate.value, toDate.value, 'dueDate');
   }
 }
