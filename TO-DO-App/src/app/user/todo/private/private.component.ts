@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TodoinfoComponent } from '../modals/todoinfo/todoinfo.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-private',
@@ -16,13 +17,24 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class PrivateComponent implements OnInit, OnDestroy {
   todos: TodoItem[];
-  allowedBatchOperation = false;
   allSelected = false;
   dataAvailable = false;
   selected = [];
+  testString = [
+    'ascjakjshckjshc',
+    '089ascjakjshckjshc',
+    'wef4t34ascjakjshckjshc',
+    'dfbdfbascjakjshckjshc',
+    '34t34t34ascjakjshckjshc',
+    'w4teckjshc'
+  ];
   getTodo: Subscription;
   getFiltered: Subscription;
-  infoId = "";
+  pendingSelectedList = [];
+  doneSelectedList = [];
+  allowDone = false;
+  allowDelete = false;
+  today = this.toDate(new Date());
 
   constructor(
     private todoService: TodoDataService,
@@ -35,106 +47,166 @@ export class PrivateComponent implements OnInit, OnDestroy {
     todoService.isPublicPage(false);
     todoFilter.isPublicPage(false);
     this.getTodo = todoService.getUpdatedPrivateTodo.subscribe(value => {
-      this.makeShorterTodo(value)
+      this.makeShorterTodo(value);
     });
     this.getFiltered = todoFilter.getFilteredTodo.subscribe(value => {
-      this.makeShorterTodo
+      this.makeShorterTodo;
     });
-  }
-
-  navigate(id) {
-    this.todoService.view(id);
-  }
-
-  showTodo(event, index): void {
-    console.log("Info : ",index)
-    console.log(event.target.parentElement)
-    const dialogRef = this.dialog.open(TodoinfoComponent, {
-      width: '600px',
-      data : this.todoService.getItem(event.target.id)
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      let selectedRow = document.getElementById(index);
-      selectedRow.style.backgroundColor = 'yellow'
-      setTimeout(() => {
-        selectedRow.style.backgroundColor = 'white'
-      }, 500);
-    });
-  }
-
-  private makeShorterTodo(todoItems: TodoItem[]) {
-    for (const todoItem of todoItems) {
-      if (todoItem.title.length > 30) {
-        todoItem.title = todoItem.title.slice(0, 30);
-        todoItem.title += '....';
-      }
-    }
-    this.todos = todoItems;
-  }
-
-  selectAll(event) {
-    if (event.target.checked) {
-      this.allSelected = true;
-      this.allowedBatchOperation = true;
-      for (const item of this.todos) {
-        this.selected.push(item.todoID);
-      }
-    } else {
-      this.allSelected = false;
-      this.allowedBatchOperation = false;
-      this.selected = [];
-    }
-  }
-
-  selectItem(data) {
-    let found = false;
-
-    for (let item = 0; item < this.selected.length; item++) {
-      if (this.selected[item] === data.target.id) {
-        found = true;
-        this.selected.splice(item, 1);
-      }
-    }
-    if (!found) {
-      this.selected.push(data.target.id);
-    }
-
-    if (this.selected.length > 0) {
-      this.allowedBatchOperation = true;
-    } else {
-      this.allowedBatchOperation = false;
-    }
-  }
-
-  editTodo(event) {
-    this.todoService.edit(event.target.id);
-  }
-
-  doneTodo(event) {
-    this.todoService.markDone(event.target.id);
-  }
-
-  deleteTodo(event) {
-    this.todoService.delete(event.target.id);
-  }
-
-  deleteSelected() {
-    this.todoService.batchDelete(this.selected);
-  }
-
-  doneSelected() {
-    this.todoService.batchMarkDone(this.selected);
   }
 
   ngOnInit() {
     this.todoService.prepareData();
   }
 
+  private makeShorterTodo(todoItems: TodoItem[]) {
+    let test = todoItems.slice();
+    for (const todoItem of test) {
+      if (todoItem.title.length > 20) {
+        todoItem.title = todoItem.title.slice(0, 20);
+        todoItem.title += '....';
+      }
+    }
+    this.todos = test.slice();
+  }
+
+  // private navigate(id) {
+  //   this.todoService.view(id);
+  // }
+
+  private editTodo(event) {
+    this.todoService.edit(event.target.id);
+  }
+
+  private doneTodo(event) {
+    this.todoService.markDone(event.target.id);
+  }
+
+  private deleteTodo(event) {
+    this.todoService.delete(event.target.id);
+  }
+
+  private deleteSelected() {
+    this.todoService.batchDelete(this.doneSelectedList);
+    this.todoService.batchDelete(this.pendingSelectedList);
+    this.resetSelected();
+  }
+
+  private doneSelected() {
+    this.todoService.batchMarkDone(this.pendingSelectedList);
+    this.resetSelected();
+  }
+
+  private selectItem(event, status) {
+    if (status === 'pending') {
+      this.addPendingToList(event.target.id);
+    } else {
+      this.addDoneToList(event.target.id);
+    }
+    this.setBatchOptions();
+  }
+
+  private addPendingToList(id) {
+    let found = false;
+    for (let item = 0; item < this.pendingSelectedList.length; item++) {
+      if (this.pendingSelectedList[item] === id) {
+        this.pendingSelectedList.splice(item, 1);
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      this.pendingSelectedList.push(id);
+    }
+  }
+
+  private addDoneToList(id) {
+    let found = false;
+    for (let item = 0; item < this.doneSelectedList.length; item++) {
+      if (this.doneSelectedList[item] === id) {
+        this.doneSelectedList.splice(item, 1);
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      this.doneSelectedList.push(id);
+    }
+  }
+
+  private selectAll(event) {
+    this.resetSelected();
+    if (event.target.checked) {
+      this.allSelected = true;
+      for (const item of this.todos) {
+        const dummy = {
+          target: {
+            id: item.todoID
+          }
+        };
+        this.selectItem(dummy, item.status);
+      }
+    }
+    this.setBatchOptions();
+  }
+
+  private setBatchOptions() {
+    if (this.pendingSelectedList.length <= 0) {
+      this.allowDone = false;
+    }
+    if (this.pendingSelectedList.length > 0) {
+      this.allowDone = true;
+      this.allowDelete = true;
+    }
+    if (
+      this.pendingSelectedList.length > 0 ||
+      this.doneSelectedList.length > 0
+    ) {
+      this.allowDelete = true;
+    }
+    if (
+      this.doneSelectedList.length <= 0 &&
+      this.pendingSelectedList.length <= 0
+    ) {
+      this.allowDelete = false;
+    }
+  }
+
+  private resetSelected() {
+    this.allSelected = false;
+    this.pendingSelectedList = [];
+    this.doneSelectedList = [];
+    this.setBatchOptions();
+  }
+
+  private showTodo(event, index): void {
+    const dialogRef = this.dialog.open(TodoinfoComponent, {
+      width: '600px',
+      data: this.todoService.getItem(event.target.id),
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      let selectedRow = document.getElementById(index);
+      selectedRow.style.backgroundColor = 'yellow';
+      setTimeout(() => {
+        selectedRow.style.backgroundColor = 'white';
+      }, 1500);
+    });
+  }
+
+  private toDate(date: Date) {
+    let dayOfMonth = '';
+    if (Number(date.getDate()) < 10) {
+      dayOfMonth = '0' + date.getDate();
+    } else {
+      dayOfMonth = '' + date.getDate();
+    }
+    console.log(dayOfMonth);
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + dayOfMonth;
+  }
+
   ngOnDestroy() {
-    this.selected = [];
     this.dataAvailable = false;
-    this.allowedBatchOperation = false;
     this.getTodo.unsubscribe();
     this.getFiltered.unsubscribe();
   }

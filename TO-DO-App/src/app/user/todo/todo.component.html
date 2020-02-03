@@ -1,10 +1,15 @@
-<div class="test">
-    <app-left-menu *ngIf="showMenu"></app-left-menu>
-    <div class="noData" *ngIf='!dataAvaliable'>No Data Found</div>
-    <div *ngIf='dataAvaliable'>
-        <router-outlet></router-outlet>
-    </div>
-    <div class="clear"></div>
-</div>
-<div class="btn btn-primary bottom" (click)="gotoTop()"> Back To Top</div>
+<!-- <div class="no-records" *ngIf="dataAvailable == false">
+  <p class="title">Records Not Avialable</p>
+  <img src="../../../../assets/no_records.png" alt="No Data Found" />
+  <button class="btn btn-primary" (click)="addNew()">Start Adding Todos</button>
+</div> -->
 
+<div class="test">
+  <app-left-menu *ngIf="showMenu"></app-left-menu>
+  <div class="noData" *ngIf="!dataAvaliable">No Data Found</div>
+  <div *ngIf="dataAvaliable">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="btn btn-primary bottom" (click)="gotoTop()">Back To Top</div>

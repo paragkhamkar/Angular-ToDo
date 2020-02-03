@@ -17,16 +17,32 @@ img{
     width: 40px; */
 /* } */
 
-ul{
-    margin: 0px;
-    padding: 0px;
+ul {
+  margin: 0px;
+  padding: 0px;
 }
 
-li{
-    display: inline-block;
-    padding: 15px;
+li {
+  display: inline-block;
 }
 
-nav{
-    background-color: darkgray;
+nav {
+  background-color: rgb(81, 85, 87);
+  box-shadow: 0px 0px 5px;
+  height: 52px;
+}
+
+a {
+  color: white;
+}
+
+.active,
+.nav > li > a:focus {
+  background-color: white;
+  color: brown;
+}
+
+.nav > li > a:hover {
+  background-color: brown;
+  color: black;
 }

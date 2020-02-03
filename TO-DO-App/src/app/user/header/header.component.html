@@ -1,24 +1,38 @@
 <nav class="navbar navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <span class="navbar-brand">TO-DO App</span>
-      </div>
-      <ul class="navbar nav navbar-nav">
-        <li><a routerLink="./todo/private" routerLinkActive="active">Home</a></li>
-        <li><a routerLink="./todo/public" routerLinkActive="active">Public</a></li>
-        <li><a routerLink="./profile" routerLinkActive="active">Profile</a></li>
-        <li>
-          <a routerLink="./todo/trash" routerLinkActive="active">Trash 
-              <i class="glyphicon glyphicon-trash"></i>
-          </a>
-        </li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-         <li><img [routerLinkActive]="'active'" (click)="navigate(2)"  src="../../../assets/angular.svg"  alt="user"></li>
-         <li><a (click)="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-      </ul>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand">TO-DO App</span>
     </div>
+    <ul class="navbar nav navbar-nav">
+      <li><a routerLink="./todo/private" routerLinkActive="active">Home</a></li>
+      <li>
+        <a routerLink="./todo/public" routerLinkActive="active">Public</a>
+      </li>
+      <li><a routerLink="./profile" routerLinkActive="active">Profile</a></li>
+      <li>
+        <a routerLink="./todo/trash" routerLinkActive="active"
+          >Trash
+          <i class="glyphicon glyphicon-trash"></i>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <img
+          [routerLinkActive]="'active'"
+          (click)="navigate(2)"
+          src="../../../assets/angular.svg"
+          alt="user"
+        />
+      </li>
+      <li>
+        <a (click)="logout()"
+          ><span class="glyphicon glyphicon-log-in"></span> Logout</a
+        >
+      </li>
+    </ul>
+  </div>
 </nav>
 
 <!-- <nav class="navbar navbar-fixed-top">

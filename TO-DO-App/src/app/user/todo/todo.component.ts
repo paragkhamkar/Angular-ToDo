@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 import { Subscribable, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-todo',
@@ -16,13 +17,17 @@ export class TodoComponent implements OnInit, OnDestroy {
 
   constructor(
     private todoService: TodoDataService,
-    private filterService: TodoFilterService
+    private filterService: TodoFilterService,
+    private router: Router
   ) {
     this.showFilter = this.todoService.showFilters.subscribe(
       value => (this.showMenu = value)
     );
     this.getAvailability = filterService.getDataAvailability.subscribe(
-      value => (this.dataAvaliable = value)
+      value => {
+        console.log('value changed : ', value);
+        this.dataAvaliable = value;
+      }
     );
     this.todoService.showFilters.next(true);
   }
@@ -36,7 +41,13 @@ export class TodoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {}
-
+  addNew() {
+    console.log('kcajscksjn');
+    this.dataAvaliable = true;
+    this.router.navigate([
+      '/user/' + this.todoService.activeUser + '/todo/new-todo'
+    ]);
+  }
   ngOnDestroy() {
     this.showFilter.unsubscribe();
     this.getAvailability.unsubscribe();

@@ -1,15 +1,43 @@
+<div class="scroller">
+  <div class="modal-header">
+    <button class="btn btn-danger test" (click)="actionFunction()">X</button>
+    <h4>Details</h4>
+  </div>
 
-<p class="lable">Title :</p>
-<p class="data"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.title}}</p>
-<p class="lable">Description :</p>
-<p class="data"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.desc}}</p>
-<p class="lable">Start Date :</p>
-<p class="data"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.dueDate}}</p>
-<p class="lable">Start Date :</p>
-<p class="data"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.dueDate}}</p>
-<div *ngIf="todo.isPublic === true">
-<p class="lable">Created By :</p>
-<p class="data"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.owner}}</p>
+  <p class="lable">Title :</p>
+  <p class="data">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ todo.title }}</p>
+  <p class="lable">Description :</p>
+  <p class="data scroller">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ todo.desc }}
+  </p>
+  <p class="linear">
+    <span class="lable small">Start Date :</span>
+    <span class="data small"
+      >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ todo.dueDate }}</span
+    >
+    <span class="lable small left">Due Date :</span>
+    <span class="data small"
+      >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ todo.dueDate }}</span
+    >
+  </p>
+  <p class="linear">
+    <span class="lable small">Category :</span>
+    <span class="data small"
+      >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ todo.dueDate }}</span
+    >
+    <span class="lable small left">Access :</span>
+    <span class="data small"
+      >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ todo.dueDate }}</span
+    >
+  </p>
+  <div *ngIf="todo.isPublic === true">
+    <p class="lable">Created By :</p>
+    <p class="data">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ todo.owner }}</p>
+  </div>
+  <p>
+    <button class="btn btn-info">Edit</button>
+    <button class="btn btn-success">Mark as Done</button>
+    <button class="btn btn-danger">Delete</button>
+    <button class="btn btn-danger" (click)="actionFunction()">Close</button>
+  </p>
 </div>
-<button class="btn btn-info">Edit</button>
-<button class="btn btn-danger">Close</button>

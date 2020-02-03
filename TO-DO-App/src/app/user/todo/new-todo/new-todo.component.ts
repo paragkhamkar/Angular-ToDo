@@ -76,16 +76,21 @@ export class NewTodoComponent implements OnInit, OnDestroy {
   }
 
   toDate(date: Date) {
-    return (
-      date.getFullYear() + '-' + date.getMonth() + 1 + '-' + date.getDate()
-    );
+    let dayOfMonth = '';
+    if (Number(date.getDate()) < 10) {
+      dayOfMonth = '0' + date.getDate();
+    } else {
+      dayOfMonth = '' + date.getDate();
+    }
+    console.log(dayOfMonth);
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + dayOfMonth;
   }
 
   submit() {
     const todo = {
       owner: this.todoService.activeUser,
       title: this.todoForm.value.title,
-      desc: this.todoForm.value.desc,
+      desc: this.todoForm.value.desc || 'No Description',
       dueDate: this.todoForm.value.dueDate,
       reminderDate: this.todoForm.value.reminderDate,
       category:
@@ -102,6 +107,12 @@ export class NewTodoComponent implements OnInit, OnDestroy {
     const today = this.toDate(new Date());
     const reminder = this.toDate(new Date(this.todoForm.value.reminderDate));
     const due = this.toDate(new Date(this.todoForm.value.dueDate));
+    console.log(today);
+    console.log(reminder);
+    console.log(due);
+    console.log('first :', due < today);
+    console.log('second :', due < reminder);
+    console.log('third :', reminder < today);
 
     if (due < today || due < reminder || reminder < today) {
       this.message.errorMessage('Please Enter Valid Dates');

@@ -1,15 +1,36 @@
-.lable{
-    font-weight: 900;
-    color: crimson;
-
+.lable {
+  margin-top: 15px;
+  font-weight: 900;
+  color: crimson;
 }
 
-.data{
-    font-weight: 500;
-    color: black;
-    margin-bottom: 40px;
+.data {
+  font-weight: 500;
+  color: black;
+  margin-bottom: 40px;
 }
 
-button{
-    margin: 0px 15px;
+button {
+  margin: 0px 15px;
+}
+
+.test {
+  float: right;
+}
+
+.small {
+  display: inline-block;
+  width: 80px;
+}
+
+.linear span {
+  margin: 0px;
+}
+
+.linear .left {
+  margin-left: 30px;
+}
+
+.scroller {
+  overflow-y: auto;
 }

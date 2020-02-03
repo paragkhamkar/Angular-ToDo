@@ -33,7 +33,7 @@ export class TodoFilterService {
 
   showAll() {
     if (this.todo) {
-      this.getFilteredTodo.next(this.todo);
+      this.getFilteredTodo.next(this.todo.slice());
       this.getDataAvailability.next(true);
     } else {
       this.getDataAvailability.next(false);
@@ -49,7 +49,7 @@ export class TodoFilterService {
         }
       }
       if (todoItems.length > 0) {
-        this.getFilteredTodo.next(todoItems);
+        this.getFilteredTodo.next(todoItems.slice());
         this.getDataAvailability.next(true);
       } else {
         this.getDataAvailability.next(false);
@@ -73,7 +73,7 @@ export class TodoFilterService {
         }
       }
       if (todoItems.length > 0) {
-        this.getFilteredTodo.next(todoItems);
+        this.getFilteredTodo.next(todoItems.slice());
         this.getDataAvailability.next(true);
       } else {
         this.getDataAvailability.next(false);
@@ -92,7 +92,7 @@ export class TodoFilterService {
         }
       }
       if (todoItems.length > 0) {
-        this.getFilteredTodo.next(todoItems);
+        this.getFilteredTodo.next(todoItems.slice());
         this.getDataAvailability.next(true);
       } else {
         this.getDataAvailability.next(false);

@@ -12,6 +12,8 @@ import { TodoFilterService } from './todo-filter.service';
 export class TodoDataService {
   publicTodoData: TodoObject;
   privateTodoData: TodoObject;
+  publicDataAvialable: Subject<boolean>;
+  privateDataAvailable: Subject<boolean>;
 
   activeUser = '';
 
@@ -35,9 +37,9 @@ export class TodoDataService {
     this.router.navigate(['/user', this.activeUser, 'todo', 'edit', id]);
   }
 
-  view(id) {
-    this.router.navigate(['/user', this.activeUser, 'todo', id]);
-  }
+  // view(id) {
+  //   this.router.navigate(['/user', this.activeUser, 'todo', id]);
+  // }
 
   getTodos() {
     this.getPrivate();
@@ -60,7 +62,10 @@ export class TodoDataService {
     this.http
       .get('https://angular-todo-2f483.firebaseio.com/publicToDo.json')
       .subscribe((result: TodoObject) => {
-        this.publicTodoData = result;
+        if (result) {
+          this.publicTodoData = result;
+        } else {
+        }
       }, this.failedToUpdate);
   }
 
@@ -81,8 +86,6 @@ export class TodoDataService {
   }
 
   private swapPrivateToPublic(todo: TodoItem) {
-    // let test = todo;
-    // test.status = 'deleted'
     return this.http
       .delete(
         'https://angular-todo-2f483.firebaseio.com/users/' +
@@ -104,7 +107,6 @@ export class TodoDataService {
   }
 
   private swapPublicToPrivate(todo) {
-    // todo.status = 'deleted'
     return this.http
       .delete(
         'https://angular-todo-2f483.firebaseio.com/publicToDo/' +
@@ -137,8 +139,8 @@ export class TodoDataService {
       }
     }
     this.isPublic
-      ? this.getUpdatedPublicTodo.next(todo)
-      : this.getUpdatedPrivateTodo.next(todo);
+      ? this.getUpdatedPublicTodo.next(todo.slice())
+      : this.getUpdatedPrivateTodo.next(todo.slice());
   }
 
   addTodo(todoItem: TodoItem) {

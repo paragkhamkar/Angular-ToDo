@@ -1,113 +1,143 @@
-
-.no-right{
-    margin-right: 0px;
+.no-right {
+  margin-right: 0px;
 }
 
-table{
-    width: 1200px   ;
-    margin: 20px 0px;
+table {
+  width: 1000px;
+  margin: 20px 0px;
 }
 
-tr{
-    border: 1px solid #aaa;
+tr {
+  border: 1px solid #aaa;
 }
 
-.test2{
-    margin: auto;
-    text-align: center;
+.test2 {
+  margin: auto;
+  text-align: center;
 }
 
-.test{
-    margin: 0px 15px;
+.test {
+  margin: 0px 15px;
 }
 
-.check-box{
-    text-align: center;
-    width: 75px;
-    height: 40px;
-    border-left: 1px solid #aaa;
+.check-box {
+  text-align: center;
+  width: 75px;
+  height: 40px;
+  border-left: 1px solid #aaa;
 }
 
-.privacy{
-    text-align: center;
-    width: 50px;
-    border-left: 1px solid #aaa;
+.privacy {
+  text-align: center;
+  width: 50px;
+  border-left: 1px solid #aaa;
 }
 
-.due-date{
-    width: 140px;
-    text-align: center;
-    padding: 0px 15px;
-    border-left: 1px solid #aaa;
+.due-date {
+  width: 130px;
+  text-align: center;
+  padding: 0px 15px;
+  border-left: 1px solid #aaa;
 }
 
-.title{
-    text-align: center;
-    padding: 0px 15px;
-    cursor: pointer;
-    border-left: 1px solid #aaa;
+.title {
+  text-align: center;
+  padding: 0px 15px;
+  cursor: pointer;
+  border-left: 1px solid #aaa;
 }
 
-th{
-    font-size: 15px;
-    height: 50px;
-    background-color: #eee;
+th {
+  font-size: 15px;
+  height: 50px;
+  background-color: #eee;
 }
 
-tr:hover td{
-    background-color: #333;
-    color: white;
+tr:hover td {
+  background-color: #333;
+  color: white;
 }
 
-.options{
-    text-align: center;
-    width: 140px;
-    border-left: 1px solid #aaa;
-    border-right: 1px solid #aaa;
+.options {
+  text-align: center;
+  width: 140px;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
 }
 
-.options i:hover, input{
-    cursor: pointer;
+.options-allowed i:hover,
+input {
+  cursor: pointer;
 }
 
-button{
-    margin-right: 20px;
-    width: 200px;
+button {
+  margin-right: 20px;
+  width: 200px;
 }
 
-.glyphicon-ok{
-    color: rgb(70, 167, 40);
+.glyphicon-ok {
+  color: rgb(70, 167, 40);
 }
 
-.glyphicon-trash{
-    color: rgb(231, 65, 15);
+.glyphicon-trash {
+  color: rgb(231, 65, 15);
 }
 
 span {
-    float: right;
+  float: right;
 }
 
-.status-done{
-    display: inline-block;
-    float: none;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: green;
+.left {
+  padding-left: 30px;
+  text-align: left;
 }
 
-.status-pending{
-    display: inline-block;
-    float: none;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: red;
+.disabled {
+  float: none;
+  display: inline-block;
+  color: #999;
+  cursor: not-allowed;
 }
 
-.left{
-    padding-left: 30px;
-    text-align: left;
+.option-disabled {
+  color: #999;
+  cursor: not-allowed;
+}
+
+span.status {
+  display: inline-block;
+  float: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+span.done {
+  background-color: green;
+}
+
+span.pending {
+  background-color: orangered;
+}
+
+span.over-due {
+  background-color: red;
+}
+
+td.status {
+  font-weight: 600;
+}
+
+td.done {
+  color: green;
+}
+
+td.pending {
+  color: orangered;
+}
+
+td.over-due {
+  color: red;
 }
 
 /* 

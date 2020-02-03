@@ -1,25 +1,51 @@
-.clear{
-    clear: both;
+.clear {
+  clear: both;
 }
 
-.test{
-    width: 1500px;
+.test {
+  width: 1500px;
 }
 
-.noData{
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    font-size: 80px;
-    background-color: cadetblue;
-    padding: 20px;
-    width: 600px;
-    margin-left: -300px;
+.noData {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  font-size: 80px;
+  background-color: cadetblue;
+  padding: 20px;
+  width: 600px;
+  margin-left: -300px;
 }
 
-.bottom{
-    transform: rotateZ(90deg);
-    position: fixed;
-    right: -40px;
-    bottom: 50px;
+.bottom {
+  transform: rotateZ(90deg);
+  position: fixed;
+  right: -40px;
+  bottom: 50px;
+}
+
+.no-records {
+  text-align: center;
+  position: relative;
+}
+
+img {
+  width: 350px;
+  height: auto;
+}
+
+.title {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  margin-left: -200px;
+  width: 400px;
+}
+
+button {
+  width: 200px;
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  margin-left: -100px;
 }
