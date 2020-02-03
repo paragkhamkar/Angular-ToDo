@@ -20,6 +20,10 @@ import { LeftMenuComponent } from './user/todo/left-menu/left-menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { TrashComponent } from './user/todo/trash/trash.component';
+import { TodoinfoComponent } from './user/todo/modals/todoinfo/todoinfo.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -37,15 +41,20 @@ import { TrashComponent } from './user/todo/trash/trash.component';
     HeaderComponent,
     LeftMenuComponent,
     SpinnerComponent,
-    TrashComponent
+    TrashComponent,
+    TodoinfoComponent
   ],
   imports: [
     HttpClientModule,
     ReactiveFormsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [TodoinfoComponent]
 })
 export class AppModule {}

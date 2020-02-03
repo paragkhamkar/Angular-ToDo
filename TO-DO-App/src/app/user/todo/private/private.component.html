@@ -18,46 +18,27 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let todo of todos">
+      <tr *ngFor="let todo of todos, let i = index" [attr.id]="i">
         <td class="check-box check"><input type="checkbox" (click)="selectItem($event)" name="" id={{todo.todoID}} [checked]='allSelected'></td>
         <td class="privacy"><i class="glyphicon glyphicon-user"></i></td>
         <td class="due-date">{{todo.dueDate}}</td>
         <td class="due-date">{{todo.category}}</td>
-        <td class="due-date" [ngStyle]="{'color': todo.status == 'done' ? 'green' : 'red' }">{{todo.status}}</td>
-        <td class="title" (click)="navigate(todo.todoID)">{{todo.title}}</td>
+        <td class="due-date left" [ngStyle]="{'color': todo.status == 'done' ? 'green' : 'red' }">
+          <span [ngClass]="{'status-done' : todo.status === 'done', 'status-pending': todo.status === 'pending'}"></span>
+          &nbsp;{{todo.status}}</td>
+        <td class="title">{{todo.title}}
+          <span>
+            <i class="glyphicon glyphicon-info-sign test" id={{todo.todoID}} (click)="showTodo($event,i)"></i>  
+        </span>
+      </td>
         <td class="due-date">{{todo.reminderDate}}</td>
         <td class="options">
-          <div class="testOption">
+          <!-- <div class="testOption"> -->
               <i class="glyphicon glyphicon-pencil test" id={{todo.todoID}} (click)="editTodo($event)" *ngIf="todo.status != 'done' "></i>
               <i class="glyphicon glyphicon-ok test" id={{todo.todoID}} (click)="doneTodo($event)" *ngIf="todo.status != 'done' "></i>
               <i class="glyphicon glyphicon-trash test" id={{todo.todoID}} (click)="deleteTodo($event)"></i>
-          </div>
+          <!-- </div> -->
         </td>
       </tr>
     </tbody>
   </table>
-
-  <!-- <div>
-      <ul class="test">
-        <li class="child">
-          <input type="checkbox" name="" id="">
-          <span class="category">Category</span>
-          <span class="status">Status</span>
-          <span class="due">Due Date</span>
-          <span class="title">Title</span>
-          <span class="reminder">Reminder Date</span>
-          <span class="option">Options</span>
-          <p>kajcnkajnckajscnakscjn</p>
-        </li>
-        <li *ngFor="let todo of todos">
-          <input type="checkbox" name="" id="">
-          <span class="category">{{todo.category}}</span>
-          <span class="status">{{todo.status}}</span>
-          <span class="due">{{todo.dueDate}}</span>
-          <span class="title">{{todo.title}}</span>
-          <span class="reminder">{{todo.reminderDate}}</span>
-          <span class="option">Options</span>
-          <p>{{todo.desc}}</p>
-        </li>
-      </ul>
-  </div> -->

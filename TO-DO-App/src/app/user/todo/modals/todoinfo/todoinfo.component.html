@@ -1,0 +1,15 @@
+
+<p class="lable">Title :</p>
+<p class="data"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.title}}</p>
+<p class="lable">Description :</p>
+<p class="data"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.desc}}</p>
+<p class="lable">Start Date :</p>
+<p class="data"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.dueDate}}</p>
+<p class="lable">Start Date :</p>
+<p class="data"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.dueDate}}</p>
+<div *ngIf="todo.isPublic === true">
+<p class="lable">Created By :</p>
+<p class="data"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.owner}}</p>
+</div>
+<button class="btn btn-info">Edit</button>
+<button class="btn btn-danger">Close</button>

@@ -6,6 +6,8 @@ import { MessagesService } from 'src/app/shared/services/messages.service';
 import { TodoItem } from 'src/app/shared/data.model';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { TodoinfoComponent } from '../modals/todoinfo/todoinfo.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-private',
@@ -20,26 +22,55 @@ export class PrivateComponent implements OnInit, OnDestroy {
   selected = [];
   getTodo: Subscription;
   getFiltered: Subscription;
+  infoId = "";
 
   constructor(
     private todoService: TodoDataService,
     private userauth: UserAuthService,
     private todoFilter: TodoFilterService,
-    private message: MessagesService
+    private message: MessagesService,
+    public dialog: MatDialog
   ) {
     todoService.showFilters.next(true);
     todoService.isPublicPage(false);
     todoFilter.isPublicPage(false);
     this.getTodo = todoService.getUpdatedPrivateTodo.subscribe(value => {
-      this.todos = value;
+      this.makeShorterTodo(value)
     });
     this.getFiltered = todoFilter.getFilteredTodo.subscribe(value => {
-      this.todos = value;
+      this.makeShorterTodo
     });
   }
 
   navigate(id) {
     this.todoService.view(id);
+  }
+
+  showTodo(event, index): void {
+    console.log("Info : ",index)
+    console.log(event.target.parentElement)
+    const dialogRef = this.dialog.open(TodoinfoComponent, {
+      width: '600px',
+      data : this.todoService.getItem(event.target.id)
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      let selectedRow = document.getElementById(index);
+      selectedRow.style.backgroundColor = 'yellow'
+      setTimeout(() => {
+        selectedRow.style.backgroundColor = 'white'
+      }, 500);
+    });
+  }
+
+  private makeShorterTodo(todoItems: TodoItem[]) {
+    for (const todoItem of todoItems) {
+      if (todoItem.title.length > 30) {
+        todoItem.title = todoItem.title.slice(0, 30);
+        todoItem.title += '....';
+      }
+    }
+    this.todos = todoItems;
   }
 
   selectAll(event) {

@@ -1,0 +1,15 @@
+.lable{
+    font-weight: 900;
+    color: crimson;
+
+}
+
+.data{
+    font-weight: 500;
+    color: black;
+    margin-bottom: 40px;
+}
+
+button{
+    margin: 0px 15px;
+}
