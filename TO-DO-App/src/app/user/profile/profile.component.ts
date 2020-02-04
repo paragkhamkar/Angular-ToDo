@@ -16,21 +16,29 @@ export class ProfileComponent implements OnInit {
   imageURL: string | ArrayBuffer = '../../../assets/angular.svg';
   selectedGender: string;
   userDetails: UserDetails;
+  userFetched = false;
 
   constructor(
     private router: Router,
     private authService: UserAuthService,
     private messageService: MessagesService
   ) {
-    if (authService.userDetails) {
+    this.userFetched = false;
+    messageService.activateSpinner();
+
+    if (authService.userDetails != null) {
       this.userDetails = authService.userDetails;
+      this.userFetched = true;
+      messageService.deactivateSpinner();
     } else {
+      authService.getUserInfo.subscribe(value => {
+        this.userDetails = value;
+        this.userFetched = true;
+        messageService.deactivateSpinner();
+      });
       messageService.errorMessage(
-        'Unbale To Fetch Details .. Try After Some Time'
+        'Unbale To Fetch Details .. wait for some time'
       );
-      router.navigate([
-        '/user/' + localStorage.getItem('localId') + '/todo/private'
-      ]);
     }
   }
 

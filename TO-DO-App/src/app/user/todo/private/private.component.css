@@ -43,7 +43,7 @@ tr {
 .title {
   text-align: center;
   padding: 0px 15px;
-  cursor: pointer;
+  /* cursor: pointer; */
   border-left: 1px solid #aaa;
 }
 
@@ -65,7 +65,7 @@ tr:hover td {
   border-right: 1px solid #aaa;
 }
 
-.options-allowed i:hover,
+.options-allowed:hover,
 input {
   cursor: pointer;
 }
@@ -125,6 +125,7 @@ span.over-due {
 }
 
 td.status {
+  font-variant-caps: all-petite-caps;
   font-weight: 600;
 }
 
@@ -138,6 +139,10 @@ td.pending {
 
 td.over-due {
   color: red;
+}
+
+.highlight-row {
+  background-color: yellow;
 }
 
 /* 

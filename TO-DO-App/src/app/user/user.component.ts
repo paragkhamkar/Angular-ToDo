@@ -25,9 +25,11 @@ export class UserComponent implements OnInit {
       todoService.activeUser = localStorage.getItem('localId');
       todoService.getTodos();
       userService.getUserDetails(localStorage.getItem('localId'));
-      router.navigate([
-        '/user/' + localStorage.getItem('localId') + '/todo/private'
-      ]);
+      // if (userService.getUserDetails(localStorage.getItem('localId'))) {
+      //   router.navigate([
+      //     '/user/' + localStorage.getItem('localId') + '/todo/private'
+      //   ]);
+      // }
     }
   }
 

@@ -1,7 +1,9 @@
 .lable {
   margin-top: 15px;
   font-weight: 900;
+  width: 25%;
   color: crimson;
+  text-align: left;
 }
 
 .data {
@@ -11,26 +13,52 @@
 }
 
 button {
-  margin: 0px 15px;
+  width: 125px;
+  margin: 0px 5px;
 }
 
 .test {
+  width: fit-content;
   float: right;
 }
 
 .small {
   display: inline-block;
-  width: 80px;
+  text-align: left;
+  width: 100px;
 }
 
 .linear span {
   margin: 0px;
 }
 
-.linear .left {
-  margin-left: 30px;
+.scroller {
+  height: 80px;
+  overflow-y: scroll;
 }
 
-.scroller {
-  overflow-y: auto;
+.show-owner {
+  display: block;
+}
+
+.hide-owner {
+  display: none;
+}
+
+.button-center {
+  text-align: center;
+}
+
+.pending {
+  font-size: 15px;
+  font-weight: 700;
+  color: red;
+  font-variant-caps: all-petite-caps;
+}
+
+.done {
+  font-size: 15px;
+  font-weight: 700;
+  color: green;
+  font-variant-caps: all-petite-caps;
 }

@@ -13,7 +13,6 @@
   >
     Mark As Done
   </button>
-  <button class="btn btn-primary">Show All</button>
 </div>
 <hr />
 <table>
@@ -38,7 +37,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let todo of todos; let i = index" [attr.id]="i">
+    <tr
+      *ngFor="let todo of todos; let i = index"
+      [attr.id]="i"
+      [ngClass]="{ 'highlight-row': i == selectedRow }"
+    >
       <td class="check-box check">
         <input
           type="checkbox"
@@ -70,8 +73,7 @@
         &nbsp;{{ todo.status }}
       </td>
       <td class="title">
-        <!-- {{ todo.title }} -->
-        {{ testString[i] }}
+        {{ titleString[i] }}
         <span>
           <i
             class="glyphicon glyphicon-info-sign test"

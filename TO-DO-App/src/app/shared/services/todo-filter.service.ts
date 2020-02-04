@@ -49,7 +49,7 @@ export class TodoFilterService {
         }
       }
       if (todoItems.length > 0) {
-        this.getFilteredTodo.next(todoItems.slice());
+        this.getFilteredTodo.next(todoItems);
         this.getDataAvailability.next(true);
       } else {
         this.getDataAvailability.next(false);
@@ -58,22 +58,25 @@ export class TodoFilterService {
   }
 
   textSearch(text) {
+    console.log(text);
+    console.log(this.todo);
     const searchKey = text.toLowerCase();
     const todoItems: TodoItem[] = [];
     if (this.todo) {
       for (const todoItem of this.todo) {
         const title: string = todoItem.title;
         const desc: string = todoItem.desc || '';
-        console.log(title);
+
         if (
           title.toLowerCase().search(searchKey) > -1 ||
           desc.toLowerCase().search(searchKey) > -1
         ) {
+          console.log('Title : ', title);
           todoItems.push(todoItem);
         }
       }
       if (todoItems.length > 0) {
-        this.getFilteredTodo.next(todoItems.slice());
+        this.getFilteredTodo.next(todoItems);
         this.getDataAvailability.next(true);
       } else {
         this.getDataAvailability.next(false);

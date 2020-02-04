@@ -11,7 +11,18 @@ import { LoginResponse, UserDetails, SignupRespose } from '../data.model';
 })
 export class UserAuthService {
   userDetails: UserDetails;
+  getUserInfo = new Subject<UserDetails>();
+  isValidUser = 'fetching';
   private API_KEY = 'AIzaSyDm11ltHEGq2trpZp0LsK1Pi5dKiq18d4I';
+  defaultErrorMessages = {
+    EMAIL_NOT_FOUND: 'Email Address doesnot exist .. try to signup',
+    INVALID_PASSWORD: 'You Have Entered Invalid Password',
+    INVALID_EMAIL: 'Please Enter Valid Email Address',
+    USER_DISABLED: 'Login disabled for security reasons',
+    EMAIL_EXISTS: 'Email Exist .. Try to Login or change Email',
+    OPERATION_NOT_ALLOWED: 'Server not accepting request for now',
+    TOO_MANY_ATTEMPTS_TRY_LATER: 'Too many attempt noticed .. try again later'
+  };
 
   constructor(
     private http: HttpClient,
@@ -35,6 +46,9 @@ export class UserAuthService {
       )
       .subscribe(
         (response: SignupRespose) => {
+          this.messageService.successMessage(
+            'Email ID Available .. Adding User To Database'
+          );
           this.addUser(response, userData);
         },
         err => {
@@ -87,17 +101,31 @@ export class UserAuthService {
   }
 
   getUserDetails(id) {
-    this.http
+    return this.http
       .get('https://angular-todo-2f483.firebaseio.com/users/' + id + '.json')
       .subscribe(
         (result: UserDetails) => {
-          this.userDetails = result;
-          this.messageService.successMessage('Welcome Back');
+          if (result === null) {
+            localStorage.clear();
+            alert('Local Storage Manipulated .. Logging you out');
+            this.router.navigate(['/auth/login']);
+            this.isValidUser = 'invalid';
+          } else {
+            this.isValidUser = 'valid';
+            this.userDetails = result;
+            this.messageService.successMessage('Profile Data Loaded');
+            this.getUserInfo.next(this.userDetails);
+          }
         },
         err => {
           this.showError(err);
+          return false;
         }
       );
+  }
+
+  fetchUser() {
+    this.getUserInfo.next(this.userDetails);
   }
 
   saveChanges(user) {
@@ -126,9 +154,10 @@ export class UserAuthService {
   }
 
   showError(error) {
-    console.log('Error Occurred');
-    console.log(error);
-    this.messageService.errorMessage(error.error.error.message);
+    console.log(this.defaultErrorMessages[error.error.error.message]);
+    this.messageService.errorMessage(
+      this.defaultErrorMessages[error.error.error.message]
+    );
     this.messageService.deactivateSpinner();
   }
 }

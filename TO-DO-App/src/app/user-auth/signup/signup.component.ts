@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
+import { UserAuthComponent } from '../user-auth.component';
 
 @Component({
   selector: 'app-signup',
@@ -12,11 +13,19 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   selectedGender = 'Female';
   imageURL: any = '../../../assets/angular.svg';
+  defaultErrorMessage = [
+    'EMAIL_EXISTS',
+    'OPERATION_NOT_ALLOWED',
+    'TOO_MANY_ATTEMPTS_TRY_LATER'
+  ];
 
   constructor(
     private authService: UserAuthService,
-    private messageService: MessagesService
-  ) {}
+    private messageService: MessagesService,
+    private test: UserAuthComponent
+  ) {
+    test.isLoginPage = false;
+  }
 
   ngOnInit() {
     this.signupForm = new FormGroup({

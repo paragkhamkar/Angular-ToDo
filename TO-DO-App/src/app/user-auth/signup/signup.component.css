@@ -1,192 +1,195 @@
 .form {
-    /* position: absolute;
+  /* position: absolute;
     top: 50%;
     left: 50%; */
-    background: #fff;
-    width: 640px;
-    margin: 25px auto;
-    padding: 40px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  background: #fff;
+  width: 640px;
+  margin: 25px auto;
+  padding: 40px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
-p{
-    padding-left: 10px;
-    color: rgb(116, 113, 113);
-    font-family: "Roboto";
+p.info {
+  padding-left: 10px;
+  color: rgb(116, 113, 113);
+  font-family: 'Roboto';
+  position: relative;
+  display: inline-block;
+  width: 240px;
+  margin-bottom: 0px;
+  margin-left: 40px;
+  line-height: 20px;
+  font-size: 10px;
 }
 
-p{
-    position: relative;
-    display: inline-block;
-    width: 240px;
-    margin-bottom: 0px;
-    margin-left: 40px;
-    /* text-align: right; */
-    line-height: 20px;
+.signup-error {
+  width: 235px;
+  font-family: 'Roboto';
+  display: inline-block;
+  margin: 2px 0px 15px 45px;
+  font-size: 12px;
+  color: white;
 }
 
-.gender{
-    margin-bottom:5px;
+.show-error {
+  color: red;
 }
 
-span{
-    position: absolute;
-    right: -7px;
-    bottom:-14px;
-    font-size: 18px;
-    color: red;
+.gender {
+  margin-bottom: 5px;
 }
 
-/* span{
-    vertical-align: middle;
-} */
-
-/* button{
-    display: inline-block;
-    width: 240px;
-} */
-
-
-
-input,textarea, form div div, button{
-    outline: none;
-    /* display: block; */
-    display: inline-block;
-    width: 240px;
-    margin: 0 0 40px 40px;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    color: #ccc;
-    font-family: "Roboto";
-    box-sizing: border-box;
-    font-size: 14px;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    transition: 0.2s linear;
+span {
+  position: absolute;
+  right: -7px;
+  bottom: -10px;
+  font-size: 18px;
+  color: red;
 }
 
-form div div{
-    display: block
+input,
+textarea,
+form div div,
+button {
+  outline: none;
+  /* display: block; */
+  display: inline-block;
+  width: 240px;
+  margin: 0 0 0px 40px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  color: #333;
+  font-family: 'Roboto';
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: 0.2s linear;
 }
-input:focus, textarea:focus {
-    color: #333;
-    border: 1px solid #44c4e7;
-}    
+
+form div div {
+  display: block;
+}
+input:focus,
+textarea:focus {
+  border: 1px solid #44c4e7;
+}
 
 h2 {
-    margin: 0 0 20px;
-    line-height: 1;
-    color: #44c4e7;
-    font-size: 18px;
-    font-weight: 400;
-    }
+  margin: 0 0 20px;
+  line-height: 1;
+  color: #44c4e7;
+  font-size: 18px;
+  font-weight: 400;
+}
 
 .signup {
-    cursor: pointer;
-    background: #44c4e7;
-    /* width: 100%; */
-    padding: 10px 15px;
-    border: 0;
-    color: #fff;
-    font-family: "Roboto";
-    font-size: 14px;
-    font-weight: 400;
-    }
-#signup:hover{
-        background: #369cb8;
+  cursor: pointer;
+  background: #44c4e7;
+  /* width: 100%; */
+  padding: 10px 15px;
+  border: 0;
+  color: #fff;
+  font-family: 'Roboto';
+  font-size: 14px;
+  font-weight: 400;
 }
-  
-  .error, .valid{
-      display:none;
-    }
-
-.no-margin{
-    width: fit-content;
-    display: inline-block;
-    padding: 5px;
-    margin: 0px;
+#signup:hover {
+  background: #369cb8;
 }
 
-form div div{
-    font-size: 14px;
-    font-weight: 400;
-    padding: 10px;
-    margin: 10px;
+.error,
+.valid {
+  display: none;
 }
 
-form div div:hover{
-    color: #44c4e7;
-    /* background-color: burlywood; */
-    cursor: pointer;
+.no-margin {
+  width: fit-content;
+  display: inline-block;
+  padding: 5px;
+  margin: 0px;
 }
 
-label{
-    width: 240px;
-    margin-left: 20px;
-    text-align: center;
+form div div {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 10px;
+  margin: 10px;
 }
 
-#genderholder{
-    float: left;
-    margin: 0px 0px 20px 30px;
-    width: 250px;
+form div div:hover {
+  color: #44c4e7;
+  /* background-color: burlywood; */
+  cursor: pointer;
 }
 
-img{
-    /* display: inline-block; */
-    vertical-align: middle;
-    /* float: right; */
-    margin-left: 75px;
-    margin-right: 25px;
-    border-radius: 50%;
-    height: 75px;
-    width: 75px;
+label {
+  width: 240px;
+  margin-left: 20px;
+  text-align: center;
 }
 
-h2{
-    margin-top: 35px;
-    float: left;
+#genderholder {
+  float: left;
+  margin: 0px 0px 20px 30px;
+  width: 250px;
 }
 
-.clearfix{
-    clear: both;
+img {
+  /* display: inline-block; */
+  vertical-align: middle;
+  /* float: right; */
+  margin-left: 75px;
+  margin-right: 25px;
+  border-radius: 50%;
+  height: 75px;
+  width: 75px;
 }
 
-.image-div{
-    padding: 10px;
-    margin:0px 0px 20px 20px;
-    /* border: 1px solid #ccc; */
+h2 {
+  margin-top: 35px;
+  float: left;
 }
 
-.image-div img{
-    float: none;
-    margin-left: 90px;
+.clearfix {
+  clear: both;
 }
 
-#genderholder div{
-    width: 240px;
+.image-div {
+  padding: 10px;
+  margin: 0px 0px 20px 20px;
+  /* border: 1px solid #ccc; */
 }
 
-textarea{
-    margin-bottom: 5px;
-    resize: none;
+.image-div img {
+  float: none;
+  margin-left: 90px;
 }
 
-h6{
-    font-family: 'Roboto';
-    color:rgb(116, 113, 113);
-    margin: 5px;
+#genderholder div {
+  width: 240px;
 }
 
-.imageDiv{
-    padding-left: 50px;
-    height: 90px;
-    /* padding: 10px; */
-    vertical-align: middle;
+textarea {
+  margin-bottom: 5px;
+  resize: none;
 }
 
-.disabled{
-    cursor: not-allowed;
-    opacity: 0.6;
+h6 {
+  font-family: 'Roboto';
+  color: rgb(116, 113, 113);
+  margin: 5px;
+}
+
+.imageDiv {
+  padding-left: 50px;
+  height: 90px;
+  /* padding: 10px; */
+  vertical-align: middle;
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }

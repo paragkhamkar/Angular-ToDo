@@ -1,29 +1,52 @@
-<a (click)="addNew()"><button class="btn btn-primary no-right">Add New</button></a>
-<!-- <hr>
-<p style="text-align: center; margin: 0px;"> Filters </p> -->
-<hr>
+<button class="btn btn-primary no-right" (click)="showAll()">
+  SHOW ALL
+</button>
+<p></p>
+<button class="btn btn-primary no-right" (click)="addNew()">
+  ADD NEW TASK
+</button>
+
+<hr />
+<p class="filter-title-small">Filters</p>
 <div class="test">
-    <input type="search" name="" id="" #search (input)="textSearch(search)" placeholder="Search...">
-    <button class="btn btn-default search-button">
-        <i class="glyphicon glyphicon-search"></i>
-    </button>
+  <input
+    type="search"
+    name=""
+    id=""
+    #search
+    (input)="textSearch(search)"
+    placeholder="Search..."
+  />
+  <button class="btn btn-default search-button">
+    <i class="glyphicon glyphicon-search"></i>
+  </button>
 </div>
-<hr>
-<ul class="list-group list-group-flush">
-    <li class="list-group-item">Status</li>
-    <li class="list-group-item" (click)="showAll()">All</li>
-    <li class="list-group-item list-group-item-success" (click)="statusSearch('done')">Done </li>
-    <li class="list-group-item list-group-item-warning" (click)="statusSearch('pending')">Pending &nbsp;&nbsp;&nbsp;&nbsp;</li>
-</ul>
-<ul class="list-group list-group-flush">
-    <li class="list-group-item">Categories</li>
-    <li class="list-group-item" (click)="showAll()">All</li>
-    <li class="list-group-item" (click)="categorySearch('Home')">Home &nbsp;&nbsp;&nbsp;&nbsp;</li>
-    <li class="list-group-item" (click)="categorySearch('School')">School</li>
-    <li class="list-group-item" (click)="categorySearch('Work')">Work</li>
-</ul>
-<hr>
-<input type="date" name="" id="" value="2020-01-01" #fromDate>
-<p style="padding-left: 25px; margin: 2px 0px; font-weight: 900; color: #aaa;">To</p>
-<input type="date" name="" id="" value="2020-12-31" #toDate>
-<button class="btn btn-primary" style="margin-top: 5px;" (click)="dateSearch(fromDate, toDate)">Search</button>
+<hr />
+
+<select (change)="categorySearch($event)">
+  <option value="" disabled>Select Category</option>
+  <option *ngFor="let option of categoryOptions" [value]="option.value">
+    {{ option.viewValue }}
+  </option>
+</select>
+
+<select (change)="statusSearch($event)">
+  <option value="" disabled>Select Status</option>
+  <option *ngFor="let option of statusOptions" [value]="option.value">
+    {{ option.viewValue }}
+  </option>
+</select>
+<hr />
+<p class="filter-title-small">Date Range Filter</p>
+<input type="date" name="" id="" value="2020-01-01" #fromDate />
+<p style="padding-left: 25px; margin: 2px 0px; font-weight: 900; color: #aaa;">
+  To
+</p>
+<input type="date" name="" id="" value="2020-12-31" #toDate />
+<button
+  class="btn btn-primary no-right"
+  style="margin-top: 5px;"
+  (click)="dateSearch(fromDate, toDate)"
+>
+  SEARCH BY DATE
+</button>

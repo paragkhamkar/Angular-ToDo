@@ -1,52 +1,201 @@
 <section class="form">
-    <h2>Sign-Up Form</h2>
-    <div class="clearfix"></div>
-    <div style="color: rgb(116, 113, 113);">All fields marked with an asterisk( <b style="color: red;">*</b> ) are required</div>
-    <hr>
-    <p class="valid">Valid. Please wait a moment.</p>
-    <p class="error">Error. Please enter correct Username &amp; password.</p>
-    
+  <h2>Sign-Up Form</h2>
+  <div class="clearfix"></div>
+  <div style="color: rgb(116, 113, 113);">
+    All fields marked with an asterisk( <b style="color: red;">*</b> ) are
+    required
+  </div>
+  <hr />
 
-    <form class="loginbox" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <p>Minimum 6 characters<span>*</span></p><p>Enter Valid Email<span>*</span></p>
-        <input formControlName="userName" placeholder="Username" type="text" id="username">
-        <input formControlName="email" placeholder="email" type="email">
-        <p>Minimum 8 characters<span>*</span></p><p>Enter Same Password<span>*</span></p>
-        <input formControlName="password" placeholder="Password" type="password" id="password">
-        <input formControlName="rePassword" placeholder="Re-enter Password" type="password" id="rePassword">
-        <p>Enter your first name<span>*</span></p><p>Enter your last name<span>*</span></p>
-        <input formControlName="firstName" placeholder="First name" type="text" id="firstname">
-        <input formControlName="lastName" placeholder="Last name" type="text" id="lastname">
+  <form class="loginbox" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <p class="info">Minimum 6 characters<span>*</span></p>
+    <p class="info">Enter Valid Email<span>*</span></p>
+    <input
+      formControlName="userName"
+      placeholder="Username"
+      type="text"
+      id="username"
+    />
+    <input formControlName="email" placeholder="email" type="email" />
+    <p
+      class="signup-error"
+      [ngClass]="{
+        'show-error':
+          !signupForm.get('userName').valid &&
+          signupForm.get('userName').touched
+      }"
+    >
+      Minimum 6 characters Required
+    </p>
+    <p
+      class="signup-error"
+      [ngClass]="{
+        'show-error':
+          !signupForm.get('email').valid && signupForm.get('email').touched
+      }"
+    >
+      Please Enter Valid Email-Id
+    </p>
 
-        <div id="genderholder">
-            <p class="gender">Select Gender</p>
+    <p class="info">Minimum 8 characters<span>*</span></p>
+    <p class="info">Enter Same Password<span>*</span></p>
+    <input
+      formControlName="password"
+      placeholder="Password"
+      type="password"
+      id="password"
+    />
+    <input
+      formControlName="rePassword"
+      placeholder="Re-enter Password"
+      type="password"
+      id="rePassword"
+    />
+    <p
+      class="signup-error"
+      [ngClass]="{
+        'show-error':
+          !signupForm.get('password').valid &&
+          signupForm.get('password').touched
+      }"
+    >
+      Minimum 8 Characters Required
+    </p>
+    <p
+      class="signup-error"
+      [ngClass]="{
+        'show-error':
+          signupForm.get('password').value !=
+            signupForm.get('rePassword').value &&
+          signupForm.get('password').touched
+      }"
+    >
+      Provide The Same Password
+    </p>
+    <p class="info">Enter your first name<span>*</span></p>
+    <p class="info">Enter your last name<span>*</span></p>
+    <input
+      formControlName="firstName"
+      placeholder="First name"
+      type="text"
+      id="firstname"
+    />
+    <input
+      formControlName="lastName"
+      placeholder="Last name"
+      type="text"
+      id="lastname"
+    />
+    <p
+      class="signup-error"
+      [ngClass]="{
+        'show-error':
+          !signupForm.get('firstName').valid &&
+          signupForm.get('firstName').touched
+      }"
+    >
+      Please Enter Your First Name
+    </p>
+    <p
+      class="signup-error"
+      [ngClass]="{
+        'show-error':
+          !signupForm.get('lastName').valid &&
+          signupForm.get('lastName').touched
+      }"
+    >
+      Please Enter Your Last Name
+    </p>
 
-            <div (click)="selectGender(female)">
-                <input #female formControlName="gender" [checked]="true" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Female">
-                Female
-            </div>
-            
-            <div (click)="selectGender(male)">
-                <input #male formControlName="gender" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Male">
-                Male
-            </div>
-            
-            <div (click)="selectGender(other)">
-                <input #other formControlName="gender" (click)="selectedGender = ''" class="no-margin" placeholder="Username" type="radio" name="gender" value="Other">
-                Other
-            </div>
+    <div id="genderholder">
+      <p class="gender">Select Gender</p>
 
-        </div>
+      <div (click)="selectGender(female)">
+        <input
+          #female
+          formControlName="gender"
+          [checked]="true"
+          (click)="selectedGender = ''"
+          class="no-margin"
+          placeholder="Username"
+          type="radio"
+          name="gender"
+          value="Female"
+          checked
+        />
+        Female
+      </div>
 
-        <textarea formControlName="address" placeholder="Address" rows="8" type="text"></textarea>
-        <hr>
-    <div class="imageDiv">
-        <h6>Select Profile Picture</h6>
-        <input class="userImage" formControlName="userImage" type="file" (change)="setImage($event)" accept="image/*" name="" id="">
-        <img [src]="imageURL" alt="kjavbksd">        
+      <div (click)="selectGender(male)">
+        <input
+          #male
+          formControlName="gender"
+          (click)="selectedGender = ''"
+          class="no-margin"
+          placeholder="Username"
+          type="radio"
+          name="gender"
+          value="Male"
+        />
+        Male
+      </div>
+
+      <div (click)="selectGender(other)">
+        <input
+          #other
+          formControlName="gender"
+          (click)="selectedGender = ''"
+          class="no-margin"
+          placeholder="Username"
+          type="radio"
+          name="gender"
+          value="Other"
+        />
+        Other
+      </div>
     </div>
-    <hr>
-        <button type="submit" id="signup" [ngClass]="{disabled:!signupForm.valid || isLoading, signup:signupForm.valid || !isLoading}" [disabled]="!signupForm.valid || isLoading">Sign Up</button>
-        <button type="reset" id="signup" [ngClass]="{disabled:!signupForm.touched || isLoading, signup:signupForm.touched || !isLoading}">Reset</button>
-    </form>
+
+    <textarea
+      formControlName="address"
+      placeholder="Address"
+      rows="8"
+      type="text"
+    ></textarea>
+    <hr />
+    <div class="imageDiv">
+      <h6>Select Profile Picture</h6>
+      <input
+        class="userImage"
+        formControlName="userImage"
+        type="file"
+        (change)="setImage($event)"
+        accept="image/*"
+        name=""
+        id=""
+      />
+      <img [src]="imageURL" alt="kjavbksd" />
+    </div>
+    <hr />
+    <button
+      type="submit"
+      id="signup"
+      [ngClass]="{
+        disabled: !signupForm.valid || isLoading,
+        signup: signupForm.valid || !isLoading
+      }"
+      [disabled]="!signupForm.valid || isLoading"
+    >
+      Sign Up
+    </button>
+    <button
+      type="reset"
+      id="signup"
+      [ngClass]="{
+        disabled: !signupForm.touched || isLoading,
+        signup: signupForm.touched || !isLoading
+      }"
+    >
+      Reset
+    </button>
+  </form>
 </section>

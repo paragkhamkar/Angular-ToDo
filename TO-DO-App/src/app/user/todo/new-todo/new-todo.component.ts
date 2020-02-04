@@ -5,6 +5,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { TodoItem } from 'src/app/shared/data.model';
 import { MessagesService } from 'src/app/shared/services/messages.service';
 import { Subscription } from 'rxjs';
+import { TodoComponent } from '../todo.component';
+import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 
 @Component({
   selector: 'app-new-todo',
@@ -24,9 +26,11 @@ export class NewTodoComponent implements OnInit, OnDestroy {
   constructor(
     private message: MessagesService,
     private todoService: TodoDataService,
+    private filterService: TodoFilterService,
     private router: Router,
     private route: ActivatedRoute
   ) {
+    filterService.getDataAvailability.next(true);
     todoService.showFilters.next(false);
     this.editMode = false;
     this.viewMode = false;
@@ -76,14 +80,15 @@ export class NewTodoComponent implements OnInit, OnDestroy {
   }
 
   toDate(date: Date) {
-    let dayOfMonth = '';
-    if (Number(date.getDate()) < 10) {
-      dayOfMonth = '0' + date.getDate();
-    } else {
-      dayOfMonth = '' + date.getDate();
-    }
-    console.log(dayOfMonth);
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + dayOfMonth;
+    return (
+      date.getFullYear() +
+      '-' +
+      (date.getMonth() + 1 < 10
+        ? '0' + (date.getMonth() + 1)
+        : date.getMonth() + 1) +
+      '-' +
+      (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    );
   }
 
   submit() {
@@ -91,8 +96,8 @@ export class NewTodoComponent implements OnInit, OnDestroy {
       owner: this.todoService.activeUser,
       title: this.todoForm.value.title,
       desc: this.todoForm.value.desc || 'No Description',
-      dueDate: this.todoForm.value.dueDate,
-      reminderDate: this.todoForm.value.reminderDate,
+      dueDate: this.toDate(new Date(this.todoForm.value.dueDate)),
+      reminderDate: this.toDate(new Date(this.todoForm.value.reminderDate)),
       category:
         this.todoForm.value.category == null
           ? 'Home'

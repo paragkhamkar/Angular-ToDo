@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class TodoComponent implements OnInit, OnDestroy {
   dataAvaliable = true;
-  showMenu: boolean;
+  showMenu = true;
   showFilter: Subscription;
   getAvailability: Subscription;
 

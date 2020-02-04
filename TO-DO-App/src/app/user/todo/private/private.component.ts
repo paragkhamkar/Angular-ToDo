@@ -19,15 +19,9 @@ export class PrivateComponent implements OnInit, OnDestroy {
   todos: TodoItem[];
   allSelected = false;
   dataAvailable = false;
+  selectedRow = -1;
   selected = [];
-  testString = [
-    'ascjakjshckjshc',
-    '089ascjakjshckjshc',
-    'wef4t34ascjakjshckjshc',
-    'dfbdfbascjakjshckjshc',
-    '34t34t34ascjakjshckjshc',
-    'w4teckjshc'
-  ];
+  titleString = [];
   getTodo: Subscription;
   getFiltered: Subscription;
   pendingSelectedList = [];
@@ -50,7 +44,7 @@ export class PrivateComponent implements OnInit, OnDestroy {
       this.makeShorterTodo(value);
     });
     this.getFiltered = todoFilter.getFilteredTodo.subscribe(value => {
-      this.makeShorterTodo;
+      this.makeShorterTodo(value);
     });
   }
 
@@ -59,14 +53,18 @@ export class PrivateComponent implements OnInit, OnDestroy {
   }
 
   private makeShorterTodo(todoItems: TodoItem[]) {
-    let test = todoItems.slice();
-    for (const todoItem of test) {
+    this.titleString = [];
+    for (const todoItem of todoItems) {
+      this.titleString.push(todoItem.title);
       if (todoItem.title.length > 20) {
-        todoItem.title = todoItem.title.slice(0, 20);
-        todoItem.title += '....';
+        this.titleString[this.titleString.length - 1] = todoItem.title.slice(
+          0,
+          20
+        );
+        this.titleString[this.titleString.length - 1] += '....';
       }
     }
-    this.todos = test.slice();
+    this.todos = todoItems;
   }
 
   // private navigate(id) {
@@ -186,10 +184,9 @@ export class PrivateComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      let selectedRow = document.getElementById(index);
-      selectedRow.style.backgroundColor = 'yellow';
+      this.selectedRow = index;
       setTimeout(() => {
-        selectedRow.style.backgroundColor = 'white';
+        this.selectedRow = -1;
       }, 1500);
     });
   }
