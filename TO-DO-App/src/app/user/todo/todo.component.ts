@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TodoDataService } from 'src/app/shared/services/todo-data.service';
 import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
-import { Subscribable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,10 +10,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./todo.component.css']
 })
 export class TodoComponent implements OnInit, OnDestroy {
+  recordsAvailable = true;
   dataAvaliable = true;
   showMenu = true;
   showFilter: Subscription;
-  getAvailability: Subscription;
+  isFilteredDataAvailable: Subscription;
+  isRecordAvailable: Subscription;
 
   constructor(
     private todoService: TodoDataService,
@@ -23,8 +25,11 @@ export class TodoComponent implements OnInit, OnDestroy {
     this.showFilter = this.todoService.showFilters.subscribe(
       value => (this.showMenu = value)
     );
-    this.getAvailability = filterService.getDataAvailability.subscribe(
+    this.isFilteredDataAvailable = filterService.getDataAvailability.subscribe(
       value => (this.dataAvaliable = value)
+    );
+    this.isRecordAvailable = todoService.isRecordAvailabe.subscribe(
+      value => (this.recordsAvailable = value)
     );
   }
 
@@ -39,12 +44,14 @@ export class TodoComponent implements OnInit, OnDestroy {
   ngOnInit() {}
   addNew() {
     this.dataAvaliable = true;
+    this.recordsAvailable = true;
+    this.showMenu = false;
     this.router.navigate([
       '/user/' + this.todoService.activeUser + '/todo/new-todo'
     ]);
   }
   ngOnDestroy() {
     this.showFilter.unsubscribe();
-    this.getAvailability.unsubscribe();
+    this.isFilteredDataAvailable.unsubscribe();
   }
 }

@@ -28,8 +28,10 @@ export class NewTodoComponent implements OnInit, OnDestroy {
     private todoService: TodoDataService,
     private filterService: TodoFilterService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private todoComponent: TodoComponent
   ) {
+    todoComponent.showMenu = false;
     filterService.getDataAvailability.next(true);
     todoService.showFilters.next(false);
     this.editMode = false;
@@ -38,7 +40,6 @@ export class NewTodoComponent implements OnInit, OnDestroy {
       this.viewId = params.view;
       this.todoId = params.id;
     });
-    todoService.showFilters.next(false);
   }
 
   goBack() {

@@ -1,0 +1,27 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand test"
+        ><img
+          src="../../assets/angular.svg"
+          class="rounded-circle"
+          width="50px"
+          alt=""
+      /></span>
+      <span class="navbar-brand">TO-DO App</span>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li *ngIf="isLoginPage">
+        <a routerLink="/auth/signup"
+          ><span class="glyphicon glyphicon-user"></span> Sign Up</a
+        >
+      </li>
+      <li *ngIf="!isLoginPage">
+        <a routerLink="/auth/login"
+          ><span class="glyphicon glyphicon-log-in"></span> Login</a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>
+<router-outlet></router-outlet>

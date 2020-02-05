@@ -1,0 +1,23 @@
+<section class="form">
+  <h2>Login To Your Account</h2>
+  <hr />
+  <form class="loginbox" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <input
+      placeholder="Username"
+      formControlName="email"
+      type="text"
+      id="username"
+    />
+    <input
+      placeholder="Password"
+      formControlName="password"
+      type="password"
+      id="password"
+    />
+    <input type="submit" value="Login" id="login" />
+  </form>
+  <hr />
+  <p>
+    New User? &nbsp;&nbsp;<a routerLink="/auth/signup">Signup for an account</a>
+  </p>
+</section>

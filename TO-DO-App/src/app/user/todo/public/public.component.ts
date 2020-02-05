@@ -5,6 +5,7 @@ import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
 import { TodoItem } from 'src/app/shared/data.model';
 import { Subscription } from 'rxjs';
+import { TodoComponent } from '../todo.component';
 
 @Component({
   selector: 'app-public',
@@ -24,8 +25,12 @@ export class PublicComponent implements OnInit, OnDestroy {
     private todoService: TodoDataService,
     private userauth: UserAuthService,
     private todoFilter: TodoFilterService,
-    private message: MessagesService
+    private message: MessagesService,
+    private todoComponent: TodoComponent
   ) {
+    this.todoService.showFilters.next(true);
+    this.todoService.prepareData();
+    todoComponent.showMenu = true;
     todoService.isPublicPage(true);
     todoFilter.isPublicPage(true);
     this.owner = todoService.activeUser;
@@ -112,8 +117,8 @@ export class PublicComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.todoService.showFilters.next(true);
     this.todoService.prepareData();
+    // this.todoService.isRecordAvailabe.next(false);
   }
 
   ngOnDestroy() {

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router, CanActivate } from '@angular/router';
 import { MessagesService } from './messages.service';
 import { TodoItem, TodoObject } from '../data.model';
-import { TodoFilterService } from './todo-filter.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +11,19 @@ import { TodoFilterService } from './todo-filter.service';
 export class TodoDataService {
   private publicTodoData: TodoObject;
   private privateTodoData: TodoObject;
-  publicDataAvialable: Subject<boolean>;
-  privateDataAvailable: Subject<boolean>;
 
+  // publicDataAvialable = new Subject<boolean>();
+  // privateDataAvailable = new Subject<boolean>();
+  // isTodo = new Subject<boolean>();
+  // isPrivateDataAvailable = new Subject<boolean>();
+  // isPublicDataAvailable = new Subject<boolean>();
+
+  getUpdatedPrivateTodo = new Subject<TodoItem[]>();
+  getUpdatedPublicTodo = new Subject<TodoItem[]>();
+  showFilters = new Subject<boolean>();
+  isRecordAvailabe = new Subject<boolean>();
+
+  isPublic = false;
   activeUser = '';
 
   constructor(
@@ -23,11 +32,10 @@ export class TodoDataService {
     private message: MessagesService
   ) {}
 
-  getUpdatedPrivateTodo = new Subject<TodoItem[]>();
-  getUpdatedPublicTodo = new Subject<TodoItem[]>();
-  showFilters = new Subject<boolean>();
-  isTodo = new Subject<boolean>();
-  isPublic = false;
+  getPrivateRecordAvailability() {
+    // if(this.privateTodoData.length){
+    // } this.isRecordAvailabe.next() : this.isRecordAvailabe.next();
+  }
 
   logout() {
     this.activeUser = '';
@@ -70,11 +78,33 @@ export class TodoDataService {
     this.http
       .get('https://angular-todo-2f483.firebaseio.com/publicToDo.json')
       .subscribe((result: TodoObject) => {
-        if (result) {
-          this.publicTodoData = result;
-        } else {
-        }
+        this.publicTodoData = result;
+        this.prepareData();
       }, this.failedToUpdate);
+  }
+
+  prepareData() {
+    console.log('inside prepare data');
+    this.isRecordAvailabe.next(false);
+    const todo: TodoItem[] = [];
+    const test = this.isPublic ? this.publicTodoData : this.privateTodoData;
+    // if (test === undefined || test === null) {
+    //   this.isRecordAvailabe.next(false);
+    //   return false;
+    // }
+    for (const todoItem in test) {
+      if (test[todoItem].status !== 'deleted') {
+        todo.push(test[todoItem]);
+      }
+    }
+    console.log('Length Outsize: ', todo);
+
+    if (todo.length > 0) {
+      this.isRecordAvailabe.next(true);
+      this.isPublic
+        ? this.getUpdatedPublicTodo.next(todo)
+        : this.getUpdatedPrivateTodo.next(todo);
+    }
   }
 
   getItem(id) {
@@ -129,26 +159,6 @@ export class TodoDataService {
         },
         err => console.log('Error')
       );
-  }
-
-  setIsToDo(value: boolean) {
-    this.showFilters.next(value);
-  }
-
-  prepareData() {
-    const todo: TodoItem[] = [];
-    const test = this.isPublic ? this.publicTodoData : this.privateTodoData;
-    if (test === undefined) {
-      return this.isTodo.next(false);
-    }
-    for (const todoItem in test) {
-      if (test[todoItem].status !== 'deleted') {
-        todo.push(test[todoItem]);
-      }
-    }
-    this.isPublic
-      ? this.getUpdatedPublicTodo.next(todo.slice())
-      : this.getUpdatedPrivateTodo.next(todo.slice());
   }
 
   addTodo(todoItem: TodoItem) {

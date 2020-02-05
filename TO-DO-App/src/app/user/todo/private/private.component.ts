@@ -7,6 +7,7 @@ import { TodoItem } from 'src/app/shared/data.model';
 import { Subscription } from 'rxjs';
 import { TodoinfoComponent } from '../modals/todoinfo/todoinfo.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TodoComponent } from '../todo.component';
 
 @Component({
   selector: 'app-private',
@@ -33,21 +34,26 @@ export class PrivateComponent implements OnInit, OnDestroy {
     private userauth: UserAuthService,
     private todoFilter: TodoFilterService,
     private message: MessagesService,
+    private todoComponent: TodoComponent,
     public dialog: MatDialog
   ) {
+    todoComponent.showMenu = true;
     todoService.isPublicPage(false);
     todoFilter.isPublicPage(false);
+
     this.getTodo = todoService.getUpdatedPrivateTodo.subscribe(value => {
       this.makeShorterTodo(value);
     });
     this.getFiltered = todoFilter.getFilteredTodo.subscribe(value => {
       this.makeShorterTodo(value);
     });
+
+    this.todoService.prepareData();
   }
 
   ngOnInit() {
+    // this.todoService.isRecordAvailabe.next(false);
     this.todoService.showFilters.next(true);
-    this.todoService.prepareData();
   }
 
   private makeShorterTodo(todoItems: TodoItem[]) {
@@ -68,6 +74,10 @@ export class PrivateComponent implements OnInit, OnDestroy {
   // private navigate(id) {
   //   this.todoService.view(id);
   // }
+
+  private canOnlyDelete() {
+    this.message.infoMessage('You can only delete this todo item');
+  }
 
   private editTodo(event) {
     this.todoService.edit(event.target.id);
@@ -196,7 +206,6 @@ export class PrivateComponent implements OnInit, OnDestroy {
     } else {
       dayOfMonth = '' + date.getDate();
     }
-    console.log(dayOfMonth);
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + dayOfMonth;
   }
 

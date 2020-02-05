@@ -105,16 +105,8 @@ export class UserAuthService {
       .get('https://angular-todo-2f483.firebaseio.com/users/' + id + '.json')
       .subscribe(
         (result: UserDetails) => {
-          if (result === null) {
-            localStorage.clear();
-            alert('Local Storage Manipulated .. Logging you out');
-            this.router.navigate(['/auth/login']);
-            this.isValidUser = 'invalid';
-          } else {
-            this.isValidUser = 'valid';
-            this.userDetails = result;
-            this.getUserInfo.next(this.userDetails);
-          }
+          this.userDetails = result;
+          this.getUserInfo.next(this.userDetails);
         },
         err => {
           this.showError(err);

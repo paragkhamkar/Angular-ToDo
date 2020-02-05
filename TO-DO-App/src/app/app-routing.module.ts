@@ -17,34 +17,50 @@ import { AuthGuard } from './auth.guard';
 import { TrashComponent } from './user/todo/trash/trash.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
   {
     path: 'auth',
-    component: UserAuthComponent,
-    children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'signup', component: SignupComponent }
-    ]
+    loadChildren: () =>
+      import('./modules/auth/auth.module').then(m => m.AuthModule)
+  },
+  // {
+  //   path: 'auth',
+  //   component: UserAuthComponent,
+  //   children: [
+  //     { path: 'login', component: LoginComponent },
+  //     { path: 'signup', component: SignupComponent }
+  //   ]
+  // },
+  // {
+  //   path: 'user/:username',
+  //   component: UserComponent,
+  //   children: [
+  //     { path: 'profile', component: ProfileComponent },
+  //     {
+  //       path: 'todo',
+  //       component: TodoComponent,
+  //       children: [
+  //         { path: 'trash', component: TrashComponent },
+  //         { path: 'public', component: PublicComponent },
+  //         { path: 'private', component: PrivateComponent },
+  //         { path: 'new-todo', component: NewTodoComponent },
+  //         { path: 'edit/:id', component: NewTodoComponent },
+  //         { path: ':view', component: NewTodoComponent }
+  //       ]
+  //     }
+  //   ]
+  // },
+  {
+    path: 'user-profile',
+    loadChildren: () =>
+      import('./modules/user/user.module').then(m => m.UserModule)
   },
   {
-    path: 'user/:username',
-    component: UserComponent,
-    children: [
-      { path: 'profile', component: ProfileComponent },
-      {
-        path: 'todo',
-        component: TodoComponent,
-        children: [
-          { path: 'trash', component: TrashComponent },
-          { path: 'public', component: PublicComponent },
-          { path: 'private', component: PrivateComponent },
-          { path: 'new-todo', component: NewTodoComponent },
-          { path: 'edit/:id', component: NewTodoComponent },
-          { path: ':view', component: NewTodoComponent }
-        ]
-      }
-    ]
+    path: 'todo',
+    loadChildren: () =>
+      import('./modules/todo/todo.module').then(m => m.TodoModule)
   },
+
   { path: '**', component: PageNotFoundComponent }
 ];
 
