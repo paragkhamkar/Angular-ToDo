@@ -4,11 +4,9 @@ import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
 import { TodoItem } from 'src/app/shared/data.model';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TodoinfoComponent } from '../modals/todoinfo/todoinfo.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-private',
@@ -16,18 +14,18 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrls: ['./private.component.css']
 })
 export class PrivateComponent implements OnInit, OnDestroy {
+  pendingSelectedList: string[] = [];
+  doneSelectedList: string[] = [];
+  titleString: string[] = [];
   todos: TodoItem[];
+  getFiltered: Subscription;
+  getTodo: Subscription;
+  allowDone = false;
+  allowDelete = false;
   allSelected = false;
   dataAvailable = false;
   selectedRow = -1;
-  selected = [];
-  titleString = [];
-  getTodo: Subscription;
-  getFiltered: Subscription;
-  pendingSelectedList = [];
-  doneSelectedList = [];
-  allowDone = false;
-  allowDelete = false;
+
   today = this.toDate(new Date());
 
   constructor(
@@ -37,7 +35,6 @@ export class PrivateComponent implements OnInit, OnDestroy {
     private message: MessagesService,
     public dialog: MatDialog
   ) {
-    todoService.showFilters.next(true);
     todoService.isPublicPage(false);
     todoFilter.isPublicPage(false);
     this.getTodo = todoService.getUpdatedPrivateTodo.subscribe(value => {
@@ -49,6 +46,7 @@ export class PrivateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.todoService.showFilters.next(true);
     this.todoService.prepareData();
   }
 

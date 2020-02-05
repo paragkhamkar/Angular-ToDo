@@ -21,7 +21,6 @@ export class UserAuthComponent implements OnInit {
     if (localStorage.getItem('localId') == null) {
       router.navigate(['/auth/login']);
     } else {
-      message.successMessage('Redirecting to Dashboard');
       router.navigate([
         '/user/' + localStorage.getItem('localId') + '/todo/private'
       ]);

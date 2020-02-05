@@ -17,31 +17,24 @@ export class LoginComponent implements OnInit {
   email = '';
   password = '';
   success = false;
-  defaultErrorMessages = [
-    'EMAIL_NOT_FOUND',
-    'INVALID_PASSWORD',
-    'USER_DISABLED'
-  ];
 
   constructor(
     private userauth: UserAuthService,
     private router: Router,
     private messageService: MessagesService,
     private todoService: TodoDataService,
-    private test: UserAuthComponent
+    private userComponent: UserAuthComponent
   ) {
-    test.isLoginPage = true;
-    this.messageService.deactivateSpinner();
-  }
-
-  ngOnInit() {
+    userComponent.isLoginPage = true;
     this.messageService.deactivateSpinner();
     if (this.todoService.activeUser !== '') {
       this.router.navigate([
         '/user/' + this.todoService.activeUser + '/todo/private'
       ]);
     }
+  }
 
+  ngOnInit() {
     this.loginForm = new FormGroup({
       email: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required)

@@ -24,17 +24,11 @@ export class UserComponent implements OnInit {
     } else {
       todoService.activeUser = localStorage.getItem('localId');
       todoService.getTodos();
-      userService.getUserDetails(localStorage.getItem('localId'));
-      // if (userService.getUserDetails(localStorage.getItem('localId'))) {
-      //   router.navigate([
-      //     '/user/' + localStorage.getItem('localId') + '/todo/private'
-      //   ]);
-      // }
+      userService.getUserDetails(todoService.activeUser);
     }
   }
 
   ngOnInit() {
-    this.messageService.infoMessage('Fetching Todo Items');
     this.messageService.deactivateSpinner();
   }
 }

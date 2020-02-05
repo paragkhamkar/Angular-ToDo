@@ -34,8 +34,7 @@
         <input
           #female
           formControlName="gender"
-          [checked]="true"
-          (click)="selectedGender = ''"
+          (click)="selectedGender = 'Female'"
           class="no-margin"
           placeholder="Username"
           type="radio"
@@ -49,7 +48,7 @@
         <input
           #male
           formControlName="gender"
-          (click)="selectedGender = ''"
+          (click)="selectedGender = 'Male'"
           class="no-margin"
           placeholder="Username"
           type="radio"
@@ -63,7 +62,7 @@
         <input
           #other
           formControlName="gender"
-          (click)="selectedGender = ''"
+          (click)="selectedGender = 'Other'"
           class="no-margin"
           placeholder="Username"
           type="radio"

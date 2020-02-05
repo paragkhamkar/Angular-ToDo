@@ -26,7 +26,6 @@ export class PublicComponent implements OnInit, OnDestroy {
     private todoFilter: TodoFilterService,
     private message: MessagesService
   ) {
-    todoService.showFilters.next(true);
     todoService.isPublicPage(true);
     todoFilter.isPublicPage(true);
     this.owner = todoService.activeUser;
@@ -113,6 +112,7 @@ export class PublicComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.todoService.showFilters.next(true);
     this.todoService.prepareData();
   }
 

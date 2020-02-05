@@ -12,19 +12,14 @@ import { UserAuthComponent } from '../user-auth.component';
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   selectedGender = 'Female';
-  imageURL: any = '../../../assets/angular.svg';
-  defaultErrorMessage = [
-    'EMAIL_EXISTS',
-    'OPERATION_NOT_ALLOWED',
-    'TOO_MANY_ATTEMPTS_TRY_LATER'
-  ];
+  imageURL: string | ArrayBuffer = '../../../assets/angular.svg';
 
   constructor(
     private authService: UserAuthService,
     private messageService: MessagesService,
-    private test: UserAuthComponent
+    private userComponent: UserAuthComponent
   ) {
-    test.isLoginPage = false;
+    userComponent.isLoginPage = false;
   }
 
   ngOnInit() {
@@ -70,7 +65,7 @@ export class SignupComponent implements OnInit {
   onSubmit() {
     if (this.signupForm.valid) {
       if (this.signupForm.value.password !== this.signupForm.value.rePassword) {
-        this.messageService.errorMessage('Please Enter Same Password');
+        this.messageService.errorMessage("Passwords didn't matched");
         return false;
       }
       const userDetails = {
@@ -79,10 +74,7 @@ export class SignupComponent implements OnInit {
         password: this.signupForm.value.password,
         firstName: this.signupForm.value.firstName,
         lastName: this.signupForm.value.lastName,
-        gender:
-          this.selectedGender === ''
-            ? this.signupForm.value.gender
-            : this.selectedGender,
+        gender: this.selectedGender,
         address: this.signupForm.value.address,
         userImage: this.imageURL
       };

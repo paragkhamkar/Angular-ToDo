@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TodoDataService } from './todo-data.service';
 import { TodoItem } from '../data.model';
+import { MessagesService } from './messages.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,10 @@ export class TodoFilterService {
   todo: TodoItem[] = [];
   isPublic = false;
 
-  constructor(private todoService: TodoDataService) {
+  constructor(
+    private todoService: TodoDataService,
+    private message: MessagesService
+  ) {
     todoService.getUpdatedPrivateTodo.subscribe(value => {
       if (!this.isPublic) {
         this.todo = value;
@@ -35,7 +39,9 @@ export class TodoFilterService {
     if (this.todo) {
       this.getFilteredTodo.next(this.todo.slice());
       this.getDataAvailability.next(true);
+      this.message.infoMessage('Showing All todo items');
     } else {
+      this.message.infoMessage('Nothing To Show');
       this.getDataAvailability.next(false);
     }
   }
@@ -50,16 +56,16 @@ export class TodoFilterService {
       }
       if (todoItems.length > 0) {
         this.getFilteredTodo.next(todoItems);
+        this.message.infoMessage('Search Result for ' + type + ' : ' + value);
         this.getDataAvailability.next(true);
       } else {
+        this.message.infoMessage('Nothing To Show');
         this.getDataAvailability.next(false);
       }
     }
   }
 
   textSearch(text) {
-    console.log(text);
-    console.log(this.todo);
     const searchKey = text.toLowerCase();
     const todoItems: TodoItem[] = [];
     if (this.todo) {
@@ -71,14 +77,19 @@ export class TodoFilterService {
           title.toLowerCase().search(searchKey) > -1 ||
           desc.toLowerCase().search(searchKey) > -1
         ) {
-          console.log('Title : ', title);
           todoItems.push(todoItem);
         }
       }
       if (todoItems.length > 0) {
         this.getFilteredTodo.next(todoItems);
+        if (text === '') {
+          this.message.infoMessage('Showing All Todo Items');
+        } else {
+          this.message.infoMessage('Search Result for : ' + text);
+        }
         this.getDataAvailability.next(true);
       } else {
+        this.message.infoMessage('Nothing To Show');
         this.getDataAvailability.next(false);
       }
     }

@@ -14,9 +14,9 @@ import { UserDetails } from 'src/app/shared/data.model';
 export class ProfileComponent implements OnInit {
   profile: FormGroup;
   imageURL: string | ArrayBuffer = '../../../assets/angular.svg';
-  selectedGender: string;
   userDetails: UserDetails;
   userFetched = false;
+  selectedGender = '';
 
   constructor(
     private router: Router,
@@ -29,16 +29,16 @@ export class ProfileComponent implements OnInit {
     if (authService.userDetails != null) {
       this.userDetails = authService.userDetails;
       this.userFetched = true;
+      this.loadDetails();
       messageService.deactivateSpinner();
     } else {
       authService.getUserInfo.subscribe(value => {
         this.userDetails = value;
         this.userFetched = true;
+        this.loadDetails();
         messageService.deactivateSpinner();
       });
-      messageService.errorMessage(
-        'Unbale To Fetch Details .. wait for some time'
-      );
+      messageService.infoMessage('Fetching Details .. wait for some time');
     }
   }
 
@@ -50,10 +50,9 @@ export class ProfileComponent implements OnInit {
       'private'
     ]);
   }
-  ngOnInit() {
-    this.imageURL = this.userDetails.userImage;
 
-    console.log(this.imageURL);
+  loadDetails() {
+    this.imageURL = this.userDetails.userImage;
     this.profile = new FormGroup({
       userName: new FormControl(
         { value: this.userDetails.userName, disabled: true },
@@ -79,6 +78,7 @@ export class ProfileComponent implements OnInit {
       ? this.userDetails.userImage
       : '../../../assets/angular.svg';
   }
+  ngOnInit() {}
 
   selectGender(gender: HTMLInputElement) {
     this.selectedGender = gender.value;
@@ -95,8 +95,8 @@ export class ProfileComponent implements OnInit {
         lastName: this.profile.value.lastName,
         gender:
           this.selectedGender === ''
-            ? this.selectedGender
-            : this.userDetails.gender,
+            ? this.userDetails.gender
+            : this.selectedGender,
         address: this.profile.value.address,
         userImage: this.imageURL
       };
@@ -111,9 +111,7 @@ export class ProfileComponent implements OnInit {
   setImage(event) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
-      console.log(reader);
       reader.readAsDataURL(event.target.files[0]);
-      console.log(reader);
       reader.onload = () => {
         this.imageURL = reader.result;
       };

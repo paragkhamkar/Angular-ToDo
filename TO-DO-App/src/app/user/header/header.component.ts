@@ -32,14 +32,14 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['./profile'], { relativeTo: this.route });
         break;
       default:
-        this.router.navigate(['./todo/trash'], { relativeTo: this.route });
+        this.messageService.errorMessage('Access Denied');
+      // this.router.navigate(['./todo/trash'], { relativeTo: this.route });
     }
   }
 
   logout() {
     this.messageService.successMessage('Logged Out Successfully');
     localStorage.clear();
-    this.todoService.activeUser = '';
-    this.router.navigate(['/auth/login']);
+    this.todoService.logout();
   }
 }

@@ -1,0 +1,17 @@
+app.module.ts
+app.component.ts
+
+user-auth
+    user-auth.component.ts
+        signup.component.ts
+        login.component.ts
+
+user
+    user.component.ts
+        header.componet.ts
+        todo
+            todo.component.ts
+                left-menu.component.ts
+                modals
+                    todoinfo.component.ts
+                    

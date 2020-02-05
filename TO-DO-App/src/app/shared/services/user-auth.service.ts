@@ -113,7 +113,6 @@ export class UserAuthService {
           } else {
             this.isValidUser = 'valid';
             this.userDetails = result;
-            this.messageService.successMessage('Profile Data Loaded');
             this.getUserInfo.next(this.userDetails);
           }
         },

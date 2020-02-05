@@ -24,12 +24,8 @@ export class TodoComponent implements OnInit, OnDestroy {
       value => (this.showMenu = value)
     );
     this.getAvailability = filterService.getDataAvailability.subscribe(
-      value => {
-        console.log('value changed : ', value);
-        this.dataAvaliable = value;
-      }
+      value => (this.dataAvaliable = value)
     );
-    this.todoService.showFilters.next(true);
   }
 
   gotoTop() {
@@ -42,7 +38,6 @@ export class TodoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
   addNew() {
-    console.log('kcajscksjn');
     this.dataAvaliable = true;
     this.router.navigate([
       '/user/' + this.todoService.activeUser + '/todo/new-todo'

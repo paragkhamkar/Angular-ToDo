@@ -10,8 +10,8 @@ import { TodoFilterService } from './todo-filter.service';
   providedIn: 'root'
 })
 export class TodoDataService {
-  publicTodoData: TodoObject;
-  privateTodoData: TodoObject;
+  private publicTodoData: TodoObject;
+  private privateTodoData: TodoObject;
   publicDataAvialable: Subject<boolean>;
   privateDataAvailable: Subject<boolean>;
 
@@ -28,6 +28,14 @@ export class TodoDataService {
   showFilters = new Subject<boolean>();
   isTodo = new Subject<boolean>();
   isPublic = false;
+
+  logout() {
+    this.activeUser = '';
+    this.publicTodoData = null;
+    this.privateTodoData = null;
+    this.message.successMessage('Logged Out Successfully');
+    this.router.navigate(['/auth/login']);
+  }
 
   isPublicPage(value) {
     this.isPublic = value;

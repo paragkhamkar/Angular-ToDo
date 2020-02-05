@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TodoFilterService } from 'src/app/shared/services/todo-filter.service';
 import { TodoDataService } from 'src/app/shared/services/todo-data.service';
-import { MatSelectModule } from '@angular/material/select';
-import { MatLabel } from '@angular/material/form-field';
-import { MatOption } from '@angular/material/core';
 
 @Component({
   selector: 'app-left-menu',
@@ -15,7 +12,6 @@ export class LeftMenuComponent implements OnInit {
   statusOptions = [];
   categoryOptions = [];
   constructor(
-    private option: MatSelectModule,
     private router: Router,
     private todoFilter: TodoFilterService,
     private todoService: TodoDataService
@@ -23,8 +19,7 @@ export class LeftMenuComponent implements OnInit {
     this.statusOptions = [
       { value: 'showAll', viewValue: 'Show All' },
       { value: 'done', viewValue: 'Done' },
-      { value: 'pending', viewValue: 'Pending' },
-      { value: 'overdue', viewValue: 'OverDue' }
+      { value: 'pending', viewValue: 'Pending' }
     ];
     this.categoryOptions = [
       { value: 'showAll', viewValue: 'Show All' },
@@ -51,12 +46,22 @@ export class LeftMenuComponent implements OnInit {
     ]);
   }
 
-  categorySearch(data) {
-    this.todoFilter.filterSearch('category', data.target.value);
+  categorySearch(event) {
+    if (event.target.value === 'showAll') {
+      this.showAll();
+    } else {
+      this.todoFilter.filterSearch('category', event.target.value);
+    }
+    event.target.selectedIndex = 0;
   }
 
-  statusSearch(data) {
-    this.todoFilter.filterSearch('status', data.target.value);
+  statusSearch(event) {
+    if (event.target.value === 'showAll') {
+      this.showAll();
+    } else {
+      this.todoFilter.filterSearch('status', event.target.value);
+    }
+    event.target.selectedIndex = 0;
   }
 
   dateSearch(fromDate: HTMLInputElement, toDate: HTMLInputElement) {
