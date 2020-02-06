@@ -1,0 +1,61 @@
+<section class="form">
+  <h2>{{ editMode === true ? 'Editing Todo Item' : 'Add New Todo Item' }}</h2>
+  <div style="color: rgb(116, 113, 113);">
+    All fields marked with an asterisk( <b style="color: red;">*</b> ) are
+    required
+  </div>
+  <hr />
+  <form [formGroup]="todoForm" class="loginbox" (ngSubmit)="submit()">
+    <div class="mandatory"><span class="asterisk">*</span></div>
+    <input placeholder="Title" formControlName="title" type="text" />
+    <textarea
+      placeholder="Description"
+      formControlName="desc"
+      type="text"
+      rows="5"
+      style="resize: none;"
+    ></textarea>
+    <p>Due Date</p>
+    <p>Reminder Date</p>
+    <input
+      formControlName="dueDate"
+      type="date"
+      data-date-inline-picker="true"
+    />
+    <input
+      class="reminder"
+      formControlName="reminderDate"
+      type="date"
+      data-date-inline-picker="true"
+    />
+    <p style="clear: both;"></p>
+    <hr style="margin-top: 0px;" />
+    <p>Category</p>
+    <p>Keep This Private?</p>
+    <select formControlName="category" name="Categories">
+      <option value="Home" [selected]="true">Home</option>
+      <option value="Work">Work</option>
+      <option value="School">School</option>
+    </select>
+    <select formControlName="isPublic" class="reminder" name="Privacy">
+      <option value="No" [selected]="true">Yes, Keep This Private</option>
+      <option value="Yes">No, Make It Public</option>
+    </select>
+    <button
+      type="submit"
+      value=""
+      class="login"
+      [ngClass]="{
+        disabled: !todoForm.valid || isLoading,
+        Addnew: todoForm.valid || !isLoading
+      }"
+      [disabled]="!todoForm.valid || isLoading"
+    >
+      {{ editMode === true ? 'Save Changes' : 'Add To List' }}
+    </button>
+    <button type="submit" value="" class="login" (click)="goBack()">
+      Cancel & Go Back
+    </button>
+  </form>
+  <hr />
+</section>

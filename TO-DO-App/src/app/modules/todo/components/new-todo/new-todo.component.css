@@ -38,7 +38,6 @@ select {
 .Addnew {
   cursor: pointer;
   background: #44c4e7;
-  /* width: 100%; */
   padding: 10px 15px;
   border: 0;
   color: #fff;
@@ -82,7 +81,7 @@ h2 {
   font-weight: 400;
 }
 
-#login {
+.login {
   cursor: pointer;
   background: #44c4e7;
   width: 100%;
@@ -122,7 +121,6 @@ input[type='date']::-webkit-calendar-picker-indicator {
 .Addnew {
   cursor: pointer;
   background: #44c4e7;
-  /* width: 100%; */
   padding: 10px 15px;
   border: 0;
   color: #fff;
@@ -138,8 +136,8 @@ input[type='date']::-webkit-calendar-picker-indicator {
 .asterisk {
   color: red;
   position: absolute;
-  right: -6px;
-  top: -15px;
+  right: -5px;
+  top: -10px;
   font-size: 20px;
   font-weight: 700;
 }

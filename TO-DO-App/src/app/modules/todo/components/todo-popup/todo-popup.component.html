@@ -1,0 +1,63 @@
+<div>
+  <!-- Header -->
+
+  <div class="modal-header">
+    <button class="btn btn-danger test" (click)="closeModal()">X</button>
+    <h4>Details</h4>
+  </div>
+
+  <!-- Body -->
+
+  <p class="lable">Title :</p>
+  <p class="data">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ todo.title }}</p>
+  <p class="lable">Description :</p>
+  <p class="data scroller">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ todo.desc }}
+  </p>
+
+  <!-- Additional Details -->
+  <p class="linear">
+    <span class="lable small">Start Date :</span>
+    <span class="data small">{{ todo.dueDate }}</span>
+    <span class="lable small left">Category :</span>
+    <span class="data small">{{ todo.category }}</span>
+  </p>
+  <p class="linear">
+    <span class="lable small">Due Date :</span>
+    <span class="data small">{{ todo.reminderDate }}</span>
+    <span class="lable small left">Status :</span>
+    <span
+      class="data small"
+      [ngClass]="{
+        done: todo.status == 'done',
+        pending: todo.status == 'pending'
+      }"
+      >{{ todo.status }}</span
+    >
+  </p>
+  <div *ngIf="todo.isPublic">
+    <p class="lable">Created By :</p>
+    <p class="data">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ todo.owner }}</p>
+  </div>
+  <!-- Action Buttons -->
+  <hr />
+  <p class="button-center">
+    <button
+      class="btn btn-info"
+      (click)="editTodo(todo.todoID)"
+      *ngIf="todo.status === 'pending'"
+    >
+      Edit
+    </button>
+    <button
+      class="btn btn-success"
+      (click)="doneTodo(todo.todoID)"
+      *ngIf="todo.status === 'pending'"
+    >
+      Mark as Done
+    </button>
+    <button class="btn btn-danger" (click)="deleteTodo(todo.todoID)">
+      Delete
+    </button>
+  </p>
+</div>

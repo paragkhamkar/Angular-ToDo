@@ -36,17 +36,33 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      email: new FormControl(null, Validators.required),
-      password: new FormControl(null, Validators.required)
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required, Validators.min(8)])
     });
   }
 
   onSubmit() {
-    const loginDetails = {
-      email: this.loginForm.value.email,
-      password: this.loginForm.value.password
-    };
-    this.messageService.activateSpinner();
-    this.userauth.userLogin(loginDetails);
+    if (
+      this.loginForm.get('email').valid === true &&
+      this.loginForm.get('password').valid === true
+    ) {
+      console.log('validdetails');
+      const loginDetails = {
+        email: this.loginForm.value.email,
+        password: this.loginForm.value.password
+      };
+      this.messageService.activateSpinner();
+      this.userauth.userLogin(loginDetails);
+    } else {
+      this.messageService.deactivateSpinner();
+      console.log('invalid details');
+      //show error message
+    }
+  }
+
+  validateForm() {
+    return console.log(
+      this.loginForm.get('email').valid && this.loginForm.get('password').valid
+    );
   }
 }

@@ -1,0 +1,64 @@
+.lable {
+  margin-top: 15px;
+  font-weight: 900;
+  width: 25%;
+  color: crimson;
+  text-align: left;
+}
+
+.data {
+  font-weight: 500;
+  color: black;
+  margin-bottom: 40px;
+}
+
+button {
+  width: 125px;
+  margin: 0px 5px;
+}
+
+.test {
+  width: fit-content;
+  float: right;
+}
+
+.small {
+  display: inline-block;
+  text-align: left;
+  width: 100px;
+}
+
+.linear span {
+  margin: 0px;
+}
+
+.scroller {
+  height: 80px;
+  overflow-y: scroll;
+}
+
+.show-owner {
+  display: block;
+}
+
+.hide-owner {
+  display: none;
+}
+
+.button-center {
+  text-align: center;
+}
+
+.pending {
+  font-size: 15px;
+  font-weight: 700;
+  color: red;
+  font-variant-caps: all-petite-caps;
+}
+
+.done {
+  font-size: 15px;
+  font-weight: 700;
+  color: green;
+  font-variant-caps: all-petite-caps;
+}

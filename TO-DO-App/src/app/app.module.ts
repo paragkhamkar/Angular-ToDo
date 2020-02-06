@@ -28,6 +28,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { AuthComponent } from './modules/auth/auth.component';
+import { TodoPopupComponent } from './modules/todo/components/todo-popup/todo-popup.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,6 @@ import { AuthComponent } from './modules/auth/auth.component';
     MatSelectModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [TodoinfoComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
